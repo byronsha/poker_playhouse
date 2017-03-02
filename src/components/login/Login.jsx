@@ -4,12 +4,12 @@ import io from 'socket.io-client'
 class Login extends React.Component {
   componentDidMount() {
     this.socket = io('/')
-    this.socket.on('lobby_joined', player => {
+    this.socket.on('lobby_joined', ({player, tables, players}) => {
       console.log(player.name + ' joined the lobby.')
 
       this.props.router.push({
         pathname: '/lobby',
-        state: { player }
+        state: {player, tables, players}
       })
     })
   }

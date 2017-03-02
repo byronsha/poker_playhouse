@@ -1,12 +1,24 @@
 import React from 'react'
+import io from 'socket.io-client'
 
 class Lobby extends React.Component {
   constructor(props) {
     super(props)
-    
+
+    const locationState = this.props.location.state
+
     this.state = {
-      player: this.props.location.state.player
+      player: locationState.player,
+      tables: locationState.tables,
+      players: locationState.players
     }
+  }
+
+  componentDidMount () {
+    this.socket = io('/')
+    this.socket.on('table_created', table => {
+      console.log(table)
+    })
   }
 
   render() {

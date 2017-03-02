@@ -56,7 +56,11 @@ io.on('connection', socket => {
 
     players[playerId] = new Player(playerId, playerName, 50000)
     
-    socket.emit('lobby_joined', players[playerId])
+    socket.emit('lobby_joined', {
+      player: players[playerId],
+      tables,
+      players
+    })
   })
 
   socket.on('create_table', (tableName, player) => {
