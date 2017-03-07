@@ -1,5 +1,8 @@
 import React from 'react'
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
+import TableList from './TableList'
+import PlayerList from './PlayerList'
+import Game from '../game/Game'
 
 class Lobby extends React.Component {
   constructor(props) {
@@ -10,94 +13,86 @@ class Lobby extends React.Component {
     this.state = {
       player: locationState.player,
       tables: {},
-      players: {}
+      players: {},
+      table: null
     }
+
+    this.handleTableClick = this.handleTableClick.bind(this)
+    this.handleLeaveClick = this.handleLeaveClick.bind(this)
   }
 
   componentDidMount() {
-    this.socket = io('/')
+    const { socket } = this.props
     
-    this.socket.on('receive_lobby_info', ({ tables, players }) => {
+    socket.on('receive_lobby_info', ({ tables, players }) => {
       this.setState({
         tables: tables,
         players: players
       })
     })
-    this.socket.on('tables_updated', tables => {
-      this.setState({ tables: tables })
+    socket.on('tables_updated', tables => {
+      const oldTable = this.state.table
+      const newTable = oldTable ? tables[oldTable.id] : oldTable
+
+      this.setState({
+        tables: tables,
+        table: newTable
+      })
     })
-    this.socket.on('players_updated', players => {
+    socket.on('players_updated', players => {
       this.setState({ players: players })
     })
-    this.socket.on('table_joined', table => {
-      const { player } = this.state
-      this.props.router.push({
-        pathname: `/game/${table.id}`,
-        state: { player, table }
+    socket.on('table_joined', ({ tables, tableId }) => {
+      this.setState({
+        tables,
+        table: tables[tableId]
+      })
+    })
+    socket.on('table_left', tables => {
+      this.setState({
+        tables: tables,
+        table: null
       })
     })
 
-    this.socket.emit('fetch_lobby_info')
+    socket.emit('fetch_lobby_info')
   }
 
   handleTableClick(tableId) {
-    const { player } = this.state
-    this.socket.emit('join_table', {
-      tableId,
-      player
-    })
-  }
+    if (!this.state.table) {
+      const { socket } = this.props
 
-  renderTableList() {
-    const { tables } = this.state
-
-    if (Object.keys(tables).length > 0) {
-      return (
-        <div>
-          <ul>
-            {Object.keys(tables).map((id) => {
-              return (
-                <li key={id}>
-                  {tables[id].name}, {tables[id].players.length}/{tables[id].maxPlayers}
-                  <button onClick={() => { this.handleTableClick(tables[id].id) }}>Join</button>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-      )
-    } else {
-      return <div></div>
+      socket.emit('join_table', tableId)
     }
   }
 
-  renderPlayerList() {
-    const { players } = this.state
-    
-    if (Object.keys(players).length > 0) {
-      return (
-        <div>
-          <ul>
-            {Object.keys(players).map((id) => {
-              return <li key={id}>{players[id].name}</li>
-            })}
-          </ul>
-        </div>
-      )
-    } else {
-      return <div></div>
-    }
+  handleLeaveClick() {
+    const { socket } = this.props
+    const { table } = this.state
+
+    socket.emit('leave_table', table) 
   }
 
   render() {
+    const props = this.props
+    const { tables, players, table } = this.state
+
     return (
       <div>
         <h1>Lobby</h1>
         <span>Logged in as {this.state.player.name}</span>
-        <h2>Tables</h2>
-        {this.renderTableList()}
-        <h2>Players</h2>
-        {this.renderPlayerList()}
+
+        <TableList
+          {...props}
+          tables={tables}
+          table={table}
+          onTableClick={this.handleTableClick}
+        />
+        <PlayerList {...props} players={players} />
+
+        <hr />
+
+        {table && <Game table={table} onLeaveClick={this.handleLeaveClick} />}
       </div>
     )
   }

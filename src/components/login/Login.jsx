@@ -1,10 +1,10 @@
 import React from 'react'
-import io from 'socket.io-client'
 
 class Login extends React.Component {
   componentDidMount() {
-    this.socket = io('/')
-    this.socket.on('lobby_joined', player => {
+    const { socket } = this.props
+
+    socket.on('lobby_joined', player => {
       this.props.router.push({
         pathname: '/lobby',
         state: { player }
@@ -14,7 +14,9 @@ class Login extends React.Component {
   
   handleSubmit = e => {
     e.preventDefault()
-    this.socket.emit('join_lobby', this.playerName.value)
+    
+    const { socket } = this.props
+    socket.emit('join_lobby', this.playerName.value)
   }
 
   render() {

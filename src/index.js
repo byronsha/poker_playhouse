@@ -13,7 +13,6 @@ const Root = () => (
       <IndexRedirect to="/login" />
       <Route path="login" component={Login} />
       <Route path="lobby" component={Lobby} />
-      <Route path="game/:gameId" component={Game} />
       <Route path="*" component={NoMatch} />
     </Route>
   </Router>

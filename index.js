@@ -6,7 +6,7 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackConfig = require('./webpack.config.js')
 
-const randomId = require('random-id')
+// const randomId = require('random-id')
 
 const app = express()
 const server = http.createServer(app)
@@ -30,18 +30,27 @@ class Table {
     this.name = name,
     this.maxPlayers = maxPlayers,
     this.limit = limit,
-    this.players = []
+    this.players = [],
+    this.seats = this.initSeats(maxPlayers)
+  }
+  initSeats(maxPlayers) {
+    const seats = {}
+    for (let i = 1; i <= maxPlayers; i++) {
+      seats[i] = null
+    }
+    return seats
   }
   addPlayer(player) {
-    if (this.players.length < this.maxPlayers) {
-      this.players.push({
-        player,
-        stack: this.limit * 100
-      })
-    }
+    this.players.push(player)
   }
   removePlayer(socketId) {
-    this.players = this.players.filter(player => player.player.socketId !== socketId)
+    this.players = this.players.filter(player => player.socketId !== socketId)
+  }
+  sitPlayer(player, seatId) {
+    this.seats[seatId] = player
+  }
+  standPlayer(seatId) {
+    this.seats[seatId] = null
   }
 }
 
@@ -68,25 +77,24 @@ io.on('connection', socket => {
 
   socket.on('join_lobby', playerName => {
     // const playerId = randomId(20)
-
     players[socket.id] = new Player(socket.id, playerName, 50000)
     
     socket.emit('lobby_joined', players[socket.id])
     socket.broadcast.emit('players_updated', players)
   })
 
-  socket.on('join_table', ({ tableId, player }) => {
-    tables[tableId].addPlayer(player)
+  socket.on('join_table', tableId => {
+    tables[tableId].addPlayer(players[socket.id])
 
-    socket.emit('table_joined', tables[tableId])
     socket.broadcast.emit('tables_updated', tables)
+    socket.emit('table_joined', { tables, tableId })
   })
 
-  socket.on('leave_table', ({ player, table }) => {
-    tables[table.id].removePlayer(player.socketId)
+  socket.on('leave_table', table => {
+    tables[table.id].removePlayer(socket.id)
 
-    socket.emit('table_left', player)
     socket.broadcast.emit('tables_updated', tables)    
+    socket.emit('table_left', tables)
   })
 
   socket.on('disconnect', () => {
