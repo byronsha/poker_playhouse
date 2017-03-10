@@ -1,15 +1,24 @@
 import React from 'react'
+import Player from '../lobby/Player'
 
 class Players extends React.Component {
   render() {
-    const { table } = this.props
+    const { player, table } = this.props
 
     if (table.players.length > 0) {
       return (
         <div>
           <ul>
-            {table.players.map((player) => {
-              return <li key={player.socketId}>{player.name}</li>
+            {table.players.map((tablePlayer) => {
+              let active = player.socketId === tablePlayer.socketId ? true : false
+
+              return (
+                <Player
+                  key={tablePlayer.socketId}
+                  player={tablePlayer}
+                  active={active}
+                />
+              )
             })}
           </ul>
         </div>

@@ -19,6 +19,7 @@ class Lobby extends React.Component {
 
     this.handleTableClick = this.handleTableClick.bind(this)
     this.handleLeaveClick = this.handleLeaveClick.bind(this)
+    this.handleSeatClick = this.handleSeatClick.bind(this)
   }
 
   componentDidMount() {
@@ -54,6 +55,9 @@ class Lobby extends React.Component {
         table: null
       })
     })
+    socket.on('table_updated', table => {
+      this.setState({ table: table })
+    })
 
     socket.emit('fetch_lobby_info')
   }
@@ -73,26 +77,42 @@ class Lobby extends React.Component {
     socket.emit('leave_table', table) 
   }
 
+  handleSeatClick(tableId, seatId) {
+    const { socket } = this.props
+
+    socket.emit('sit_down', {tableId, seatId})
+  }
+
   render() {
     const props = this.props
-    const { tables, players, table } = this.state
+    const { player, tables, players, table } = this.state
 
     return (
       <div>
         <h1>Lobby</h1>
-        <span>Logged in as {this.state.player.name}</span>
+        <span>Logged in as {player.name}</span>
 
         <TableList
-          {...props}
-          tables={tables}
           table={table}
+          tables={tables}
           onTableClick={this.handleTableClick}
         />
-        <PlayerList {...props} players={players} />
+
+        <PlayerList
+          player={player} 
+          players={players}
+        />
 
         <hr />
 
-        {table && <Game table={table} onLeaveClick={this.handleLeaveClick} />}
+        {table &&
+          <Game
+            player={player}
+            table={table}
+            onLeaveClick={this.handleLeaveClick}
+            onSeatClick={this.handleSeatClick}
+          />
+        }
       </div>
     )
   }

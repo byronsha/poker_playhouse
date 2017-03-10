@@ -6,8 +6,6 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackConfig = require('./webpack.config.js')
 
-// const randomId = require('random-id')
-
 const app = express()
 const server = http.createServer(app)
 const io = socketIo(server)
@@ -45,12 +43,18 @@ class Table {
   }
   removePlayer(socketId) {
     this.players = this.players.filter(player => player.socketId !== socketId)
+    
+    for (let i = 0; i < this.maxPlayers; i++) {
+      if (this.seats[i] && this.seats[i].player.socketId === socketId) {
+        this.seats[i] = null
+      }
+    }
   }
   sitPlayer(player, seatId) {
-    this.seats[seatId] = player
-  }
-  standPlayer(seatId) {
-    this.seats[seatId] = null
+    this.seats[seatId] = {
+      player,
+      stack: this.limit * 100
+    }
   }
 }
 
@@ -61,12 +65,12 @@ tables[1] = new Table(1, 'Table 1', 6, 25)
 tables[2] = new Table(2, 'Table 2', 9, 25)
 
 io.on('connection', socket => {
-  socket.on('message', body => {
-    socket.broadcast.emit('message', {
-      body,
-      from: socket.id.slice(8)
-    })
-  })
+  // socket.on('message', body => {
+  //   socket.broadcast.emit('message', {
+  //     body,
+  //     from: socket.id.slice(8)
+  //   })
+  // })
 
   socket.on('fetch_lobby_info', () => {
     socket.emit('receive_lobby_info', {
@@ -76,7 +80,6 @@ io.on('connection', socket => {
   })
 
   socket.on('join_lobby', playerName => {
-    // const playerId = randomId(20)
     players[socket.id] = new Player(socket.id, playerName, 50000)
     
     socket.emit('lobby_joined', players[socket.id])
@@ -97,8 +100,17 @@ io.on('connection', socket => {
     socket.emit('table_left', tables)
   })
 
+  socket.on('sit_down', ({ tableId, seatId }) => {
+    const table = tables[tableId]
+
+    table.sitPlayer(players[socket.id], seatId)
+    
+    for (let i = 0; i < table.players.length; i++) {
+      io.to(table.players[i].socketId).emit('table_updated', table)
+    }
+  })
+
   socket.on('disconnect', () => {
-    // remove player from tables and players based on socket id
     delete players[socket.id]
     removeFromTables(socket.id)
 
