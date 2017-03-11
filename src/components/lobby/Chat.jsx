@@ -12,9 +12,11 @@ class Chat extends React.Component {
         <input
           type="text"
           placeholder="Enter a message..."
-          onKeyUp={this.props.createMessage}
+          onKeyUp={this.props.sendMessage}
         />
-        {messages}
+        <ul>
+          {messages}
+        </ul>
       </div>
     )
   }

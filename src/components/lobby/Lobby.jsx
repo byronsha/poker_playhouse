@@ -1,8 +1,8 @@
 import React from 'react'
-// import io from 'socket.io-client'
 import TableList from './TableList'
 import PlayerList from './PlayerList'
 import Game from '../game/Game'
+import Chat from './Chat'
 
 class Lobby extends React.Component {
   constructor(props) {
@@ -14,7 +14,8 @@ class Lobby extends React.Component {
       player: locationState.player,
       tables: {},
       players: {},
-      table: null
+      table: null,
+      messages: []
     }
 
     this.handleTableClick = this.handleTableClick.bind(this)
@@ -58,6 +59,9 @@ class Lobby extends React.Component {
     socket.on('table_updated', table => {
       this.setState({ table: table })
     })
+    socket.on('message', message => {
+      this.setState({ messages: [message, ...this.state.messages] })
+    })
 
     socket.emit('fetch_lobby_info')
   }
@@ -80,7 +84,22 @@ class Lobby extends React.Component {
   handleSeatClick(tableId, seatId) {
     const { socket } = this.props
 
-    socket.emit('sit_down', {tableId, seatId})
+    socket.emit('sit_down', { tableId, seatId })
+  }
+
+  sendMessage = e => {
+    const { socket } = this.props
+    const body = e.target.value
+
+    if (e.keyCode === 13 && body) {
+      const message = {
+        body,
+        from: 'Me'
+      }
+      this.setState({ messages: [message, ...this.state.messages] })
+      socket.emit('message', body)
+      e.target.value = ''
+    }
   }
 
   render() {
@@ -101,6 +120,11 @@ class Lobby extends React.Component {
         <PlayerList
           player={player} 
           players={players}
+        />
+
+        <Chat
+          messages={this.state.messages}
+          sendMessage={this.sendMessage}
         />
 
         <hr />

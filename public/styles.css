@@ -4,3 +4,9 @@
   margin: 20px;
   background: lightblue;
 }
+.chat ul {
+  max-height: 200px;
+  width: 300px;
+  overflow: auto;
+  list-style-type: none;
+}
