@@ -10,6 +10,8 @@ class Login extends React.Component {
         state: { player }
       })
     })
+
+    socket.emit('join_lobby', (0|Math.random()*9e6).toString(36))
   }
   
   handleSubmit = e => {

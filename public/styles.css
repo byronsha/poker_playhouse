@@ -4,6 +4,9 @@
   margin: 20px;
   background: lightblue;
 }
+.seat.active {
+  border: 1px solid blue;
+}
 .chat ul {
   max-height: 200px;
   width: 300px;

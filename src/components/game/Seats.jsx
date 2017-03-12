@@ -3,14 +3,14 @@ import SeatedPlayer from './SeatedPlayer'
 
 class Seats extends React.Component {
   render() {
-    const { table, onSeatClick } = this.props
+    const { player, table, onSeatClick } = this.props
 
     return (
       <div>
         {Object.keys(table.seats).map((seatId) => {
           const seat = table.seats[seatId]
           if (seat) {
-            return <SeatedPlayer key={seatId} seat={seat} />
+            return <SeatedPlayer key={seatId} player={player} seat={seat} />
           } else {
             return (
               <div
