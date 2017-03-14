@@ -13,7 +13,8 @@ class Table {
     this.board = null,
     this.deck = null,
     this.turn = null,
-    this.pot = 0
+    this.pot = 0,
+    this.callAmount = 0
   }
   initSeats(maxPlayers) {
     const seats = {}
@@ -76,11 +77,14 @@ class Table {
           }
 
           if (blinds === 0) {
+            // small blind
             seat.placeBet(this.limit / 200)
             this.pot += this.limit / 200
           } else if (blinds === 1) {
+            // big blind
             seat.placeBet(this.limit / 100)
             this.pot += this.limit / 100
+            this.callAmount = this.limit / 100
           }
           blinds++
         }
@@ -126,6 +130,17 @@ class Table {
       this.turn = null,
       this.clearHand()
     }
+  }
+  dealFlop() {
+    for (let i = 0; i < 3; i++) {
+      this.board.push(this.deck.deal())
+    }
+  }
+  dealTurn() {
+    this.board.push(this.deck.deal())
+  }
+  dealRiver() {
+    this.board.push(this.deck.deal())
   }
 }
 

@@ -3,6 +3,7 @@ import Players from './Players'
 import Seats from './Seats'
 import Board from './Board'
 import Pot from './Pot'
+import ActionButtons from './ActionButtons'
 
 class Game extends React.Component {
   isOwnTurn() {
@@ -40,11 +41,7 @@ class Game extends React.Component {
         <Pot table={table} />
 
         {this.isOwnTurn() &&
-          <div>
-            <button>Fold</button>
-            <button>Check</button>
-            <button>Bet</button>
-          </div>
+          <ActionButtons player={player} table={table} />
         }
       </div>
     )
