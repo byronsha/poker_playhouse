@@ -6,7 +6,7 @@ class Pot extends React.Component {
 
     return (
       <div className="pot">
-        Pot: {table.pot}
+        Pot: ${table.pot.toFixed(2)}
       </div>
     )
   }

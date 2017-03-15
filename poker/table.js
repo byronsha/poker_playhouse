@@ -12,6 +12,7 @@ class Table {
     this.seats = this.initSeats(maxPlayers),
     this.board = null,
     this.deck = null,
+    this.button = null,
     this.turn = null,
     this.pot = 0,
     this.callAmount = 0
@@ -41,8 +42,8 @@ class Table {
   sitPlayer(player, seatId) {
     this.seats[seatId] = new Seat(player, this.limit)
     
-    if (!this.turn) {
-      this.turn = seatId
+    if (!this.button) {
+      this.button = seatId
     }
     
     if (this.satPlayers().length >= 2) {
@@ -52,14 +53,46 @@ class Table {
   satPlayers() {
     return Object.values(this.seats).filter(seat => seat !== null)
   }
-  unfoldedPlayers () {
+  unfoldedPlayers() {
     return Object.values(this.seats).filter(seat => seat !== null && !seat.folded)
+  }
+  getNextUnfoldedPlayer(player, places) {
+    let i = 0
+    let current = player
+    
+    while (i < places) {
+      if (current === this.maxPlayers) {
+        current = 0
+      } else {
+        current++
+      }
+ 
+      if (this.seats[current] && !this.seats[current].folded) {
+        i++
+      }
+    }
+
+    return current
+  }
+  unfoldPlayers() {
+    const satPlayers = this.satPlayers()
+    for (let i = 0; i < satPlayers.length; i++) {
+      satPlayers[i].folded = false
+    }
   }
   startHand() {
     this.deck = new Deck()
+    this.unfoldPlayers()
+
     const arr = _.range(1, this.maxPlayers + 1)
-    let order = arr.slice(this.turn - 1).concat(arr.slice(0, this.turn))
+    let order = arr.slice(this.button).concat(arr.slice(0, this.button))
     let blinds = 0
+
+    if (this.unfoldedPlayers().length <= 3) {
+      this.turn = this.button
+    } else {
+      this.turn = this.getNextUnfoldedPlayer(this.button, 3)
+    }
 
     // deal cards to seated players
     for (let i = 0; i < 2; i++) {
@@ -68,7 +101,7 @@ class Table {
 
         if (this.seats[currentSeat]) {
           const seat = this.seats[currentSeat]
-          const dealtCard = this.deck.deal()
+          const dealtCard = this.deck.draw()
           seat.folded = false
           seat.hand.push(dealtCard)
 
@@ -78,13 +111,24 @@ class Table {
 
           if (blinds === 0) {
             // small blind
-            seat.placeBet(this.limit / 200)
-            this.pot += this.limit / 200
+            if (this.unfoldedPlayers().length === 2) {
+              seat.placeBet(this.limit / 100)
+              this.pot += this.limit / 100
+              this.callAmount = this.limit / 100
+            } else {
+              seat.placeBet(this.limit / 200)
+              this.pot += this.limit / 200
+            }
           } else if (blinds === 1) {
             // big blind
-            seat.placeBet(this.limit / 100)
-            this.pot += this.limit / 100
-            this.callAmount = this.limit / 100
+            if (this.unfoldedPlayers().length === 2) {
+              seat.placeBet(this.limit / 200)
+              this.pot += this.limit / 200
+            } else {
+              seat.placeBet(this.limit / 100)
+              this.pot += this.limit / 100
+              this.callAmount = this.limit / 100
+            }
           }
           blinds++
         }
@@ -133,14 +177,14 @@ class Table {
   }
   dealFlop() {
     for (let i = 0; i < 3; i++) {
-      this.board.push(this.deck.deal())
+      this.board.push(this.deck.draw())
     }
   }
   dealTurn() {
-    this.board.push(this.deck.deal())
+    this.board.push(this.deck.draw())
   }
   dealRiver() {
-    this.board.push(this.deck.deal())
+    this.board.push(this.deck.draw())
   }
 }
 

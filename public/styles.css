@@ -3,6 +3,7 @@
   padding: 10px;
   margin: 20px;
   background: lightblue;
+  text-align: center;
 }
 .seat.active {
   border: 1px solid blue;
@@ -12,4 +13,14 @@
   width: 300px;
   overflow: auto;
   list-style-type: none;
+}
+.card {
+  display: inline-block;
+  font-size: 25px;
+  text-align: center;
+  background: white;
+  width: 40px;
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 3px;
 }

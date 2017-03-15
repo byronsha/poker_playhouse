@@ -9,8 +9,17 @@ class Seats extends React.Component {
       <div>
         {Object.keys(table.seats).map((seatId) => {
           const seat = table.seats[seatId]
+          const isButton = seatId === table.button ? true : false
+          
           if (seat) {
-            return <SeatedPlayer key={seatId} player={player} seat={seat} />
+            return (
+              <SeatedPlayer
+                key={seatId}
+                player={player}
+                seat={seat}
+                isButton={isButton}
+              />
+            )
           } else {
             return (
               <div

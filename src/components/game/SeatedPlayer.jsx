@@ -1,21 +1,25 @@
 import React from 'react'
+import Hand from './Hand'
 
 class SeatedPlayer extends React.Component {
   render() {
-    const { seat } = this.props
+    const { player, seat, isButton } = this.props
     const className = seat.turn ? 'seat active' : 'seat'
 
     return (
       <div className={className}>
         {seat.bet > 0 &&
-          <div>{seat.bet}</div>  
+          <div>${seat.bet.toFixed(2)}</div>  
         }
         
-        <div>{seat.player.name} - {seat.stack}</div>
+        <div>{seat.player.name} {player.socketId === seat.player.socketId ? '(me)' : ''}</div>
+        <div>${seat.stack.toFixed(2)}</div>
         
         {seat.hand.length > 0 && 
-          <div>{seat.hand[0]} | {seat.hand[1]}</div>  
+          <Hand seat={seat} />  
         }
+
+        {isButton && <div>btn</div>}
       </div>
     )
   }
