@@ -4,18 +4,20 @@ const Deck = require('./deck.js')
 
 class Table {
   constructor(id, name, maxPlayers, limit) {
-    this.id = id,
-    this.name = name,
-    this.maxPlayers = maxPlayers,
-    this.limit = limit,
-    this.players = [],
-    this.seats = this.initSeats(maxPlayers),
-    this.board = null,
-    this.deck = null,
-    this.button = null,
-    this.turn = null,
-    this.pot = 0,
-    this.callAmount = 0
+    this.id = id
+    this.name = name
+    this.maxPlayers = maxPlayers
+    this.limit = limit
+    this.players = []
+    this.seats = this.initSeats(maxPlayers)
+    this.board = []
+    this.deck = null
+    this.button = null
+    this.turn = null
+    this.pot = 0
+    this.callAmount = null
+    this.minBet = this.limit / 200
+    this.minRaise = this.limit / 100
   }
   initSeats(maxPlayers) {
     const seats = {}
@@ -75,7 +77,13 @@ class Table {
     return current
   }
   changeTurn(lastTurn) {
-    this.turn = this.getNextUnfoldedPlayer(lastTurn, 1)
+    if (this.allCheckedOrCalled()) {
+      this.dealNextStreet()
+      this.turn = this.getNextUnfoldedPlayer(this.button, 1)
+    } else {
+      this.turn = this.getNextUnfoldedPlayer(lastTurn, 1)
+    }
+
     for (let i = 1; i < this.maxPlayers; i++) {
       if (this.seats[i] && i === this.turn) {
         this.seats[i].turn = true
@@ -85,14 +93,17 @@ class Table {
     }
   }
   unfoldPlayers() {
-    const satPlayers = this.satPlayers()
-    for (let i = 0; i < satPlayers.length; i++) {
-      satPlayers[i].folded = false
+    for (let i = 1; i < this.maxPlayers; i++) {
+      if (this.seats[i]) {
+        this.seats[i].folded = false
+        this.seats[i].checked = false
+      }
     }
   }
   startHand() {
     this.deck = new Deck()
     this.unfoldPlayers()
+    this.minRaise *= 2
 
     const arr = _.range(1, this.maxPlayers + 1)
     let order = arr.slice(this.button).concat(arr.slice(0, this.button))
@@ -147,8 +158,10 @@ class Table {
   }
   clearHand() {
     this.deck = null
-    this.board = null
+    this.board = []
     this.pot = 0
+    this.callAmount = null
+    this.minRaise = this.limit / 100
   }
   checkHandOver() {
     if (this.satPlayers().length === 1) {
@@ -186,15 +199,46 @@ class Table {
       this.clearHand()
     }
   }
+  allCheckedOrCalled() {
+    for (let i = 1; i <= this.maxPlayers; i++) {
+      if (this.seats[i]
+          && !this.seats[i].checked 
+          && !this.seats[i].folded
+          && this.seats[i].bet !== this.callAmount) {
+        return false
+      }
+    }
+    return true
+  }
+  dealNextStreet() {
+    this.resetBets()
+    if (this.board.length === 0) {
+      this.dealFlop()
+    } else if (this.board.length === 3 || this.board.length === 4) {
+      this.dealTurnOrRiver()
+    } else if (this.board.length === 5) {
+      this.determineWinner()
+    }
+  }
+  determineWinner() {
+    console.log('hello')
+  }
+  resetBets() {
+    for (let i = 1; i < this.maxPlayers; i++) {
+      if (this.seats[i]) {
+        this.seats[i].bet = 0
+        this.seats[i].checked = false
+      }
+    }
+    this.callAmount = null
+    this.minRaise = this.limit / 200
+  }
   dealFlop() {
     for (let i = 0; i < 3; i++) {
       this.board.push(this.deck.draw())
     }
   }
-  dealTurn() {
-    this.board.push(this.deck.draw())
-  }
-  dealRiver() {
+  dealTurnOrRiver() {
     this.board.push(this.deck.draw())
   }
   findPlayerBySocketId(socketId) {

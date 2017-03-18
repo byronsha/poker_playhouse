@@ -1,4 +1,5 @@
 import React from 'react'
+import Card from './Card'
 
 class Board extends React.Component {
   render() {
@@ -6,7 +7,9 @@ class Board extends React.Component {
 
     return (
       <div className="board">
-        Board: {table.board}
+        {table.board.map(card => 
+          <Card key={card.rank + card.suit} card={card} />
+        )}
       </div>
     )
   }

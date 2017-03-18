@@ -1,21 +1,22 @@
 class Seat {
   constructor(id, player, stack) {
-    this.id = id,
-    this.player = player,
-    this.hand = [],
-    this.bet = 0,
-    this.stack = stack,
-    this.turn = false,
+    this.id = id
+    this.player = player
+    this.hand = []
+    this.bet = 0
+    this.stack = stack
+    this.turn = false
+    this.checked = true
     this.folded = true
   }
   raise(amount) {
-    this.stack -= amount
-    this.bet += amount
+    this.stack -= (amount - this.bet)
+    this.bet = amount
   }
   check() {
-
+    this.checked = true
   }
-  call(amount) {
+  callRaise(amount) {
     this.stack -= (amount - this.bet)
     this.bet = amount
   }

@@ -63,10 +63,18 @@ io.on('connection', socket => {
   socket.on('raise', ({ tableId, amount }) => {
     const table = tables[tableId]
     const seat = table.findPlayerBySocketId(socket.id)
+    const addToPot = amount - seat.bet
 
     seat.raise(amount)
+
+    if (table.callAmount) {
+      table.minRaise = seat.bet + (seat.bet - table.callAmount) * 2
+    } else {
+      table.minRaise = seat.bet * 2
+    }
+    
     table.callAmount = seat.bet
-    table.pot += amount
+    table.pot += addToPot
     table.changeTurn(seat.id)
 
     broadcastToTable(table)
@@ -75,6 +83,7 @@ io.on('connection', socket => {
   socket.on('check', tableId => {
     const table = tables[tableId]
     const seat = table.findPlayerBySocketId(socket.id)
+
     seat.check()
     table.changeTurn(seat.id)
 
@@ -84,7 +93,10 @@ io.on('connection', socket => {
   socket.on('call', tableId => {
     const table = tables[tableId]
     const seat = table.findPlayerBySocketId(socket.id)
-    seat.call()
+    const addToPot = table.callAmount - seat.bet
+
+    seat.callRaise(table.callAmount)
+    table.pot += addToPot
     table.changeTurn(seat.id)
 
     broadcastToTable(table)

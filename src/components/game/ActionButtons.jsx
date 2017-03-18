@@ -18,7 +18,7 @@ class ActionButtons extends React.Component {
           Fold
         </button>
 
-        {table.callAmount === 0 &&
+        {!table.callAmount &&
           <button onClick={() => {
             onCheckClick(table.id)
           }}>
@@ -37,11 +37,12 @@ class ActionButtons extends React.Component {
         <button onClick={() => {
           onRaiseClick(table.id, parseFloat(raiseAmount.value))
         }}>
-          Raise
+          Raise to
         </button>
 
         <input
           type="number"
+          defaultValue={table.minRaise.toFixed(2)}
           ref={ref => { raiseAmount = ref }}
         >
         </input>

@@ -39,11 +39,7 @@ class Game extends React.Component {
         />
 
         <Board table={table} />
-        <Pot table={table} />
-
-        <div>
-          Call amount: ${table.callAmount.toFixed(2)}
-        </div>
+        <Pot table={table} /> (minraise {table.minRaise})
 
         {this.isOwnTurn() &&
           <ActionButtons
