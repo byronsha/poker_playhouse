@@ -60,6 +60,45 @@ io.on('connection', socket => {
     socket.emit('table_left', tables)
   })
 
+  socket.on('raise', ({ tableId, amount }) => {
+    const table = tables[tableId]
+    const seat = table.findPlayerBySocketId(socket.id)
+
+    seat.raise(amount)
+    table.callAmount = seat.bet
+    table.pot += amount
+    table.changeTurn(seat.id)
+
+    broadcastToTable(table)
+  })
+
+  socket.on('check', tableId => {
+    const table = tables[tableId]
+    const seat = table.findPlayerBySocketId(socket.id)
+    seat.check()
+    table.changeTurn(seat.id)
+
+    broadcastToTable(table)
+  })
+
+  socket.on('call', tableId => {
+    const table = tables[tableId]
+    const seat = table.findPlayerBySocketId(socket.id)
+    seat.call()
+    table.changeTurn(seat.id)
+
+    broadcastToTable(table)
+  })
+
+  socket.on('fold', tableId => {
+    const table = tables[tableId]
+    const seat = table.findPlayerBySocketId(socket.id)
+    seat.fold()
+    table.changeTurn(seat.id)
+
+    broadcastToTable(table)
+  })
+
   socket.on('sit_down', ({ tableId, seatId }) => {
     const table = tables[tableId]
     table.sitPlayer(players[socket.id], seatId)

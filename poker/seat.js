@@ -1,5 +1,6 @@
 class Seat {
-  constructor(player, stack) {
+  constructor(id, player, stack) {
+    this.id = id,
     this.player = player,
     this.hand = [],
     this.bet = 0,
@@ -7,19 +8,25 @@ class Seat {
     this.turn = false,
     this.folded = true
   }
-  placeBet(amount) {
-    this.bet += amount,
+  raise(amount) {
     this.stack -= amount
+    this.bet += amount
+  }
+  check() {
+
+  }
+  call(amount) {
+    this.stack -= (amount - this.bet)
+    this.bet = amount
+  }
+  fold() {
+    this.bet = 0
+    this.folded = true
   }
   winHand(pot) {
     this.bet = 0
     this.hand = []
     this.stack += pot
-    this.turn = false
-  }
-  loseHand() {
-    this.bet = 0
-    this.hand = []
     this.turn = false
   }
 }

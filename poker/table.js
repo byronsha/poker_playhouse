@@ -40,7 +40,7 @@ class Table {
     this.checkTableEmpty()
   }
   sitPlayer(player, seatId) {
-    this.seats[seatId] = new Seat(player, this.limit)
+    this.seats[seatId] = new Seat(seatId, player, this.limit)
     
     if (!this.button) {
       this.button = seatId
@@ -73,6 +73,16 @@ class Table {
     }
 
     return current
+  }
+  changeTurn(lastTurn) {
+    this.turn = this.getNextUnfoldedPlayer(lastTurn, 1)
+    for (let i = 1; i < this.maxPlayers; i++) {
+      if (this.seats[i] && i === this.turn) {
+        this.seats[i].turn = true
+      } else if (this.seats[i]) {
+        this.seats[i].turn = false
+      }
+    }
   }
   unfoldPlayers() {
     const satPlayers = this.satPlayers()
@@ -112,20 +122,20 @@ class Table {
           if (blinds === 0) {
             // small blind
             if (this.unfoldedPlayers().length === 2) {
-              seat.placeBet(this.limit / 100)
+              seat.raise(this.limit / 100)
               this.pot += this.limit / 100
               this.callAmount = this.limit / 100
             } else {
-              seat.placeBet(this.limit / 200)
+              seat.raise(this.limit / 200)
               this.pot += this.limit / 200
             }
           } else if (blinds === 1) {
             // big blind
             if (this.unfoldedPlayers().length === 2) {
-              seat.placeBet(this.limit / 200)
+              seat.raise(this.limit / 200)
               this.pot += this.limit / 200
             } else {
-              seat.placeBet(this.limit / 100)
+              seat.raise(this.limit / 100)
               this.pot += this.limit / 100
               this.callAmount = this.limit / 100
             }
@@ -171,7 +181,8 @@ class Table {
   }
   checkTableEmpty() {
     if (this.satPlayers().length === 0) {
-      this.turn = null,
+      this.button = null
+      this.turn = null
       this.clearHand()
     }
   }
@@ -185,6 +196,14 @@ class Table {
   }
   dealRiver() {
     this.board.push(this.deck.draw())
+  }
+  findPlayerBySocketId(socketId) {
+    for (let i = 1; i <= this.maxPlayers; i++) {
+      if (this.seats[i] && this.seats[i].player.socketId === socketId) {
+        return this.seats[i]
+      }
+    }
+    throw new Error('seat not found!')
   }
 }
 

@@ -19,7 +19,8 @@ class Game extends React.Component {
   }
 
   render() {
-    const { player, table, onLeaveClick, onSeatClick } = this.props
+    const { player, table, onLeaveClick, onSeatClick, onRaiseClick,
+            onCheckClick, onCallClick, onFoldClick } = this.props
 
     return (
       <div>
@@ -40,8 +41,19 @@ class Game extends React.Component {
         <Board table={table} />
         <Pot table={table} />
 
+        <div>
+          Call amount: ${table.callAmount.toFixed(2)}
+        </div>
+
         {this.isOwnTurn() &&
-          <ActionButtons player={player} table={table} />
+          <ActionButtons
+            player={player}
+            table={table}
+            onRaiseClick={onRaiseClick}
+            onCheckClick={onCheckClick}
+            onCallClick={onCallClick}
+            onFoldClick={onFoldClick}
+          />
         }
       </div>
     )

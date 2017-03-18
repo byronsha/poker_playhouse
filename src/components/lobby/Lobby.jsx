@@ -21,6 +21,11 @@ class Lobby extends React.Component {
     this.handleTableClick = this.handleTableClick.bind(this)
     this.handleLeaveClick = this.handleLeaveClick.bind(this)
     this.handleSeatClick = this.handleSeatClick.bind(this)
+
+    this.handleRaiseClick = this.handleRaiseClick.bind(this)
+    this.handleCheckClick = this.handleCheckClick.bind(this)
+    this.handleCallClick = this.handleCallClick.bind(this)
+    this.handleFoldClick = this.handleFoldClick.bind(this)
   }
 
   componentDidMount() {
@@ -68,23 +73,32 @@ class Lobby extends React.Component {
 
   handleTableClick(tableId) {
     if (!this.state.table) {
-      const { socket } = this.props
-
-      socket.emit('join_table', tableId)
+      this.props.socket.emit('join_table', tableId)
     }
   }
 
   handleLeaveClick() {
-    const { socket } = this.props
-    const { table } = this.state
-
-    socket.emit('leave_table', table) 
+    this.props.socket.emit('leave_table', this.state.table) 
   }
 
   handleSeatClick(tableId, seatId) {
-    const { socket } = this.props
+    this.props.socket.emit('sit_down', { tableId, seatId })
+  }
 
-    socket.emit('sit_down', { tableId, seatId })
+  handleRaiseClick(tableId, amount) {
+    this.props.socket.emit('raise', ({ tableId, amount }))
+  }
+
+  handleCheckClick(tableId) {
+    this.props.socket.emit('check', tableId)
+  }
+
+  handleCallClick(tableId) {
+    this.props.socket.emit('call', tableId)
+  }
+
+  handleFoldClick(tableId) {
+    this.props.socket.emit('fold', tableId)
   }
 
   sendMessage = e => {
@@ -135,6 +149,10 @@ class Lobby extends React.Component {
             table={table}
             onLeaveClick={this.handleLeaveClick}
             onSeatClick={this.handleSeatClick}
+            onRaiseClick={this.handleRaiseClick}
+            onCheckClick={this.handleCheckClick}
+            onCallClick={this.handleCallClick}
+            onFoldClick={this.handleFoldClick}
           />
         }
       </div>

@@ -19,6 +19,7 @@ class SeatedPlayer extends React.Component {
           <Hand seat={seat} />  
         }
 
+        <div>seat {seat.id}</div>
         {isButton && <div>btn</div>}
       </div>
     )
