@@ -68,7 +68,7 @@ io.on('connection', socket => {
     seat.raise(amount)
 
     if (table.callAmount) {
-      table.minRaise = seat.bet + (seat.bet - table.callAmount) * 2
+      table.minRaise = table.callAmount + (seat.bet - table.callAmount) * 2
     } else {
       table.minRaise = seat.bet * 2
     }

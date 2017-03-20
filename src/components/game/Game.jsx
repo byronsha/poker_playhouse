@@ -23,23 +23,31 @@ class Game extends React.Component {
             onCheckClick, onCallClick, onFoldClick } = this.props
 
     return (
-      <div>
-        <h1>{table.name} | {table.limit} NL | {table.maxPlayers} players</h1>
-        <button onClick={() => { onLeaveClick() }}>Leave table</button>
+      <div id="game">
+        <h1>
+          {table.name} | {table.limit} NL | {table.maxPlayers} players
+          <button onClick={() => { onLeaveClick() }}>Leave table</button>
+        </h1>
+        
+        <hr />
         
         <Players
           player={player}
           table={table}
         />
 
+        {table.deck &&
+          <div>
+            <Board table={table} />
+            <Pot table={table} />
+          </div>
+        }
+
         <Seats
           player={player}
           table={table}
           onSeatClick={onSeatClick}
         />
-
-        <Board table={table} />
-        <Pot table={table} /> (minraise {table.minRaise})
 
         {this.isOwnTurn() &&
           <ActionButtons

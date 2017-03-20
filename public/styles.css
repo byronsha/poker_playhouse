@@ -1,26 +1,79 @@
-.seat {
+body {
+  margin: 0px;
+}
+#lobby {
   display: inline-block;
-  padding: 10px;
-  margin: 20px;
-  background: lightblue;
+  width: 200px;
+  height: 100vh;
+  padding: 0px 10px;
+  background: #eee;
+}
+#game {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0px 10px;
+}
+.seat {
+  color: white;
+  display: inline-block;
+  padding: 10px 10px 10px 5px;
+  margin: 10px;
+  background: #648cff;
   text-align: center;
+  border-radius: 3px;
 }
 .seat.active {
-  border: 1px solid blue;
+  border: 1px solid red;
+}
+.seat-number {
+  padding: 5px 10px;
+  background: blue;
+  border-radius: 3px;
+  margin-right: 3px;
+}
+.seated-player {
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  margin: 50px 0px;
+}
+.button {
+  padding: 1px 5px;
+  border-radius: 100%;
+  border: 1px solid black; 
+  position: absolute;
+  right: 10px;
+  bottom: -20px;
 }
 .chat ul {
-  max-height: 200px;
-  width: 300px;
+  max-height: 500px;
+  width: 200px;
   overflow: auto;
   list-style-type: none;
+  padding-left: 0px;
 }
 .card {
   display: inline-block;
   font-size: 25px;
   text-align: center;
   background: white;
+  height: 56px;
   width: 40px;
   margin: 5px;
   border: 1px solid black;
   border-radius: 3px;
+  vertical-align: top;
+}
+.card-silhouette {
+  display: inline-block;
+  height: 56px;
+  width: 40px;
+  margin: 5px;
+  border: 1px solid #333;
+  border-radius: 3px;
+  vertical-align: top;
+}
+.table-list, .player-list {
+  list-style-type: none;
+  padding-left: 0px;
 }

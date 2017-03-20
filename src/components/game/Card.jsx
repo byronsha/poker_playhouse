@@ -33,12 +33,16 @@ class Card extends React.Component {
 
     const { card } = this.props
 
-    return (
-      <div className="card" style={this.getSuitColor(card.suit)}>
-        <div>{ranks[card.rank] ? ranks[card.rank] : card.rank}</div>
-        <div>{suits[card.suit]}</div>
-      </div>
-    )
+    if (card.rank === '0') {
+      return <div className="card-silhouette"></div>
+    } else {
+      return (
+        <div className="card" style={this.getSuitColor(card.suit)}>
+          <div>{ranks[card.rank] ? ranks[card.rank] : card.rank}</div>
+          <div>{suits[card.suit]}</div>
+        </div>
+      )
+    }
   }
 }
 

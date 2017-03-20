@@ -7,20 +7,22 @@ class SeatedPlayer extends React.Component {
     const className = seat.turn ? 'seat active' : 'seat'
 
     return (
-      <div className={className}>
+      <div className="seated-player">
         {seat.bet > 0 &&
           <div>${seat.bet.toFixed(2)}</div>  
         }
-        
-        <div>{seat.player.name} {player.socketId === seat.player.socketId ? '(me)' : ''}</div>
-        <div>${seat.stack.toFixed(2)}</div>
         
         {seat.hand.length > 0 && 
           <Hand seat={seat} />  
         }
 
-        <div>seat {seat.id}</div>
-        {isButton && <div>btn</div>}
+        <div className={className}>
+          <span className="seat-number">{seat.id}</span>
+          <span>{seat.player.name} {player.socketId === seat.player.socketId ? '(me)' : ''} </span>
+          <span> ${seat.stack.toFixed(2)}</span>
+        </div>
+
+        {isButton && <span className="button">B</span>}
       </div>
     )
   }

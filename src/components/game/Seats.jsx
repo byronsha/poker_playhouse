@@ -27,7 +27,8 @@ class Seats extends React.Component {
                 className="seat"
                 onClick={() => { onSeatClick(table.id, seatId) }}
               >
-                Sit here
+                <span className="seat-number">{seatId}</span>
+                <span>SIT HERE</span>
               </div>
             )
           }

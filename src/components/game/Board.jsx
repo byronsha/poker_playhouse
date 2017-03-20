@@ -3,12 +3,19 @@ import Card from './Card'
 
 class Board extends React.Component {
   render() {
-    const { table } = this.props
+    let renderedCards = this.props.table.board.slice(0)
+
+    while (renderedCards.length < 5) {
+      renderedCards.push({
+        rank: '0',
+        suit: '0'
+      })
+    }
 
     return (
       <div className="board">
-        {table.board.map(card => 
-          <Card key={card.rank + card.suit} card={card} />
+        {renderedCards.map((card, index) => 
+          <Card key={index} card={card} />
         )}
       </div>
     )

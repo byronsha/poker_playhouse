@@ -122,26 +122,25 @@ class Lobby extends React.Component {
 
     return (
       <div>
-        <h1>Lobby</h1>
-        <span>Logged in as {player.name}</span>
+        <div id="lobby">
+          <span>Logged in as {player.name}</span>
 
-        <TableList
-          table={table}
-          tables={tables}
-          onTableClick={this.handleTableClick}
-        />
+          <TableList
+            table={table}
+            tables={tables}
+            onTableClick={this.handleTableClick}
+          />
 
-        <PlayerList
-          player={player} 
-          players={players}
-        />
+          <PlayerList
+            player={player} 
+            players={players}
+          />
 
-        <Chat
-          messages={this.state.messages}
-          sendMessage={this.sendMessage}
-        />
-
-        <hr />
+          <Chat
+            messages={this.state.messages}
+            sendMessage={this.sendMessage}
+          />
+        </div>
 
         {table &&
           <Game

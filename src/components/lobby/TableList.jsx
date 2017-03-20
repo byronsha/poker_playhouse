@@ -9,7 +9,7 @@ class TableList extends React.Component {
       return (
         <div>
           <h1>Tables</h1>
-          <ul>
+          <ul className="table-list">
             {Object.keys(tables).map((id) => {
               let active
               if (table) {

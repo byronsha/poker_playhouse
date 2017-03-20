@@ -9,7 +9,7 @@ class PlayerList extends React.Component {
       return (
         <div>
           <h1>Players</h1>
-          <ul>
+          <ul className="player-list">
             {Object.keys(players).map((id) => {
               let active = player.socketId === players[id].socketId ? true : false
 

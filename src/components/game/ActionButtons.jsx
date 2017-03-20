@@ -30,7 +30,7 @@ class ActionButtons extends React.Component {
           <button onClick={() => {
             onCallClick(table.id)
           }}>
-            Call - ${table.callAmount - seat.bet}
+            Call - ${(table.callAmount - seat.bet).toFixed(2)}
           </button>  
         }
 
@@ -41,6 +41,7 @@ class ActionButtons extends React.Component {
         </button>
 
         <input
+          key={table.minRaise}
           type="number"
           defaultValue={table.minRaise.toFixed(2)}
           ref={ref => { raiseAmount = ref }}

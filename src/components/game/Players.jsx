@@ -8,7 +8,7 @@ class Players extends React.Component {
     if (table.players.length > 0) {
       return (
         <div>
-          <ul>
+          <ul className="player-list">
             {table.players.map((tablePlayer) => {
               let active = player.socketId === tablePlayer.socketId ? true : false
 
