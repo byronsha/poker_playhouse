@@ -77,3 +77,14 @@ body {
   list-style-type: none;
   padding-left: 0px;
 }
+.action-buttons button {
+  font-size: 16px;
+  margin: 0px 5px;
+  padding: 5px;
+  background: white;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+.action-buttons button:hover {
+  background: #ccc;
+}

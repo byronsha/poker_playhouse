@@ -1,6 +1,21 @@
 import React from 'react'
+import RaiseSlider from './RaiseSlider'
 
 class ActionButtons extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      raiseAmount: this.props.table.minRaise
+    }
+
+    this.handleRaiseChange = this.handleRaiseChange.bind(this)
+  }
+
+  handleRaiseChange(e) {
+    this.setState({ raiseAmount: e.target.value })
+  }
+
   render() {
     let raiseAmount
     const { player, table, onRaiseClick, onCheckClick,
@@ -11,7 +26,7 @@ class ActionButtons extends React.Component {
     )[0]
 
     return (
-      <div>
+      <div className="action-buttons">
         <button onClick={() => {
           onFoldClick(table.id)
         }}>
@@ -35,18 +50,17 @@ class ActionButtons extends React.Component {
         }
 
         <button onClick={() => {
-          onRaiseClick(table.id, parseFloat(raiseAmount.value))
+          onRaiseClick(table.id, parseFloat(this.state.raiseAmount))
         }}>
-          Raise to
+          Raise to ${parseFloat(this.state.raiseAmount).toFixed(2)}
         </button>
 
-        <input
-          key={table.minRaise}
-          type="number"
-          defaultValue={table.minRaise.toFixed(2)}
-          ref={ref => { raiseAmount = ref }}
-        >
-        </input>
+        <RaiseSlider
+          raiseAmount={this.state.raiseAmount}
+          onRaiseChange={this.handleRaiseChange}
+          table={table}
+          seat={seat}
+        />
       </div>
     )
   }
