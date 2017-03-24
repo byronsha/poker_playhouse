@@ -33,7 +33,7 @@ class ActionButtons extends React.Component {
           Fold
         </button>
 
-        {!table.callAmount &&
+        {(!table.callAmount || seat.bet === table.callAmount) &&
           <button onClick={() => {
             onCheckClick(table.id)
           }}>
@@ -41,7 +41,7 @@ class ActionButtons extends React.Component {
           </button>
         }
 
-        {table.callAmount > 0 &&
+        {(table.callAmount > 0 && seat.bet !== table.callAmount) &&
           <button onClick={() => {
             onCallClick(table.id)
           }}>
@@ -49,18 +49,22 @@ class ActionButtons extends React.Component {
           </button>  
         }
 
-        <button onClick={() => {
-          onRaiseClick(table.id, parseFloat(this.state.raiseAmount))
-        }}>
-          Raise to ${parseFloat(this.state.raiseAmount).toFixed(2)}
-        </button>
+        {seat.stack > table.callAmount &&
+          <span>
+            <button onClick={() => {
+              onRaiseClick(table.id, parseFloat(this.state.raiseAmount))
+            }}>
+              Raise to ${parseFloat(this.state.raiseAmount).toFixed(2)}
+            </button>
 
-        <RaiseSlider
-          raiseAmount={this.state.raiseAmount}
-          onRaiseChange={this.handleRaiseChange}
-          table={table}
-          seat={seat}
-        />
+            <RaiseSlider
+              raiseAmount={this.state.raiseAmount}
+              onRaiseChange={this.handleRaiseChange}
+              table={table}
+              seat={seat}
+            />
+          </span>
+        }
       </div>
     )
   }

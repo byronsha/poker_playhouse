@@ -24,10 +24,9 @@ class Seat {
     this.bet = 0
     this.folded = true
   }
-  winHand(pot) {
+  winHand(amount) {
     this.bet = 0
-    this.hand = []
-    this.stack += pot
+    this.stack += amount
     this.turn = false
   }
 }

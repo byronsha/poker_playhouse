@@ -22,6 +22,8 @@ class Game extends React.Component {
     const { player, table, onLeaveClick, onSeatClick, onRaiseClick,
             onCheckClick, onCallClick, onFoldClick } = this.props
 
+    console.log(table)
+
     return (
       <div id="game">
         <h1>

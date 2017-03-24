@@ -73,8 +73,9 @@ io.on('connection', socket => {
       table.minRaise = seat.bet * 2
     }
     
-    table.callAmount = seat.bet
+    table.callAmount = amount
     table.pot += addToPot
+
     table.changeTurn(seat.id)
 
     broadcastToTable(table)
@@ -88,6 +89,14 @@ io.on('connection', socket => {
     table.changeTurn(seat.id)
 
     broadcastToTable(table)
+
+    if (table.handOver) {
+      setTimeout(() => {
+        table.clearHand()
+        table.startHand()
+        broadcastToTable(table)
+      }, 5000)
+    }
   })
 
   socket.on('call', tableId => {
@@ -100,6 +109,14 @@ io.on('connection', socket => {
     table.changeTurn(seat.id)
 
     broadcastToTable(table)
+
+    if (table.handOver) {
+      setTimeout(() => {
+        table.clearHand()
+        table.startHand()
+        broadcastToTable(table)
+      }, 5000)
+    }
   })
 
   socket.on('fold', tableId => {
@@ -109,6 +126,14 @@ io.on('connection', socket => {
     table.changeTurn(seat.id)
 
     broadcastToTable(table)
+
+    if (table.handOver) {
+      setTimeout(() => {
+        table.clearHand()
+        table.startHand()
+        broadcastToTable(table)
+      }, 5000)
+    }
   })
 
   socket.on('sit_down', ({ tableId, seatId }) => {
