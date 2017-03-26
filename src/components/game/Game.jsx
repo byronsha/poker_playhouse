@@ -22,8 +22,6 @@ class Game extends React.Component {
     const { player, table, onLeaveClick, onSeatClick, onRaiseClick,
             onCheckClick, onCallClick, onFoldClick } = this.props
 
-    console.log(table)
-
     return (
       <div id="game">
         <h1>
@@ -38,12 +36,8 @@ class Game extends React.Component {
           table={table}
         />
 
-        {table.deck &&
-          <div>
-            <Board table={table} />
-            <Pot table={table} />
-          </div>
-        }
+        <Board table={table} />
+        <Pot table={table} />
 
         <Seats
           player={player}

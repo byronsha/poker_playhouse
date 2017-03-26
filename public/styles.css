@@ -1,17 +1,29 @@
 body {
   margin: 0px;
+  font-family: 'Helvetica';
 }
-#lobby {
-  display: inline-block;
-  width: 200px;
-  height: 100vh;
-  padding: 0px 10px;
+#left-column {
+  position: absolute;
+  width: 250px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: #eee;
+}
+#right-column {
+  position: absolute;
+  width: 300px;
+  top: 0;
+  right: 0;
+  bottom: 0;
   background: #eee;
 }
 #game {
-  display: inline-block;
-  vertical-align: top;
-  padding: 0px 10px;
+  position: relative;
+  height: 100%;
+  margin-left: 250px;
+  margin-right: 300px;
+  box-sizing: border-box;
 }
 .seat {
   color: white;

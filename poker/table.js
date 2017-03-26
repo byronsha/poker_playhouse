@@ -52,7 +52,7 @@ class Table {
       this.button = seatId
     }
     
-    if (this.satPlayers().length >= 2) {
+    if (this.satPlayers().length === 2) {
       this.startHand()
     }
   }
@@ -106,7 +106,7 @@ class Table {
       if (this.handOver) {
         this.turn = null
       } else {
-        this.turn = this.smallBlind
+        this.turn = this.getNextUnfoldedPlayer(this.button, 1)
       }
     } else {
       this.turn = this.getNextUnfoldedPlayer(lastTurn, 1)
@@ -133,6 +133,9 @@ class Table {
     this.deck = new Deck()
     this.unfoldPlayers()
     this.minRaise *= 2
+    this.callAmount = null
+    this.smallBlind = null
+    this.bigBlind = null
 
     const arr = _.range(1, this.maxPlayers + 1)
     let order = arr.slice(this.button).concat(arr.slice(0, this.button))
@@ -194,10 +197,7 @@ class Table {
     this.deck = null
     this.board = []
     this.pot = 0
-    this.callAmount = null
     this.minRaise = this.limit / 100
-    this.smallBlind = null
-    this.bigBlind = null
     this.clearSeatHands()
   }
   clearSeatHands() {
@@ -240,11 +240,6 @@ class Table {
     }
   }
   allCheckedOrCalled() {
-    console.log(this)
-    console.log(this.seats)
-    console.log(this.bigBlind)
-    console.log(this.seats[this.bigBlind])
-
     if (this.seats[this.bigBlind].bet === this.limit / 100 && !this.seats[this.bigBlind].checked) {
       return false
     }

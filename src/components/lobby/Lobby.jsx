@@ -122,24 +122,14 @@ class Lobby extends React.Component {
 
     return (
       <div>
-        <div id="lobby">
-          <span>Logged in as {player.name}</span>
-
+        <div id="left-column">
           <TableList
             table={table}
             tables={tables}
             onTableClick={this.handleTableClick}
           />
 
-          <PlayerList
-            player={player} 
-            players={players}
-          />
-
-          <Chat
-            messages={this.state.messages}
-            sendMessage={this.sendMessage}
-          />
+          <span>Logged in as {player.name}</span>
         </div>
 
         {table &&
@@ -154,6 +144,18 @@ class Lobby extends React.Component {
             onFoldClick={this.handleFoldClick}
           />
         }
+
+        <div id="right-column">
+          <PlayerList
+            player={player} 
+            players={players}
+          />
+
+          <Chat
+            messages={this.state.messages}
+            sendMessage={this.sendMessage}
+          />
+        </div>
       </div>
     )
   }
