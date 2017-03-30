@@ -5,7 +5,7 @@ const PokerHand = require('./pokerhand.js')
 
 class Table {
   constructor(id, name, maxPlayers, limit) {
-    this.id = id
+    this.id = parseInt(id)
     this.name = name
     this.maxPlayers = maxPlayers
     this.limit = limit
@@ -48,7 +48,7 @@ class Table {
   sitPlayer(player, seatId) {
     this.seats[seatId] = new Seat(seatId, player, this.limit)
     
-    if (!this.button) {
+    if (this.satPlayers().length === 1) {
       this.button = seatId
     }
     
@@ -67,11 +67,12 @@ class Table {
     let current = player
     
     while (i < places) {
-      if (current === this.maxPlayers) {
-        current = 0
-      } else {
-        current++
-      }
+      current = current === this.maxPlayers ? 1 : current + 1
+      // if (current === this.maxPlayers) {
+      //   current = 1
+      // } else {
+      //   current++
+      // }
  
       if (this.seats[current]) {
         i++
@@ -83,13 +84,14 @@ class Table {
   getNextUnfoldedPlayer(player, places) {
     let i = 0
     let current = player
-    
+
     while (i < places) {
-      if (current === this.maxPlayers) {
-        current = 0
-      } else {
-        current++
-      }
+      current = current === this.maxPlayers ? 1 : current + 1
+      // if (current === this.maxPlayers) {
+      //   current = 1
+      // } else {
+      //   current++
+      // }
  
       if (this.seats[current] && !this.seats[current].folded) {
         i++
@@ -112,7 +114,7 @@ class Table {
       this.turn = this.getNextUnfoldedPlayer(lastTurn, 1)
     }
 
-    for (let i = 1; i < this.maxPlayers; i++) {
+    for (let i = 1; i <= this.maxPlayers; i++) {
       if (this.seats[i] && i === this.turn) {
         this.seats[i].turn = true
       } else if (this.seats[i]) {
@@ -121,7 +123,7 @@ class Table {
     }
   }
   unfoldPlayers() {
-    for (let i = 1; i < this.maxPlayers; i++) {
+    for (let i = 1; i <= this.maxPlayers; i++) {
       if (this.seats[i]) {
         this.seats[i].folded = false
         this.seats[i].checked = false
@@ -137,60 +139,33 @@ class Table {
     this.smallBlind = null
     this.bigBlind = null
 
-    const arr = _.range(1, this.maxPlayers + 1)
-    let order = arr.slice(this.button).concat(arr.slice(0, this.button))
-    let blinds = 0
-
     if (this.unfoldedPlayers().length <= 3) {
       this.turn = this.button
     } else {
       this.turn = this.getNextUnfoldedPlayer(this.button, 3)
     }
 
-    // deal cards to seated players
-    for (let i = 0; i < 2; i++) {
-      for (let j = 0; j < arr.length; j++) {
-        const currentSeat = order[j]
+    this.dealPreflop()
+    this.setBlinds()
+  }
+  setBlinds() {
+    const unfoldedPlayers = this.unfoldedPlayers()
 
-        if (this.seats[currentSeat]) {
-          const seat = this.seats[currentSeat]
-          const dealtCard = this.deck.draw()
-          seat.folded = false
-          seat.hand.push(dealtCard)
-
-          if (currentSeat === parseInt(this.turn)) {
-            seat.turn = true
-          }
-
-          if (blinds === 0) {
-            // small blind
-            if (this.unfoldedPlayers().length === 2) {
-              seat.raise(this.limit / 100)
-              this.pot += this.limit / 100
-              this.callAmount = this.limit / 100
-              this.bigBlind = currentSeat
-            } else {
-              seat.raise(this.limit / 200)
-              this.pot += this.limit / 200
-              this.smallBlind = currentSeat
-            }
-          } else if (blinds === 1) {
-            // big blind
-            if (this.unfoldedPlayers().length === 2) {
-              seat.raise(this.limit / 200)
-              this.pot += this.limit / 200
-              this.smallBlind = currentSeat
-            } else {
-              seat.raise(this.limit / 100)
-              this.pot += this.limit / 100
-              this.callAmount = this.limit / 100
-              this.bigBlind = currentSeat
-            }
-          }
-          blinds++
-        }
-      }
+    if (unfoldedPlayers.length === 2) {
+      this.smallBlind = this.button
+      this.bigBlind = this.getNextUnfoldedPlayer(this.button, 1)
+    } else {
+      this.smallBlind = this.getNextUnfoldedPlayer(this.button, 1)
+      this.bigBlind = this.getNextUnfoldedPlayer(this.button, 2)
     }
+
+    this.seats[this.smallBlind].raise(this.limit / 200)
+    this.pot += this.limit / 200
+
+    this.seats[this.bigBlind].raise(this.limit / 100)
+    this.pot += this.limit / 100
+
+    this.callAmount = this.limit / 100
   }
   clearHand() {
     this.handOver = true
@@ -271,7 +246,7 @@ class Table {
     let winners = []
     let highScore = 0
 
-    for (let i = 1; i < this.maxPlayers; i++) {
+    for (let i = 1; i <= this.maxPlayers; i++) {
       if (this.seats[i]) {
         const hand = PokerHand.score(this.seats[i].hand, this.board)
 
@@ -294,7 +269,7 @@ class Table {
     this.handOver = true
   }
   resetBets() {
-    for (let i = 1; i < this.maxPlayers; i++) {
+    for (let i = 1; i <= this.maxPlayers; i++) {
       if (this.seats[i]) {
         this.seats[i].bet = 0
         this.seats[i].checked = false
@@ -302,6 +277,25 @@ class Table {
     }
     this.callAmount = null
     this.minRaise = this.limit / 200
+  }
+  dealPreflop() {
+    const arr = _.range(1, this.maxPlayers + 1)
+    const order = arr.slice(this.button).concat(arr.slice(0, this.button))
+
+     // deal cards to seated players
+    for (let i = 0; i < 2; i++) {
+      for (let j = 0; j < order.length; j++) {
+        const currentSeat = order[j]
+
+        if (this.seats[currentSeat]) {
+          this.seats[currentSeat].hand.push(this.deck.draw())
+
+          if (currentSeat === this.turn) {
+            this.seats[currentSeat].turn = true
+          }
+        }
+      }
+    }
   }
   dealFlop() {
     for (let i = 0; i < 3; i++) {

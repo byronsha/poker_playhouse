@@ -8,28 +8,38 @@ class TableList extends React.Component {
     if (Object.keys(tables).length > 0) {
       return (
         <div>
-          <h1>Tables</h1>
-          <ul className="table-list">
-            {Object.keys(tables).map((id) => {
-              let active
-              if (table) {
-                active = id == table.id ? true : false
-              }
+          <h3>Games</h3>
+          <table className="table-list">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Stakes</th>
+                <th>Players</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(tables).map((id) => {
+                let active
+                if (table) {
+                  active = id == table.id ? true : false
+                }
 
-              return (
-                <Table
-                  key={id}
-                  table={tables[id]}
-                  onTableClick={onTableClick} 
-                  active={active}
-                />
-              )
-            })}
-          </ul>
+                return (
+                  <Table
+                    key={id}
+                    table={tables[id]}
+                    onTableClick={onTableClick} 
+                    active={active}
+                  />
+                )
+              })}
+            </tbody>
+          </table>
         </div>
       )
     } else {
-      return <div><h1>Tables</h1></div>
+      return <div><h1>Games</h1></div>
     }
   }
 }

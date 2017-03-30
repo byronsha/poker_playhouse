@@ -4,7 +4,7 @@ body {
 }
 #left-column {
   position: absolute;
-  width: 250px;
+  width: 270px;
   top: 0;
   left: 0;
   bottom: 0;
@@ -18,36 +18,76 @@ body {
   bottom: 0;
   background: #eee;
 }
-#game {
+#center-column {
   position: relative;
   height: 100%;
-  margin-left: 250px;
+  margin-left: 270px;
   margin-right: 300px;
   box-sizing: border-box;
 }
-.seat {
-  color: white;
-  display: inline-block;
-  padding: 10px 10px 10px 5px;
-  margin: 10px;
-  background: #648cff;
-  text-align: center;
-  border-radius: 3px;
+.poker-game {
+  position: relative;
+  width: 100%;
+  height: 100vh;
 }
-.seat.active {
-  border: 1px solid red;
+.seat-container {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  text-align: center;
+}
+.seat-info {
+  position: absolute;
+  width: 140px;
+  left: 5px;
+  padding: 6px;
+  bottom: 5px;
+  color: white;
+  background: darkblue;
+  border-radius: 3px;
+  box-sizing: border-box;
 }
 .seat-number {
-  padding: 5px 10px;
+  padding: 10px 15px;
   background: blue;
   border-radius: 3px;
   margin-right: 3px;
+  float: left;
+  font-weight: bold;
 }
-.seated-player {
-  display: inline-block;
-  text-align: center;
-  position: relative;
-  margin: 50px 0px;
+.seat1of6 {
+  left: calc(50% - 75px);
+  top: 15%;
+}
+.seat2of6 {
+  right: 12%;
+  top: 25%;
+}
+.seat3of6 {
+  right: 12%;
+  bottom: 35%;
+}
+.seat4of6 {
+  left: calc(50% - 75px);
+  bottom: 25%;
+}
+.seat5of6 {
+  left: 12%;
+  bottom: 35%;
+}
+.seat6of6 {
+  left: 12%;
+  top: 25%;
+}
+.seat-container.active .seat-info {
+  outline: 3px solid gold;
+}
+.seat-open {
+  padding-top: 10px;
+}
+.seat-stack {
+  font-size: 14px;
+  padding-top: 3px;
 }
 .button {
   padding: 1px 5px;
@@ -55,7 +95,7 @@ body {
   border: 1px solid black; 
   position: absolute;
   right: 10px;
-  bottom: -20px;
+  bottom: -25px;
 }
 .chat ul {
   max-height: 500px;
@@ -64,39 +104,69 @@ body {
   list-style-type: none;
   padding-left: 0px;
 }
+.hand {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  bottom: 60px;
+}
 .card {
   display: inline-block;
-  font-size: 25px;
-  text-align: center;
-  background: white;
-  height: 56px;
-  width: 40px;
-  margin: 5px;
-  border: 1px solid black;
+  font-size: 30px;
+  font-weight: bold;
+  background: #eee;
+  border: 1px solid #ccc;
+  height: 65px;
+  width: 50px;
+  margin: 3px;
   border-radius: 3px;
   vertical-align: top;
+}
+.card div:nth-child(2) {
+  font-size: 45px;
+  margin-top: -15px;
 }
 .card-silhouette {
   display: inline-block;
-  height: 56px;
-  width: 40px;
-  margin: 5px;
-  border: 1px solid #333;
+  border: 1px solid #ccc;
+  height: 65px;
+  width: 50px;
+  margin: 3px;
   border-radius: 3px;
   vertical-align: top;
 }
-.table-list, .player-list {
+.table-list td {
+  text-align: center;
+}
+.player-list {
   list-style-type: none;
   padding-left: 0px;
 }
-.action-buttons button {
+.board {
+  width: 290px;
+  height: 100px;
+  position: absolute;
+  left: calc(50% - 145px);
+  top: 45%;
+  text-align: center;
+}
+button {
   font-size: 16px;
   margin: 0px 5px;
-  padding: 5px;
+  padding: 2px 5px;
   background: white;
   border: 1px solid black;
   border-radius: 3px;
 }
-.action-buttons button:hover {
+button:hover {
   background: #ccc;
+}
+.action-buttons {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+.raise-slider {
+  padding-top: 5px;
 }

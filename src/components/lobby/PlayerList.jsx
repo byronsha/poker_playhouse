@@ -8,7 +8,7 @@ class PlayerList extends React.Component {
     if (Object.keys(players).length > 0) {
       return (
         <div>
-          <h1>Players</h1>
+          <h3>Players</h3>
           <ul className="player-list">
             {Object.keys(players).map((id) => {
               let active = player.socketId === players[id].socketId ? true : false

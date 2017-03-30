@@ -8,10 +8,12 @@ class Table extends React.Component {
     }
 
     return (
-      <li style={style}>
-        {table.name}, {table.players.length}/{table.maxPlayers}
-        <button onClick={() => { onTableClick(table.id) }}>Join</button>
-      </li>
+      <tr style={style}>
+        <td>{table.name}</td>
+        <td>${table.minBet.toFixed(2)}/${(table.minBet * 2).toFixed(2)}</td>
+        <td>{table.players.length}/{table.maxPlayers}</td>
+        <td><button onClick={() => { onTableClick(table.id) }}>Join</button></td>
+      </tr>
     )
   }
 }

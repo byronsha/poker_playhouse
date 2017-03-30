@@ -22,22 +22,24 @@ class Game extends React.Component {
     const { player, table, onLeaveClick, onSeatClick, onRaiseClick,
             onCheckClick, onCallClick, onFoldClick } = this.props
 
+    console.log(table)
+
     return (
-      <div id="game">
-        <h1>
+      <div className="poker-game">
+        <span>
           {table.name} | {table.limit} NL | {table.maxPlayers} players
           <button onClick={() => { onLeaveClick() }}>Leave table</button>
-        </h1>
-        
-        <hr />
+        </span>
         
         <Players
           player={player}
           table={table}
         />
 
-        <Board table={table} />
-        <Pot table={table} />
+        <div className="board">
+          <Board table={table} />
+          <Pot table={table} />
+        </div>
 
         <Seats
           player={player}

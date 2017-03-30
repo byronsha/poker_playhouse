@@ -8,7 +8,7 @@ class Chat extends React.Component {
 
     return (
       <div className="chat">
-        <h1>Chat</h1>
+        <h3>Chat</h3>
         <input
           type="text"
           placeholder="Enter a message..."

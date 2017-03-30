@@ -1,7 +1,7 @@
 import React from 'react'
 
 const RaiseSlider = ({ raiseAmount, onRaiseChange, table, seat }) => (
-  <span>
+  <div className="raise-slider">
     ${table.minRaise.toFixed(2)}
     <input
       type="range"
@@ -14,7 +14,7 @@ const RaiseSlider = ({ raiseAmount, onRaiseChange, table, seat }) => (
     >
     </input>
     ${(seat.stack + seat.bet).toFixed(2)}
-  </span>
+  </div>
 )
 
 export default RaiseSlider

@@ -13,7 +13,7 @@ class Board extends React.Component {
     }
 
     return (
-      <div className="board">
+      <div>
         {renderedCards.map((card, index) => 
           <Card key={index} card={card} />
         )}
