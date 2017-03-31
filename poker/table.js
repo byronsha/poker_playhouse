@@ -68,12 +68,6 @@ class Table {
     
     while (i < places) {
       current = current === this.maxPlayers ? 1 : current + 1
-      // if (current === this.maxPlayers) {
-      //   current = 1
-      // } else {
-      //   current++
-      // }
- 
       if (this.seats[current]) {
         i++
       }
@@ -87,12 +81,6 @@ class Table {
 
     while (i < places) {
       current = current === this.maxPlayers ? 1 : current + 1
-      // if (current === this.maxPlayers) {
-      //   current = 1
-      // } else {
-      //   current++
-      // }
- 
       if (this.seats[current] && !this.seats[current].folded) {
         i++
       }

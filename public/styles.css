@@ -43,13 +43,13 @@ body {
   padding: 6px;
   bottom: 5px;
   color: white;
-  background: darkblue;
+  background: #1565c0;
   border-radius: 3px;
   box-sizing: border-box;
 }
 .seat-number {
   padding: 10px 15px;
-  background: blue;
+  background: #90caf9;
   border-radius: 3px;
   margin-right: 3px;
   float: left;
@@ -80,7 +80,7 @@ body {
   top: 25%;
 }
 .seat-container.active .seat-info {
-  outline: 3px solid gold;
+  box-shadow: 0 0 0 3px gold;
 }
 .seat-open {
   padding-top: 10px;
@@ -128,7 +128,7 @@ body {
 }
 .card-silhouette {
   display: inline-block;
-  border: 1px solid #ccc;
+  border: 1px dashed #ccc;
   height: 65px;
   width: 50px;
   margin: 3px;
