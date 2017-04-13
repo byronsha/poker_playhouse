@@ -5,8 +5,16 @@ class ActionButtons extends React.Component {
   constructor(props) {
     super(props)
 
+    const { player, table } = this.props
+    const seat = Object.values(table.seats).filter(seat =>
+      seat !== null && seat.player.socketId === player.socketId
+    )[0]
+    
+    const raiseAmount = table.minRaise > seat.stack + seat.bet ?
+      seat.stack + seat.bet : table.minRaise
+
     this.state = {
-      raiseAmount: this.props.table.minRaise
+      raiseAmount: raiseAmount
     }
 
     this.handleRaiseChange = this.handleRaiseChange.bind(this)
@@ -17,13 +25,14 @@ class ActionButtons extends React.Component {
   }
 
   render() {
-    let raiseAmount
     const { player, table, onRaiseClick, onCheckClick,
             onCallClick, onFoldClick } = this.props
 
     const seat = Object.values(table.seats).filter(seat =>
       seat !== null && seat.player.socketId === player.socketId
     )[0]
+
+    const totalCallAmount = table.callAmount - seat.bet > seat.stack ? seat.stack : table.callAmount - seat.bet
 
     return (
       <div className="action-buttons">
@@ -45,7 +54,7 @@ class ActionButtons extends React.Component {
           <button onClick={() => {
             onCallClick(table.id)
           }}>
-            Call - ${(table.callAmount - seat.bet).toFixed(2)}
+            Call - ${(totalCallAmount).toFixed(2)}
           </button>  
         }
 

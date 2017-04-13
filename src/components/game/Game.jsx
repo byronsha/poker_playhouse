@@ -2,10 +2,34 @@ import React from 'react'
 import Players from './Players'
 import Seats from './Seats'
 import Board from './Board'
-import Pot from './Pot'
 import ActionButtons from './ActionButtons'
 
 class Game extends React.Component {
+  constructor() {
+    super()
+
+    this.state = {
+      displayOffset: 0
+    }
+
+    this.rotateClockwiseClick = this.rotateClockwiseClick.bind(this)
+    this.rotateCounterClockwiseClick = this.rotateCounterClockwiseClick.bind(this)
+  }
+
+  rotateClockwiseClick() {
+    let currentOffset = this.state.displayOffset
+    let maxOffset = this.props.table.maxPlayers - 1
+    let newOffset = currentOffset === maxOffset ? 0 : currentOffset + 1
+    this.setState({ displayOffset: newOffset })
+  }
+
+  rotateCounterClockwiseClick() {
+    let currentOffset = this.state.displayOffset
+    let maxOffset = this.props.table.maxPlayers - 1
+    let newOffset = currentOffset === 0 ? maxOffset : currentOffset - 1
+    this.setState({ displayOffset: newOffset })    
+  }
+
   isOwnTurn() {
     const { player, table } = this.props
 
@@ -31,20 +55,33 @@ class Game extends React.Component {
           <button onClick={() => { onLeaveClick() }}>Leave table</button>
         </span>
         
+        <div>
+          <span onClick={this.rotateClockwiseClick}>Rotate clockwise</span>
+          <span onClick={this.rotateCounterClockwiseClick}>Rotate counter-clockwise</span>
+        </div>
+        
         <Players
           player={player}
           table={table}
         />
 
         <div className="board">
+          {table.mainPot > 0 &&
+            <div>Main Pot: ${table.mainPot.toFixed(2)}</div>  
+          }
+
           <Board table={table} />
-          <Pot table={table} />
+          
+          <div className="pot">
+            Total Pot: ${table.pot.toFixed(2)}
+          </div>
         </div>
 
         <Seats
           player={player}
           table={table}
           onSeatClick={onSeatClick}
+          displayOffset={this.state.displayOffset}
         />
 
         {this.isOwnTurn() &&

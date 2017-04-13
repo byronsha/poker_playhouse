@@ -23,6 +23,7 @@ class SeatedPlayer extends React.Component {
           </div>
         </div>
 
+        {seat.lastAction && <div className="seat-last-action">{seat.lastAction}</div>}
         {isButton && <span className="button">D</span>}
       </div>
     )

@@ -89,12 +89,26 @@ body {
   font-size: 14px;
   padding-top: 3px;
 }
+.seat-last-action {
+  z-index: -1;
+  position: absolute;
+  bottom: -21px;
+  left: 5px;
+  text-align: center;
+  width: 140px;
+  background: #c62828;
+  font-size: 12px;
+  color: white;
+  padding: 10px 0px 5px 0px;
+  font-weight: bold;
+  border-radius: 3px;
+}
 .button {
   padding: 1px 5px;
   border-radius: 100%;
   border: 1px solid black; 
   position: absolute;
-  right: 10px;
+  right: -30px;
   bottom: -25px;
 }
 .chat ul {
