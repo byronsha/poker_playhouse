@@ -149,10 +149,10 @@ body {
 }
 .card-silhouette {
   display: inline-block;
-  border: 1px dashed #ccc;
+  border: 1px dashed white;
   height: 65px;
   width: 50px;
-  margin: 3px;
+  margin: 6px 3px;
   border-radius: 3px;
   vertical-align: top;
 }
@@ -168,7 +168,7 @@ body {
   height: 100px;
   position: absolute;
   left: calc(50% - 145px);
-  top: 45%;
+  top: 42%;
   text-align: center;
 }
 button {
@@ -197,10 +197,10 @@ button:hover {
 .poker-table-bg {
   background: #5edc5e;
   border: 10px solid rgb(132, 75, 31);
-  width: 70%;
+  width: 72%;
   height: 44%;
   position: absolute;
-  left: 15%;
+  left: 14%;
   top: 28%;
   box-sizing: border-box;
   border-radius: 50%;
