@@ -4,11 +4,13 @@ body {
 }
 #left-column {
   position: absolute;
-  width: 270px;
+  width: 280px;
   top: 0;
   left: 0;
   bottom: 0;
   background: #eee;
+  padding: 5px;
+  box-sizing: border-box;
 }
 #right-column {
   position: absolute;
@@ -17,11 +19,13 @@ body {
   right: 0;
   bottom: 0;
   background: #eee;
+  padding: 5px;
+  box-sizing: border-box;
 }
 #center-column {
   position: relative;
   height: 100%;
-  margin-left: 270px;
+  margin-left: 280px;
   margin-right: 300px;
   box-sizing: border-box;
 }
@@ -29,6 +33,8 @@ body {
   position: relative;
   width: 100%;
   height: 100vh;
+  box-sizing: border-box;
+  padding: 5px;
 }
 .seat-container {
   width: 150px;
@@ -110,6 +116,7 @@ body {
   position: absolute;
   right: -30px;
   bottom: -25px;
+  background: white;
 }
 .chat ul {
   max-height: 500px;
@@ -183,4 +190,19 @@ button:hover {
 }
 .raise-slider {
   padding-top: 5px;
+}
+.table-info button {
+  float: right;
+}
+.poker-table-bg {
+  background: #5edc5e;
+  border: 10px solid rgb(132, 75, 31);
+  width: 70%;
+  height: 44%;
+  position: absolute;
+  left: 15%;
+  top: 28%;
+  box-sizing: border-box;
+  border-radius: 50%;
+  z-index: -5;
 }
