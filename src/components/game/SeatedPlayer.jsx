@@ -1,5 +1,6 @@
 import React from 'react'
 import Hand from './Hand'
+import ChipPile from './ChipPile'
 
 class SeatedPlayer extends React.Component {
   render() {
@@ -8,7 +9,10 @@ class SeatedPlayer extends React.Component {
     return (
       <div>
         {seat.bet > 0 &&
-          <div>${seat.bet.toFixed(2)}</div>  
+          <div className="bet">
+            <ChipPile amount={seat.bet.toFixed(2)} />
+            ${seat.bet.toFixed(2)}
+          </div>
         }
         
         {seat.hand.length > 0 && 

@@ -3,6 +3,7 @@ import Players from './Players'
 import Seats from './Seats'
 import Board from './Board'
 import ActionButtons from './ActionButtons'
+import ChipPile from './ChipPile'
 
 class Game extends React.Component {
   constructor() {
@@ -46,8 +47,6 @@ class Game extends React.Component {
     const { player, table, onLeaveClick, onSeatClick, onRaiseClick,
             onCheckClick, onCallClick, onFoldClick } = this.props
 
-    console.log(table)
-
     return (
       <div className="poker-game">
         <div className="table-info">
@@ -64,7 +63,10 @@ class Game extends React.Component {
 
         <div className="board">
           {table.mainPot > 0 &&
-            <div>Main Pot: ${table.mainPot.toFixed(2)}</div>  
+            <div>
+              <ChipPile amount={table.mainPot.toFixed(2)} />
+              <div>Main Pot: ${table.mainPot.toFixed(2)}</div>  
+            </div>
           }
 
           <Board table={table} />

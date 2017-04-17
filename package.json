@@ -18,13 +18,15 @@
     "body-parser": "^1.16.0",
     "express": "^4.14.0",
     "node-gyp": "^3.5.0",
+    "node-sass": "^4.5.2",
     "random-id": "0.0.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-router": "^3.0.2",
+    "sass-loader": "^6.0.3",
     "socket.io": "^1.7.2",
     "underscore": "^1.8.3",
-    "webpack": "^1.14.0",
+    "webpack": "^1.15.0",
     "webpack-dev-middleware": "^1.9.0"
   }
 }

@@ -61,29 +61,53 @@ body {
   float: left;
   font-weight: bold;
 }
+.bet {
+  position: absolute;
+  width: 100%;
+}
 .seat1of6 {
   left: calc(50% - 75px);
-  top: 15%;
+  top: 13%;
+}
+.seat1of6 .bet {
+  bottom: -85px;
 }
 .seat2of6 {
   right: 12%;
   top: 25%;
 }
+.seat2of6 .bet {
+  bottom: -50px;
+  left: -120px;
+}
 .seat3of6 {
   right: 12%;
   bottom: 35%;
 }
+.seat3of6 .bet {
+  left: -120px;
+}
 .seat4of6 {
   left: calc(50% - 75px);
-  bottom: 25%;
+  bottom: 23%;
+}
+.seat4of6 .bet {
+  top: -50px;
 }
 .seat5of6 {
   left: 12%;
   bottom: 35%;
 }
+.seat5of6 .bet {
+  right: -120px;
+}
 .seat6of6 {
   left: 12%;
   top: 25%;
+}
+.seat6of6 .bet {
+  bottom: -50px;
+  right: -120px;
 }
 .seat-container.active .seat-info {
   box-shadow: 0 0 0 3px gold;
@@ -152,7 +176,7 @@ body {
   border: 1px dashed white;
   height: 65px;
   width: 50px;
-  margin: 6px 3px;
+  margin: 3px;
   border-radius: 3px;
   vertical-align: top;
 }
@@ -168,7 +192,7 @@ body {
   height: 100px;
   position: absolute;
   left: calc(50% - 145px);
-  top: 42%;
+  top: 40%;
   text-align: center;
 }
 button {
@@ -198,11 +222,27 @@ button:hover {
   background: #5edc5e;
   border: 10px solid rgb(132, 75, 31);
   width: 72%;
-  height: 44%;
+  height: 50%;
   position: absolute;
   left: 14%;
-  top: 28%;
+  top: 25%;
   box-sizing: border-box;
   border-radius: 50%;
   z-index: -5;
+}
+.chip-pile {
+  text-align: center;
+}
+.chips {
+  width: 20px;
+  display: inline-block;
+  margin: 0px 1px;
+}
+.chips > div {
+  height: 3px;
+  border: 1px solid #333;
+  border-bottom: 0px;
+}
+.chips > div:last-child {
+  border-bottom: 1px solid #333;
 }
