@@ -1,0 +1,37 @@
+.poker-table-bg {
+  background: #5edc5e;
+  border: 10px solid rgb(132, 75, 31);
+  width: 80%;
+  height: 60%;
+  position: absolute;
+  left: 10%;
+  top: 16%;
+  box-sizing: border-box;
+  border-radius: 50%;
+  z-index: -1;
+}
+.board {
+  width: 340px;
+  height: 100px;
+  position: absolute;
+  left: calc(50% - 170px);
+  top: 37%;
+  text-align: center;
+}
+.board .chip-pile {
+  top: 5px;
+  left: -10px;
+  position: absolute;
+}
+.board .card {
+  margin: 8px 3px;
+}
+.card-silhouette {
+  display: inline-block;
+  outline: 1px dashed white;
+  height: 80px;
+  width: 60px;
+  margin: 8px 3px;
+  border-radius: 1px;
+  vertical-align: top;
+}

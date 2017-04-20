@@ -1,0 +1,107 @@
+.seat1of6 {
+  left: calc(50% - 75px);
+  top: 4%;
+}
+.seat1of6 .bet {
+  bottom: -105px;
+}
+.seat2of6 {
+  right: 10%;
+  top: 18%;
+}
+.seat2of6 .bet {
+  bottom: -70px;
+  left: -150px;
+}
+.seat3of6 {
+  right: 10%;
+  bottom: 35%;
+}
+.seat3of6 .bet {
+  left: -150px;
+}
+.seat4of6 {
+  left: calc(50% - 75px);
+  bottom: 21%;
+}
+.seat4of6 .bet {
+  top: -40px;
+}
+.seat5of6 {
+  left: 10%;
+  bottom: 35%;
+}
+.seat5of6 .bet {
+  right: -150px;
+}
+.seat6of6 {
+  left: 10%;
+  top: 18%;
+}
+.seat6of6 .bet {
+  bottom: -70px;
+  right: -150px;
+}
+.seat-container {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  text-align: center;
+  z-index: 5;
+}
+.seat-info {
+  position: absolute;
+  width: 140px;
+  left: 5px;
+  padding: 6px;
+  bottom: 5px;
+  color: white;
+  background: #1565c0;
+  border-radius: 1px;
+  box-sizing: border-box;
+}
+.seat-number {
+  padding: 10px 15px;
+  background: #90caf9;
+  border-radius: 1px;
+  margin-right: 3px;
+  float: left;
+  font-weight: bold;
+}
+.bet {
+  position: absolute;
+  width: 100%;
+}
+.seat-container.active .seat-info {
+  box-shadow: 0 0 0 2px gold;
+}
+.seat-open {
+  padding-top: 10px;
+}
+.seat-stack {
+  font-size: 14px;
+  padding-top: 3px;
+}
+.seat-last-action {
+  z-index: -1;
+  position: absolute;
+  bottom: -21px;
+  left: 5px;
+  text-align: center;
+  width: 140px;
+  background: #c62828;
+  font-size: 12px;
+  color: white;
+  padding: 10px 0px 5px 0px;
+  font-weight: bold;
+  border-radius: 1px;
+}
+.button {
+  padding: 4px 8px;
+  border-radius: 100%;
+  position: absolute;
+  right: -30px;
+  bottom: -25px;
+  background: white;
+  color: #333;
+}

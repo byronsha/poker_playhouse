@@ -35,112 +35,8 @@ body {
   height: 100vh;
   box-sizing: border-box;
   padding: 5px;
-}
-.seat-container {
-  width: 150px;
-  height: 150px;
-  position: absolute;
-  text-align: center;
-}
-.seat-info {
-  position: absolute;
-  width: 140px;
-  left: 5px;
-  padding: 6px;
-  bottom: 5px;
-  color: white;
-  background: #1565c0;
-  border-radius: 3px;
-  box-sizing: border-box;
-}
-.seat-number {
-  padding: 10px 15px;
-  background: #90caf9;
-  border-radius: 3px;
-  margin-right: 3px;
-  float: left;
-  font-weight: bold;
-}
-.bet {
-  position: absolute;
-  width: 100%;
-}
-.seat1of6 {
-  left: calc(50% - 75px);
-  top: 13%;
-}
-.seat1of6 .bet {
-  bottom: -85px;
-}
-.seat2of6 {
-  right: 12%;
-  top: 25%;
-}
-.seat2of6 .bet {
-  bottom: -50px;
-  left: -120px;
-}
-.seat3of6 {
-  right: 12%;
-  bottom: 35%;
-}
-.seat3of6 .bet {
-  left: -120px;
-}
-.seat4of6 {
-  left: calc(50% - 75px);
-  bottom: 23%;
-}
-.seat4of6 .bet {
-  top: -50px;
-}
-.seat5of6 {
-  left: 12%;
-  bottom: 35%;
-}
-.seat5of6 .bet {
-  right: -120px;
-}
-.seat6of6 {
-  left: 12%;
-  top: 25%;
-}
-.seat6of6 .bet {
-  bottom: -50px;
-  right: -120px;
-}
-.seat-container.active .seat-info {
-  box-shadow: 0 0 0 3px gold;
-}
-.seat-open {
-  padding-top: 10px;
-}
-.seat-stack {
-  font-size: 14px;
-  padding-top: 3px;
-}
-.seat-last-action {
-  z-index: -1;
-  position: absolute;
-  bottom: -21px;
-  left: 5px;
-  text-align: center;
-  width: 140px;
-  background: #c62828;
-  font-size: 12px;
-  color: white;
-  padding: 10px 0px 5px 0px;
-  font-weight: bold;
-  border-radius: 3px;
-}
-.button {
-  padding: 1px 5px;
-  border-radius: 100%;
-  border: 1px solid black; 
-  position: absolute;
-  right: -30px;
-  bottom: -25px;
-  background: white;
+  background: #333;
+  z-index: 0;
 }
 .chat ul {
   max-height: 500px;
@@ -157,28 +53,18 @@ body {
 }
 .card {
   display: inline-block;
-  font-size: 30px;
+  font-size: 35px;
   font-weight: bold;
   background: #eee;
-  border: 1px solid #ccc;
-  height: 65px;
-  width: 50px;
+  height: 80px;
+  width: 60px;
   margin: 3px;
-  border-radius: 3px;
+  border-radius: 1px;
   vertical-align: top;
 }
 .card div:nth-child(2) {
-  font-size: 45px;
+  font-size: 50px;
   margin-top: -15px;
-}
-.card-silhouette {
-  display: inline-block;
-  border: 1px dashed white;
-  height: 65px;
-  width: 50px;
-  margin: 3px;
-  border-radius: 3px;
-  vertical-align: top;
 }
 .table-list td {
   text-align: center;
@@ -186,14 +72,6 @@ body {
 .player-list {
   list-style-type: none;
   padding-left: 0px;
-}
-.board {
-  width: 290px;
-  height: 100px;
-  position: absolute;
-  left: calc(50% - 145px);
-  top: 40%;
-  text-align: center;
 }
 button {
   font-size: 16px;
@@ -218,31 +96,21 @@ button:hover {
 .table-info button {
   float: right;
 }
-.poker-table-bg {
-  background: #5edc5e;
-  border: 10px solid rgb(132, 75, 31);
-  width: 72%;
-  height: 50%;
-  position: absolute;
-  left: 14%;
-  top: 25%;
-  box-sizing: border-box;
-  border-radius: 50%;
-  z-index: -5;
-}
 .chip-pile {
   text-align: center;
 }
 .chips {
-  width: 20px;
+  width: 35px;
   display: inline-block;
-  margin: 0px 1px;
 }
 .chips > div {
-  height: 3px;
+  height: 8px;
+  width: 28px;
   border: 1px solid #333;
-  border-bottom: 0px;
+  border-radius: 0 0 50% 50%;
+  position: absolute;
+  margin: 0px 3px;
 }
 .chips > div:last-child {
-  border-bottom: 1px solid #333;
+  border-radius: 50%;
 }

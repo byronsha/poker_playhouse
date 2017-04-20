@@ -7,6 +7,14 @@ class Seats extends React.Component {
     const { player, table, onSeatClick, displayOffset } = this.props
     let seats = Object.keys(table.seats)
 
+    let seated = false
+    for (let i = 0; i < Object.values(table.seats).length; i++) {
+      let seat = Object.values(table.seats)[i]
+      if (seat && seat.player.socketId === player.socketId) {
+        seated = true
+      }
+    }
+
     return (
       <div>
         {seats.map((seatId) => {
@@ -35,15 +43,19 @@ class Seats extends React.Component {
                 />
               </div>
             )
-          } else {
+          } else if (!seated) {
             return (
               <div key={seatId} className={className}>
                 <EmptySeat
                   seatId={seatId}
-                  onSeatClick={() => { onSeatClick(table.id, parseInt(seatId)) }}
-                />
+                  onSeatClick={e => {
+                    e.stopPropagation()
+                    onSeatClick(table.id, parseInt(seatId))
+                }}/>
               </div>
             )
+          } else {
+            return <div key={seatId}></div>
           }
         })}
       </div>

@@ -18,14 +18,22 @@ const ChipPile = ({ amount }) => {
   tenCentChips = Math.floor(leftover / 0.10)
   leftover = leftover % 0.10
 
-  fiveCentChips = leftover == 0.05 ? 1 : 0
+  fiveCentChips = parseFloat(leftover.toFixed(2)) === 0.05 ? 1 : 0
 
   return (
     <div className="chip-pile">
-      <Chips number={tenDollarChips} color={'purple'} />
-      <Chips number={oneDollarChips} color={'red'} />
-      <Chips number={tenCentChips} color={'blue'} />
-      <Chips number={fiveCentChips} color={'white'} />
+      {tenDollarChips > 0 &&
+        <Chips number={tenDollarChips} color={'purple'} />
+      }
+      {oneDollarChips > 0 &&
+        <Chips number={oneDollarChips} color={'red'} />
+      }
+      {tenCentChips > 0 &&
+        <Chips number={tenCentChips} color={'blue'} />
+      }
+      {fiveCentChips > 0 &&
+        <Chips number={fiveCentChips} color={'white'} />
+      }
     </div>
   )
 }
