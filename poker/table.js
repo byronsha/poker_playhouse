@@ -92,6 +92,13 @@ class Table {
   changeTurn(lastTurn) {
     this.checkHandOver()
 
+    if (this.allAllIn()) {
+      while (this.board.length < 5) {
+        this.dealNextStreet()
+      }
+      this.dealNextStreet()
+    }
+
     if (this.allCheckedOrCalled()) {
       this.dealNextStreet()
       if (this.handOver) {
@@ -219,6 +226,14 @@ class Table {
         } else if (!this.callAmount && !this.seats[i].checked) {
           return false
         }
+      }
+    }
+    return true
+  }
+  allAllIn() {
+    for (let i = 1; i <= this.maxPlayers; i++) {
+      if (this.seats[i] && this.seats[i].stack > 0) {
+        return false
       }
     }
     return true

@@ -2,7 +2,7 @@ import React from 'react'
 import Players from './Players'
 import Seats from './Seats'
 import Board from './Board'
-import ActionButtons from './ActionButtons'
+import Actions from './Actions'
 import ChipPile from './ChipPile'
 
 class Game extends React.Component {
@@ -85,8 +85,12 @@ class Game extends React.Component {
           displayOffset={this.state.displayOffset}
         />
 
+        <div className="game-chat-container">
+          <div className="game-chat"></div>
+        </div>
+
         {this.isOwnTurn() &&
-          <ActionButtons
+          <Actions
             player={player}
             table={table}
             onRaiseClick={onRaiseClick}

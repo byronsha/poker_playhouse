@@ -23,8 +23,8 @@ class Seat {
     this.lastAction = 'CHECK'
   }
   callRaise(amount) {
-    this.stack -= (amount - this.bet)
-    this.bet = amount
+    this.stack = this.stack - (amount - this.bet) < 0 ? 0 : this.stack - (amount - this.bet)
+    this.bet = amount > this.stack ? this.stack : amount
     this.lastAction = 'CALL'
   }
   fold() {

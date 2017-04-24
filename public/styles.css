@@ -53,7 +53,7 @@ body {
 }
 .card {
   display: inline-block;
-  font-size: 35px;
+  font-size: 40px;
   font-weight: bold;
   background: #eee;
   height: 80px;
@@ -63,8 +63,8 @@ body {
   vertical-align: top;
 }
 .card div:nth-child(2) {
-  font-size: 50px;
-  margin-top: -15px;
+  font-size: 55px;
+  margin-top: -22px;
 }
 .table-list td {
   text-align: center;
@@ -79,19 +79,10 @@ button {
   padding: 2px 5px;
   background: white;
   border: 1px solid black;
-  border-radius: 3px;
+  border-radius: 1px;
 }
 button:hover {
   background: #ccc;
-}
-.action-buttons {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  text-align: center;
-}
-.raise-slider {
-  padding-top: 5px;
 }
 .table-info button {
   float: right;
@@ -113,4 +104,72 @@ button:hover {
 }
 .chips > div:last-child {
   border-radius: 50%;
+}
+
+.game-chat-container {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 50%;
+  height: 140px;
+  background: #111;
+}
+.game-chat {
+  margin: 10px;
+  height: 120px;
+  background: #000;
+}
+.actions-container {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 50%;
+  height: 140px;
+  background: #111;
+}
+.actions {
+  margin: 10px;
+  height: 120px;
+  background: #000;
+}
+.actions button {
+  height: 60px;
+  width: 100px;
+  margin: 5px 3px;
+  background: #c62828;
+  vertical-align: top;
+  color: white;
+}
+.raise-button {
+  display: inline-block;
+  color: white;
+}
+.raise-sizing-container {
+  display: inline-block;
+}
+.raise-slider {
+  margin: 0px 5px;
+  text-align: center;
+}
+.raise-slider span {
+  top: -5px;
+  margin: 5px;
+  position: relative;
+}
+.raise-sizing-container button {
+  margin: 5px 0px 5px 5px;
+  height: 30px;
+  width: 75px;
+}
+.raise-sizing-container button:last-child {
+  margin-right: 5px;
+}
+.raise-slider button {
+  height: 25px;
+  width: 25px;
+  margin: 0px;
+  border-radius: 50%;
+}
+.raise-slider button:first-child {
+  padding-bottom: 10px;
 }

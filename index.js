@@ -102,7 +102,13 @@ io.on('connection', socket => {
   socket.on('call', tableId => {
     const table = tables[tableId]
     const seat = table.findPlayerBySocketId(socket.id)
-    const addToPot = table.callAmount - seat.bet
+
+    let addToPot
+    if (table.callAmount > seat.stack) {
+      addToPot = seat.stack - seat.bet
+    } else {
+      addToPot = table.callAmount - seat.bet
+    }
 
     seat.callRaise(table.callAmount)
     table.pot += addToPot

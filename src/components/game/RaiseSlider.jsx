@@ -1,12 +1,16 @@
 import React from 'react'
 
-const RaiseSlider = ({ raiseAmount, onRaiseChange, table, seat }) => {
+const RaiseSlider = ({
+  raiseAmount, decreaseRaiseAmount, increaseRaiseAmount,
+  onRaiseChange, table, seat
+}) => {
   const maxBet = seat.stack + seat.bet
   const minRaise = table.minRaise > maxBet ? maxBet : table.minRaise
 
   return (
     <div className="raise-slider">
-      ${minRaise.toFixed(2)}
+      <button onClick={decreaseRaiseAmount}>-</button>
+      <span>${minRaise.toFixed(2)}</span>
       <input
         type="range"
         min={minRaise.toFixed(2)}
@@ -17,7 +21,8 @@ const RaiseSlider = ({ raiseAmount, onRaiseChange, table, seat }) => {
         onChange={onRaiseChange}
       >
       </input>
-      ${maxBet.toFixed(2)}
+      <span>${maxBet.toFixed(2)}</span>
+      <button onClick={increaseRaiseAmount}>+</button>
     </div>
   )
 }
