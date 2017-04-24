@@ -1,5 +1,6 @@
 import React from 'react'
 import RaiseSlider from './RaiseSlider'
+import PotSizeButton from './PotSizeButton'
 
 class ActionButtons extends React.Component {
   constructor(props) {
@@ -59,6 +60,13 @@ class ActionButtons extends React.Component {
       pot = table.pot * 2 + totalCallAmount
     }
 
+    const potSizes = [
+      ['½ pot', 1/2],
+      ['⅔ pot', 2/3],
+      ['¾ pot', 3/4],
+      ['Pot', 1]
+    ]
+
     return (
       <div className="actions-container">
         <div className="actions">
@@ -87,48 +95,34 @@ class ActionButtons extends React.Component {
           }
 
           {seat.stack > table.callAmount &&
-            <div className="raise-button">
-              <button onClick={() => {
-                onRaiseClick(table.id, parseFloat(this.state.raiseAmount))
-              }}>
-                Raise to
-                <br/>
-                ${parseFloat(this.state.raiseAmount).toFixed(2)}
-              </button>
+            <button onClick={() => {
+              onRaiseClick(table.id, parseFloat(this.state.raiseAmount))
+            }}>
+              Raise to
+              <br/>
+              ${parseFloat(this.state.raiseAmount).toFixed(2)}
+            </button>
+          }
 
-              <div className="raise-sizing-container">
-                <button onClick={() => {
-                  this.handleRaiseUpdate((pot/2).toFixed(2))
-                }}>
-                  ½ pot
-                </button>
+          {seat.stack > table.callAmount &&
+            <div className="raise-sizing-container">
+              <RaiseSlider
+                raiseAmount={this.state.raiseAmount}
+                decreaseRaiseAmount={() => this.handleRaiseUpdate(this.state.raiseAmount - table.minBet)}
+                increaseRaiseAmount={() => this.handleRaiseUpdate(this.state.raiseAmount + table.minBet)}
+                onRaiseChange={this.handleRaiseChange}
+                table={table}
+                seat={seat}
+              />
 
-                <button onClick={() => {
-                  this.handleRaiseUpdate((pot*(2/3)).toFixed(2))
-                }}>
-                  ⅔ pot
-                </button>
-
-                <button onClick={() => {
-                  this.handleRaiseUpdate((pot*(3/4)).toFixed(2))
-                }}>
-                  ¾ pot
-                </button>
-
-                <button onClick={() => {
-                  this.handleRaiseUpdate(pot)
-                }}>
-                  Pot
-                </button>
-
-                <RaiseSlider
-                  raiseAmount={this.state.raiseAmount}
-                  decreaseRaiseAmount={() => this.handleRaiseUpdate(this.state.raiseAmount - table.minBet)}
-                  increaseRaiseAmount={() => this.handleRaiseUpdate(this.state.raiseAmount + table.minBet)}
-                  onRaiseChange={this.handleRaiseChange}
-                  table={table}
-                  seat={seat}
-                />
+              <div className="pot-sizes">
+                {potSizes.map(potSize =>
+                  <PotSizeButton
+                    key={potSize[0]}
+                    text={potSize[0]}
+                    onRaiseClick={() => this.handleRaiseUpdate(pot*potSize[1])}
+                  />
+                )}
               </div>
             </div>
           }
@@ -139,3 +133,28 @@ class ActionButtons extends React.Component {
 }
 
 export default ActionButtons
+
+/*
+                <button onClick={() => {
+                  this.handleRaiseUpdate((pot/2))
+                }}>
+                  ½ pot
+                </button>
+
+                <button onClick={() => {
+                  this.handleRaiseUpdate((pot*(2/3)))
+                }}>
+                  ⅔ pot
+                </button>
+
+                <button onClick={() => {
+                  this.handleRaiseUpdate((pot*(3/4)))
+                }}>
+                  ¾ pot
+                </button>
+
+                <button onClick={() => {
+                  this.handleRaiseUpdate(pot)
+                }}>
+                  Pot
+                </button>*/

@@ -91,11 +91,7 @@ io.on('connection', socket => {
     broadcastToTable(table)
 
     if (table.handOver) {
-      setTimeout(() => {
-        table.clearHand()
-        table.startHand()
-        broadcastToTable(table)
-      }, 5000)
+      initNewHand(table)
     }
   })
 
@@ -117,11 +113,7 @@ io.on('connection', socket => {
     broadcastToTable(table)
 
     if (table.handOver) {
-      setTimeout(() => {
-        table.clearHand()
-        table.startHand()
-        broadcastToTable(table)
-      }, 5000)
+      initNewHand(table)
     }
   })
 
@@ -134,11 +126,7 @@ io.on('connection', socket => {
     broadcastToTable(table)
 
     if (table.handOver) {
-      setTimeout(() => {
-        table.clearHand()
-        table.startHand()
-        broadcastToTable(table)
-      }, 5000)
+      initNewHand(table)
     }
   })
 
@@ -165,8 +153,34 @@ io.on('connection', socket => {
 
   function broadcastToTable(table) {
     for (let i = 0; i < table.players.length; i++) {
-      io.to(table.players[i].socketId).emit('table_updated', table)
+      let socketId = table.players[i].socketId
+      let tableCopy = hideOpponentCards(table, socketId)
+      io.to(socketId).emit('table_updated', tableCopy)
     }
+  }
+
+  function hideOpponentCards(table, socketId) {
+    let tableCopy = JSON.parse(JSON.stringify(table))
+    let hiddenHand = [
+      { suit: 'hidden', rank: 'hidden'},
+      { suit: 'hidden', rank: 'hidden'}
+    ]
+
+    for (let i = 1; i <= tableCopy.maxPlayers; i++) {
+      if (tableCopy.seats[i] && tableCopy.seats[i].player.socketId !== socketId) {
+        tableCopy.seats[i].hand = hiddenHand
+      }
+    }
+
+    return tableCopy
+  }
+
+  function initNewHand(table) {
+    setTimeout(() => {
+      table.clearHand()
+      table.startHand()
+      broadcastToTable(table)
+    }, 5000)
   }
 })
 

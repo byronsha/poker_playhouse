@@ -35,6 +35,8 @@ class Card extends React.Component {
 
     if (card.rank === '0') {
       return <div className="card-silhouette"></div>
+    } else if (card.rank === 'hidden') {
+      return <div className="card"><div className="card-back"></div></div>
     } else {
       return (
         <div className="card" style={this.getSuitColor(card.suit)}>

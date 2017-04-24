@@ -47,6 +47,9 @@ class Game extends React.Component {
     const { player, table, onLeaveClick, onSeatClick, onRaiseClick,
             onCheckClick, onCallClick, onFoldClick } = this.props
 
+    console.log('TABLE UPDATED -- ')
+    console.log(table)
+
     return (
       <div className="poker-game">
         <div className="table-info">
@@ -85,10 +88,6 @@ class Game extends React.Component {
           displayOffset={this.state.displayOffset}
         />
 
-        <div className="game-chat-container">
-          <div className="game-chat"></div>
-        </div>
-
         {this.isOwnTurn() &&
           <Actions
             player={player}
@@ -99,6 +98,10 @@ class Game extends React.Component {
             onFoldClick={onFoldClick}
           />
         }
+
+        <div className="game-chat-container">
+          <div className="game-chat"></div>
+        </div>
       </div>
     )
   }
