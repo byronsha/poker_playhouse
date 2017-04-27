@@ -117,12 +117,3 @@ class Game extends React.Component {
 }
 
 export default Game
-
-        /*<div className="game-chat-container">
-          <div className="game-chat">
-            {messages && messages.map(message => {
-              return <div key={message.timestamp}>{message.timestamp} - {message.message}</div>
-            })}
-          </div>
-          <input type="text" onKeyUp={e => onTableMessage(e, table.id)} />
-        </div>*/
