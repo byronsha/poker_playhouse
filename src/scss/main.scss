@@ -1,6 +1,7 @@
 @import './actions.scss';
 @import './card.scss';
 @import './chips.scss';
+@import './game_chat.scss';
 @import './seats.scss';
 @import './table.scss';
 @import url('https://fonts.googleapis.com/css?family=Ubuntu');
@@ -54,14 +55,6 @@ button:hover {
   margin-right: 300px;
   box-sizing: border-box;
 }
-
-.chat ul {
-  max-height: 500px;
-  width: 200px;
-  overflow: auto;
-  list-style-type: none;
-  padding-left: 0px;
-}
 .table-list td {
   text-align: center;
 }
@@ -70,17 +63,10 @@ button:hover {
   padding-left: 0px;
   font-size: 12px;
 }
-
-.game-chat-container {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  width: 33%;
-  height: 182px;
-  background: #aaa;
-}
-.game-chat {
-  margin: 3px;
-  height: 176px;
-  background: #eee;
+.chat ul {
+  max-height: 500px;
+  width: 200px;
+  overflow: auto;
+  list-style-type: none;
+  padding-left: 0px;
 }

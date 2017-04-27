@@ -53,17 +53,18 @@ io.on('connection', socket => {
     socket.emit('table_joined', { tables, tableId })
   })
 
-  socket.on('leave_table', table => {
-    tables[table.id].removePlayer(socket.id)
+  socket.on('leave_table', tableId => {
+    tables[tableId].removePlayer(socket.id)
 
     socket.broadcast.emit('tables_updated', tables)    
-    socket.emit('table_left', tables)
+    socket.emit('table_left', { tables, tableId })
   })
 
   socket.on('raise', ({ tableId, amount }) => {
     const table = tables[tableId]
     const seat = table.findPlayerBySocketId(socket.id)
     const addToPot = amount - seat.bet
+    const message = `${seat.player.name} raises to $${amount.toFixed(2)}`
 
     seat.raise(amount)
 
@@ -78,17 +79,18 @@ io.on('connection', socket => {
 
     table.changeTurn(seat.id)
 
-    broadcastToTable(table)
+    broadcastToTable(table, message)
   })
 
   socket.on('check', tableId => {
     const table = tables[tableId]
     const seat = table.findPlayerBySocketId(socket.id)
+    const message = `${seat.player.name} checks`
 
     seat.check()
     table.changeTurn(seat.id)
 
-    broadcastToTable(table)
+    broadcastToTable(table, message)
 
     if (table.handOver) {
       initNewHand(table)
@@ -106,11 +108,13 @@ io.on('connection', socket => {
       addToPot = table.callAmount - seat.bet
     }
 
+    const message = `${seat.player.name} calls $${addToPot.toFixed(2)}`
+
     seat.callRaise(table.callAmount)
     table.pot += addToPot
     table.changeTurn(seat.id)
 
-    broadcastToTable(table)
+    broadcastToTable(table, message)
 
     if (table.handOver) {
       initNewHand(table)
@@ -120,21 +124,33 @@ io.on('connection', socket => {
   socket.on('fold', tableId => {
     const table = tables[tableId]
     const seat = table.findPlayerBySocketId(socket.id)
+    const message = `${seat.player.name} folds`
+
     seat.fold()
     table.changeTurn(seat.id)
 
-    broadcastToTable(table)
+    broadcastToTable(table, message)
 
     if (table.handOver) {
       initNewHand(table)
     }
   })
 
+  socket.on('table_message', ({ message, from, tableId }) => {
+    const table = tables[tableId]
+    broadcastToTable(table, message, from)
+  })
+
   socket.on('sit_down', ({ tableId, seatId }) => {
     const table = tables[tableId]
+    const message = `${players[socket.id].name} sat down in Seat ${seatId}`
     table.sitPlayer(players[socket.id], seatId)
 
-    broadcastToTable(table)
+    broadcastToTable(table, message)
+
+    if (table.satPlayers().length === 2) {
+      initNewHand(table)
+    }
   })
 
   socket.on('disconnect', () => {
@@ -151,11 +167,11 @@ io.on('connection', socket => {
     }
   }
 
-  function broadcastToTable(table) {
+  function broadcastToTable(table, message, from = null) {
     for (let i = 0; i < table.players.length; i++) {
       let socketId = table.players[i].socketId
       let tableCopy = hideOpponentCards(table, socketId)
-      io.to(socketId).emit('table_updated', tableCopy)
+      io.to(socketId).emit('table_updated', { table: tableCopy, message, from })
     }
   }
 
@@ -179,10 +195,11 @@ io.on('connection', socket => {
   }
 
   function initNewHand(table) {
+    broadcastToTable(table, '---New hand starting in 5 seconds---')
     setTimeout(() => {
       table.clearHand()
       table.startHand()
-      broadcastToTable(table)
+      broadcastToTable(table, '---New hand started---')
     }, 5000)
   }
 })

@@ -4,6 +4,7 @@ import Seats from './seats/Seats'
 import Board from './Board'
 import Actions from './actions/Actions'
 import ChipPile from './pieces/ChipPile'
+import GameChat from './chat/GameChat'
 
 class Game extends React.Component {
   constructor() {
@@ -44,18 +45,15 @@ class Game extends React.Component {
   }
 
   render() {
-    const { player, table, onLeaveClick, onSeatClick, onRaiseClick,
-            onCheckClick, onCallClick, onFoldClick } = this.props
-
-    console.log('TABLE UPDATED -- ')
-    console.log(table)
+    const { player, table, messages, onLeaveClick, onSeatClick, onRaiseClick,
+            onCheckClick, onCallClick, onFoldClick, onTableMessage } = this.props
 
     return (
       <div className="poker-game">
         <div className="table-info">
           <div>
             {table.name}
-            <button onClick={() => { onLeaveClick() }}>Leave table</button>
+            <button onClick={() => { onLeaveClick(table.id) }}>Leave table</button>
             <button onClick={this.rotateCounterClockwiseClick}><i className="fa fa-undo" aria-hidden="true"></i></button>
             <button onClick={this.rotateClockwiseClick}><i className="fa fa-repeat" aria-hidden="true"></i></button>
           </div>
@@ -107,12 +105,23 @@ class Game extends React.Component {
           />
         }
 
-        <div className="game-chat-container">
-          <div className="game-chat"></div>
-        </div>
+        <GameChat
+          tableId={table.id}
+          messages={messages}
+          onTableMessage={e => onTableMessage(e, table.id)}  
+        />
       </div>
     )
   }
 }
 
 export default Game
+
+        /*<div className="game-chat-container">
+          <div className="game-chat">
+            {messages && messages.map(message => {
+              return <div key={message.timestamp}>{message.timestamp} - {message.message}</div>
+            })}
+          </div>
+          <input type="text" onKeyUp={e => onTableMessage(e, table.id)} />
+        </div>*/

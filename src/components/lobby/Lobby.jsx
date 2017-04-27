@@ -3,6 +3,7 @@ import TableList from '../left_column/TableList'
 import PlayerList from '../right_column/PlayerList'
 import Chat from '../right_column/Chat'
 import Game from '../game/Game'
+import Moment from 'moment'
 
 class Lobby extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class Lobby extends React.Component {
       player: locationState.player,
       tables: {},
       players: {},
-      table: null,
+      openTables: {},
       messages: []
     }
 
@@ -38,31 +39,59 @@ class Lobby extends React.Component {
       })
     })
     socket.on('tables_updated', tables => {
-      const oldTable = this.state.table
-      const newTable = oldTable ? tables[oldTable.id] : oldTable
+      let newOpenTables = this.state.openTables
+
+      for (let tableId of Object.keys(newOpenTables)) {
+        newOpenTables[tableId].table = tables[tableId]
+      }
 
       this.setState({
         tables: tables,
-        table: newTable
+        openTables: newOpenTables
       })
     })
     socket.on('players_updated', players => {
       this.setState({ players: players })
     })
     socket.on('table_joined', ({ tables, tableId }) => {
+      let newOpenTables = this.state.openTables
+
+      newOpenTables[tableId] = {
+        table: tables[tableId],
+        messages: []
+      }
+
       this.setState({
         tables,
-        table: tables[tableId]
+        openTables: newOpenTables
       })
     })
-    socket.on('table_left', tables => {
+    socket.on('table_left', ({ tables, tableId }) => {
+      let newOpenTables = this.state.openTables
+      delete newOpenTables[tableId]
+
       this.setState({
         tables: tables,
-        table: null
+        openTables: newOpenTables
       })
     })
-    socket.on('table_updated', table => {
-      this.setState({ table: table })
+    socket.on('table_updated', ({ table, message, from }) => {
+      let newOpenTables = this.state.openTables
+      let newMessage = {
+        message,
+        from,
+        timestamp: Moment().format('LTS')
+      }
+
+      if (newOpenTables[table.id]) {
+        newOpenTables[table.id].table = table
+        newOpenTables[table.id].messages.push(newMessage)
+      }
+
+      this.setState({ openTables: newOpenTables })
+
+      let gameChat = document.getElementById(`table-${table.id}-game-chat`)
+      gameChat.scrollTop = gameChat.scrollHeight
     })
     socket.on('message', message => {
       this.setState({ messages: [message, ...this.state.messages] })
@@ -72,13 +101,13 @@ class Lobby extends React.Component {
   }
 
   handleTableClick(tableId) {
-    if (!this.state.table) {
+    if (Object.keys(this.state.openTables).length < 4) {
       this.props.socket.emit('join_table', tableId)
     }
   }
 
-  handleLeaveClick() {
-    this.props.socket.emit('leave_table', this.state.table) 
+  handleLeaveClick(tableId) {
+    this.props.socket.emit('leave_table', tableId) 
   }
 
   handleSeatClick(tableId, seatId) {
@@ -86,7 +115,7 @@ class Lobby extends React.Component {
   }
 
   handleRaiseClick(tableId, amount) {
-    this.props.socket.emit('raise', ({ tableId, amount }))
+    this.props.socket.emit('raise', { tableId, amount })
   }
 
   handleCheckClick(tableId) {
@@ -99,6 +128,17 @@ class Lobby extends React.Component {
 
   handleFoldClick(tableId) {
     this.props.socket.emit('fold', tableId)
+  }
+
+  sendTableMessage = (e, tableId) => {
+    const { socket } = this.props
+    const { player } = this.state
+    const body = e.target.value
+
+    if (e.keyCode === 13 && body) {
+      socket.emit('table_message', { message: body, from: player.name, tableId })
+      e.target.value = ''
+    }
   }
 
   sendMessage = e => {
@@ -118,7 +158,7 @@ class Lobby extends React.Component {
 
   render() {
     const props = this.props
-    const { player, tables, players, table } = this.state
+    const { player, tables, players, openTables } = this.state
 
     return (
       <div>
@@ -126,24 +166,29 @@ class Lobby extends React.Component {
           <div className="player-info">Logged in as {player.name}</div>
           
           <TableList
-            table={table}
+            openTables={Object.keys(openTables)}
             tables={tables}
             onTableClick={this.handleTableClick}
           />
         </div>
 
         <div id="center-column">
-          {table &&
-            <Game
-              player={player}
-              table={table}
-              onLeaveClick={this.handleLeaveClick}
-              onSeatClick={this.handleSeatClick}
-              onRaiseClick={this.handleRaiseClick}
-              onCheckClick={this.handleCheckClick}
-              onCallClick={this.handleCallClick}
-              onFoldClick={this.handleFoldClick}
-            />
+          {Object.keys(openTables).length > 0 &&
+            Object.values(openTables).map(table =>
+              <Game
+                key={table.table.id}
+                player={player}
+                table={table.table}
+                messages={table.messages}
+                onLeaveClick={this.handleLeaveClick}
+                onSeatClick={this.handleSeatClick}
+                onRaiseClick={this.handleRaiseClick}
+                onCheckClick={this.handleCheckClick}
+                onCallClick={this.handleCallClick}
+                onFoldClick={this.handleFoldClick}
+                onTableMessage={this.sendTableMessage}
+              />
+            )
           }
         </div>
 

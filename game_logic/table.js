@@ -52,10 +52,6 @@ class Table {
     if (this.satPlayers().length === 1) {
       this.button = seatId
     }
-    
-    if (this.satPlayers().length === 2) {
-      this.startHand()
-    }
   }
   satPlayers() {
     return Object.values(this.seats).filter(seat => seat !== null)

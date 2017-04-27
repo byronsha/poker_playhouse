@@ -3,7 +3,7 @@ import Table from './Table'
 
 class TableList extends React.Component {
   render() {
-    const { tables, table, onTableClick } = this.props
+    const { tables, openTables, onTableClick } = this.props
 
     if (Object.keys(tables).length > 0) {
       return (
@@ -20,9 +20,10 @@ class TableList extends React.Component {
             </thead>
             <tbody>
               {Object.keys(tables).map((id) => {
-                let active
-                if (table) {
-                  active = id == table.id ? true : false
+                let active = false
+
+                if (openTables.indexOf(id) !== -1) {
+                  active = true
                 }
 
                 return (
