@@ -1,8 +1,7 @@
 import React from 'react'
-import _ from 'underscore'
 
 const Chips = ({ number, color }) => {
-  const chips = _.range(parseInt(number + 1)).map(num => {
+  const chips = Array.from(Array(number + 1).keys()).map(num => {
     return <div key={num} style={{background: color, bottom: `${23 + num*5}px`}}></div>
   })
 
