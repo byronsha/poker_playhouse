@@ -82,6 +82,12 @@
   font-size: 14px;
   padding-top: 3px;
 }
+.hand {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  bottom: 60px;
+}
 .seat-last-action {
   z-index: -1;
   position: absolute;
@@ -102,6 +108,7 @@
   position: absolute;
   right: -30px;
   bottom: -25px;
-  background: white;
-  color: #333;
+  background: #393e4d;
+  font-weight: bold;
+  color: #ddd;
 }

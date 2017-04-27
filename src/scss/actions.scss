@@ -1,0 +1,51 @@
+.actions-container {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  color: white;
+}
+.actions {
+  margin: 20px;
+  
+  button {
+    height: 85px;
+    width: 105px;
+    background: #c62828;
+    vertical-align: top;
+    color: white;
+    border: none;
+    border-radius: 3px;
+  }
+  button:hover {
+    background: #e57373;
+    cursor: pointer;
+    transition: 0.2s ease all;
+  }
+}
+.raise-sizing-container button {
+  height: 30px;
+  width: 81px;
+  margin: 2px;
+}
+.raise-slider {
+  margin: 10px 0px 5px 0px;
+  text-align: center;
+  
+  span {
+    top: -5px;
+    margin: 5px;
+    position: relative;
+  }
+  button {
+    height: 25px;
+    width: 25px;
+    margin: 0px;
+    border-radius: 50%;
+  }
+  button:first-child {
+    padding-bottom: 10px;
+  }
+}
+.pot-sizes {
+  margin-left: 3px;
+}

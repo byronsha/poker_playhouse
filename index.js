@@ -13,7 +13,7 @@ const app = express()
 const server = http.createServer(app)
 const io = socketIo(server)
 
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname))
 app.use(webpackDevMiddleware(webpack(webpackConfig)))
 app.use(bodyParser.urlencoded({ extended: false }))
 

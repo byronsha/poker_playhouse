@@ -1,0 +1,84 @@
+@import './actions.scss';
+@import './card.scss';
+@import './chips.scss';
+@import './seats.scss';
+@import './table.scss';
+
+body {
+  margin: 0px;
+  font-family: 'Helvetica';
+}
+th {
+  font-weight: normal;
+}
+button {
+  font-size: 16px;
+  margin: 0px 5px;
+  padding: 2px 5px;
+  background: white;
+  border: 1px solid black;
+  border-radius: 1px;
+}
+button:hover {
+  background: #ccc;
+  cursor: pointer;
+}
+#left-column {
+  position: absolute;
+  width: 280px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: #393e4d;
+  padding: 5px;
+  box-sizing: border-box;
+  color: #ddd;
+}
+#right-column {
+  position: absolute;
+  width: 300px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: #393e4d;
+  padding: 5px;
+  box-sizing: border-box;
+  color: #ddd;
+}
+#center-column {
+  position: relative;
+  height: 100%;
+  margin-left: 280px;
+  margin-right: 300px;
+  box-sizing: border-box;
+}
+
+.chat ul {
+  max-height: 500px;
+  width: 200px;
+  overflow: auto;
+  list-style-type: none;
+  padding-left: 0px;
+}
+.table-list td {
+  text-align: center;
+}
+.player-list {
+  list-style-type: none;
+  padding-left: 0px;
+  font-size: 12px;
+}
+
+.game-chat-container {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 33%;
+  height: 182px;
+  background: #aaa;
+}
+.game-chat {
+  margin: 3px;
+  height: 176px;
+  background: #eee;
+}

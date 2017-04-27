@@ -1,3 +1,4 @@
+require('!style-loader!css-loader!sass-loader!./scss/main.scss')
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, IndexRedirect, hashHistory } from 'react-router'

@@ -1,0 +1,70 @@
+.poker-game {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 5px;
+  background: #fff;
+  z-index: 0;
+
+  .player-list {
+    color: #333;
+    padding-top: 15px;
+  }
+}
+.table-info {
+  color: #333;
+
+  div:first-child {
+    font-size: 22px;
+  }
+  button {
+    float: right;
+    vertical-align: top;
+    border: none;
+    background: #444;
+    color: white;
+    font-size: 14px;
+  }
+  button:hover {
+    background: #666;
+  }
+}
+.table-background {
+  background: #5edc5e;
+  border: 10px solid rgb(132, 75, 31);
+  width: 80%;
+  height: 60%;
+  position: absolute;
+  left: 10%;
+  top: 16%;
+  box-sizing: border-box;
+  border-radius: 50%;
+  z-index: -1;
+}
+.board {
+  width: 340px;
+  height: 100px;
+  position: absolute;
+  left: calc(50% - 170px);
+  top: 37%;
+  text-align: center;
+  
+  .chip-pile {
+    top: 5px;
+    left: -10px;
+    position: absolute;
+  }
+  .card {
+    margin: 8px 3px;
+  }
+  .card-silhouette {
+    display: inline-block;
+    outline: 1px dashed white;
+    height: 80px;
+    width: 60px;
+    margin: 8px 3px;
+    border-radius: 1px;
+    vertical-align: top;
+  }
+}
