@@ -1,8 +1,8 @@
 import React from 'react'
-import TableList from './TableList'
-import PlayerList from './PlayerList'
+import TableList from '../left_column/TableList'
+import PlayerList from '../right_column/PlayerList'
+import Chat from '../right_column/Chat'
 import Game from '../game/Game'
-import Chat from './Chat'
 
 class Lobby extends React.Component {
   constructor(props) {

@@ -1,5 +1,5 @@
 import React from 'react'
-import Chips from './Chips'
+import ChipStack from './ChipStack'
 
 const ChipPile = ({ amount }) => {
   let leftover = amount
@@ -23,16 +23,16 @@ const ChipPile = ({ amount }) => {
   return (
     <div className="chip-pile">
       {tenDollarChips > 0 &&
-        <Chips number={tenDollarChips} color={'purple'} />
+        <ChipStack number={tenDollarChips} color={'purple'} />
       }
       {oneDollarChips > 0 &&
-        <Chips number={oneDollarChips} color={'red'} />
+        <ChipStack number={oneDollarChips} color={'red'} />
       }
       {tenCentChips > 0 &&
-        <Chips number={tenCentChips} color={'blue'} />
+        <ChipStack number={tenCentChips} color={'blue'} />
       }
       {fiveCentChips > 0 &&
-        <Chips number={fiveCentChips} color={'white'} />
+        <ChipStack number={fiveCentChips} color={'white'} />
       }
     </div>
   )

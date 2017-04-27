@@ -1,7 +1,7 @@
 import React from 'react'
-import Player from '../lobby/Player'
+import Player from '../right_column/Player'
 
-class Players extends React.Component {
+class Spectators extends React.Component {
   render() {
     const { player, table } = this.props
 
@@ -29,4 +29,4 @@ class Players extends React.Component {
   }
 }
 
-export default Players
+export default Spectators

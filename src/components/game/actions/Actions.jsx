@@ -133,28 +133,3 @@ class ActionButtons extends React.Component {
 }
 
 export default ActionButtons
-
-/*
-                <button onClick={() => {
-                  this.handleRaiseUpdate((pot/2))
-                }}>
-                  ½ pot
-                </button>
-
-                <button onClick={() => {
-                  this.handleRaiseUpdate((pot*(2/3)))
-                }}>
-                  ⅔ pot
-                </button>
-
-                <button onClick={() => {
-                  this.handleRaiseUpdate((pot*(3/4)))
-                }}>
-                  ¾ pot
-                </button>
-
-                <button onClick={() => {
-                  this.handleRaiseUpdate(pot)
-                }}>
-                  Pot
-                </button>*/

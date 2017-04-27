@@ -1,9 +1,9 @@
 import React from 'react'
-import Players from './Players'
-import Seats from './Seats'
+import Spectators from './Spectators'
+import Seats from './seats/Seats'
 import Board from './Board'
-import Actions from './Actions'
-import ChipPile from './ChipPile'
+import Actions from './actions/Actions'
+import ChipPile from './pieces/ChipPile'
 
 class Game extends React.Component {
   constructor() {
@@ -59,7 +59,7 @@ class Game extends React.Component {
           <button onClick={this.rotateClockwiseClick}><i className="fa fa-repeat" aria-hidden="true"></i></button>
         </div>
         
-        <Players
+        <Spectators
           player={player}
           table={table}
         />

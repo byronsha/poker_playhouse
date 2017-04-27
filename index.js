@@ -6,8 +6,8 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackConfig = require('./webpack.config.js')
 
-const Player = require('./poker/player.js')
-const Table = require('./poker/table.js')
+const Player = require('./game_logic/player.js')
+const Table = require('./game_logic/table.js')
 
 const app = express()
 const server = http.createServer(app)
@@ -167,7 +167,10 @@ io.on('connection', socket => {
     ]
 
     for (let i = 1; i <= tableCopy.maxPlayers; i++) {
-      if (tableCopy.seats[i] && tableCopy.seats[i].player.socketId !== socketId) {
+      if (tableCopy.seats[i]
+        && tableCopy.seats[i].hand.length > 0
+        && tableCopy.seats[i].player.socketId !== socketId)
+      {
         tableCopy.seats[i].hand = hiddenHand
       }
     }

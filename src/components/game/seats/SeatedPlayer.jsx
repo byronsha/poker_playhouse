@@ -1,6 +1,6 @@
 import React from 'react'
 import Hand from './Hand'
-import ChipPile from './ChipPile'
+import ChipPile from '../pieces/ChipPile'
 
 class SeatedPlayer extends React.Component {
   render() {
@@ -28,7 +28,7 @@ class SeatedPlayer extends React.Component {
         </div>
 
         {seat.lastAction && <div className="seat-last-action">{seat.lastAction}</div>}
-        {isButton && <span className="button">D</span>}
+        {isButton && <span className="button-chip">D</span>}
       </div>
     )
   }
