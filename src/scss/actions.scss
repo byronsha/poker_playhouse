@@ -10,16 +10,18 @@
   button {
     height: 85px;
     width: 105px;
-    background: #c62828;
+    background: #0d47a1;
     vertical-align: top;
     color: white;
     border: none;
     border-radius: 3px;
+    box-shadow: 0px 1px 1px #000;
   }
   button:hover {
-    background: #e57373;
+    background: #1565c0;
     cursor: pointer;
     transition: 0.2s ease all;
+    box-shadow: 0px 1px 3px #000;
   }
 }
 .raise-sizing-container button {
@@ -30,7 +32,8 @@
 .raise-slider {
   margin: 10px 0px 5px 0px;
   text-align: center;
-  
+  color: #333;
+
   span {
     top: -5px;
     margin: 5px;

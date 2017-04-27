@@ -2,6 +2,11 @@ import React from 'react'
 import ChipStack from './ChipStack'
 
 const ChipPile = ({ amount }) => {
+  const purple = '#6a1b9a'
+  const red = '#c62828'
+  const blue = '#1565c0'
+  const white = '#eee'
+
   let leftover = amount
   let tenDollarChips, oneDollarChips, tenCentChips, fiveCentChips
 
@@ -23,16 +28,16 @@ const ChipPile = ({ amount }) => {
   return (
     <div className="chip-pile">
       {tenDollarChips > 0 &&
-        <ChipStack number={tenDollarChips} color={'purple'} />
+        <ChipStack number={tenDollarChips} color={purple} />
       }
       {oneDollarChips > 0 &&
-        <ChipStack number={oneDollarChips} color={'red'} />
+        <ChipStack number={oneDollarChips} color={red} />
       }
       {tenCentChips > 0 &&
-        <ChipStack number={tenCentChips} color={'blue'} />
+        <ChipStack number={tenCentChips} color={blue} />
       }
       {fiveCentChips > 0 &&
-        <ChipStack number={fiveCentChips} color={'white'} />
+        <ChipStack number={fiveCentChips} color={white} />
       }
     </div>
   )

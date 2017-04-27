@@ -8,10 +8,13 @@
 .chips > div {
   height: 8px;
   width: 28px;
-  border: 1px solid #333;
+  border-bottom: 1px solid #333;
   border-radius: 0 0 50% 50%;
   position: absolute;
   margin: 0px 3px;
+}
+.chips > div:first-child {
+  border-bottom: none;
 }
 .chips > div:last-child {
   border-radius: 50%;

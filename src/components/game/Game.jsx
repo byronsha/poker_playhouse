@@ -83,7 +83,11 @@ class Game extends React.Component {
           </div>
         </div>
 
-        <div className="table-background"></div>
+        <div className="table-background">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
 
         <Seats
           player={player}

@@ -3,20 +3,22 @@
 @import './chips.scss';
 @import './seats.scss';
 @import './table.scss';
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
 
 body {
   margin: 0px;
-  font-family: 'Helvetica';
+  font-family: 'Ubuntu', sans-serif;
 }
 th {
   font-weight: normal;
 }
 button {
+  font-family: 'Ubuntu', sans-serif;  
   font-size: 16px;
   margin: 0px 5px;
   padding: 2px 5px;
   background: white;
-  border: 1px solid black;
+  border: none;
   border-radius: 1px;
 }
 button:hover {
