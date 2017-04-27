@@ -1,7 +1,7 @@
 import React from 'react'
 import Message from './Message'
 
-const GameChat = ({ tableId, messages, onTableMessage}) => (
+const GameChat = ({ playerName, tableId, messages, onTableMessage}) => (
   <div className="game-chat-container">
     <div id={`table-${tableId}-game-chat`} className="game-chat">
       {messages.map((message, index) =>
@@ -9,9 +9,12 @@ const GameChat = ({ tableId, messages, onTableMessage}) => (
       )}
     </div>
 
+    <div className="player-name">[{playerName}]: </div>
+    
     <input
       type="text"
       onKeyUp={onTableMessage}
+      placeholder="..."
     />
   </div>
 )

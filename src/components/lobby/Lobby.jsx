@@ -163,6 +163,10 @@ class Lobby extends React.Component {
     return (
       <div>
         <div id="left-column">
+          <div className="fancy-chip blue">
+            <div><span>PF</span></div>
+          </div>
+          
           <div className="player-info">Logged in as {player.name}</div>
           
           <TableList

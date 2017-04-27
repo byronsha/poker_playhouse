@@ -1,20 +1,22 @@
 @import './actions.scss';
 @import './card.scss';
 @import './chips.scss';
+@import './fancy_chip.scss';
 @import './game_chat.scss';
 @import './seats.scss';
 @import './table.scss';
 @import url('https://fonts.googleapis.com/css?family=Ubuntu');
 
+body, button, input {
+  font-family: 'Ubuntu', sans-serif;
+}
 body {
   margin: 0px;
-  font-family: 'Ubuntu', sans-serif;
 }
 th {
   font-weight: normal;
 }
 button {
-  font-family: 'Ubuntu', sans-serif;  
   font-size: 16px;
   margin: 0px 5px;
   padding: 2px 5px;

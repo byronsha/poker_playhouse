@@ -106,6 +106,7 @@ class Game extends React.Component {
         }
 
         <GameChat
+          playerName={player.name}
           tableId={table.id}
           messages={messages}
           onTableMessage={e => onTableMessage(e, table.id)}  

@@ -4,10 +4,30 @@
   right: 0px;
   width: 33%;
   height: 182px;
+  font-size: 14px;
+
+  .player-name {
+    display: inline-block;
+    background: white;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-right: 0px;
+    padding: 3px 6px 1px 2px;
+    height: 18px;
+    font-weight: bold;
+  }
 
   input {
     width: 100%;
-    height: 18px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-left: none;
+    position: absolute;
+  }
+  input:focus {
+    outline: none;
+    box-shadow: 0 -2px 0 #1565c0 inset;
+    transition: 0.2s all;
   }
 }
 .game-chat {
