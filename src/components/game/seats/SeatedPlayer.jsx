@@ -1,6 +1,7 @@
 import React from 'react'
 import Hand from './Hand'
 import ChipPile from '../pieces/ChipPile'
+import ShotClock from './ShotClock'
 
 class SeatedPlayer extends React.Component {
   render() {
@@ -27,7 +28,14 @@ class SeatedPlayer extends React.Component {
           </div>
         </div>
 
-        {seat.lastAction && <div className="seat-last-action">{seat.lastAction}</div>}
+        {seat.lastAction &&
+          <div className="seat-last-action">{seat.lastAction}</div>
+        }
+
+        {seat.turn &&
+          <ShotClock seconds={30} /> 
+        }
+
         {isButton && <span className="button-chip">D</span>}
       </div>
     )

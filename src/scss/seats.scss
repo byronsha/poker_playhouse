@@ -48,6 +48,7 @@
   position: absolute;
   text-align: center;
   z-index: 5;
+  color: white;
 }
 .seat-info {
   position: absolute;
@@ -88,19 +89,38 @@
   width: 100%;
   bottom: 60px;
 }
-.seat-last-action {
+.seat-last-action, .shot-clock {
   z-index: -1;
   position: absolute;
-  bottom: -21px;
+  bottom: -16px;
   left: 5px;
   text-align: center;
   width: 140px;
   background: #c62828;
   font-size: 12px;
   color: white;
-  padding: 10px 0px 5px 0px;
+  padding: 5px 0px 5px 0px;
   font-weight: bold;
+  letter-spacing: 1px;
   border-radius: 1px;
+}
+.shot-clock {
+  background: #393e4d;
+  width: 138px;
+  padding: 3px 2px 2px 0px;
+  height: 14px;
+
+  div {
+    float: right;
+    width: 3px;
+    height: 13px;
+    border-left: 1px solid #393e4d;
+  }
+  span {
+    position: absolute;
+    left: 3px;
+    bottom: 3px;
+  }
 }
 .button-chip {
   padding: 4px 7px 4px 9px;
