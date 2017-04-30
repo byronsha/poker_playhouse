@@ -21,10 +21,13 @@ class SeatedPlayer extends React.Component {
         }
 
         <div className="seat-info">
-          <div className="seat-number">{seat.id}</div>
           <div className="seat-stack">
-            <div>{seat.player.name} {player.socketId === seat.player.socketId ? '(me)' : ''} </div>
             <div> ${seat.stack.toFixed(2)}</div>
+          </div>
+          
+          <div>
+            <div className="seat-number">{seat.id}</div>
+            <div>{seat.player.name} {player.socketId === seat.player.socketId ? '(me)' : ''} </div>
           </div>
         </div>
 

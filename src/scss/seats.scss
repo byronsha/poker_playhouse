@@ -54,16 +54,16 @@
   position: absolute;
   width: 140px;
   left: 5px;
-  padding: 6px;
   bottom: 5px;
   color: white;
   background: #1565c0;
   border-radius: 1px;
   box-sizing: border-box;
+  border: 2px solid #333;
 }
 .seat-number {
-  padding: 10px 15px;
-  background: #90caf9;
+  padding: 2px 6px;
+  background: #555;
   border-radius: 1px;
   margin-right: 3px;
   float: left;
@@ -80,8 +80,8 @@
   padding-top: 10px;
 }
 .seat-stack {
-  font-size: 14px;
-  padding-top: 3px;
+  font-size: 22px;
+  padding: 5px 0px;
 }
 .hand {
   position: absolute;

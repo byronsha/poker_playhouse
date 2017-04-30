@@ -24,6 +24,10 @@ class ShotClock extends React.Component {
   }
   
   render() {
+    if (this.state.seconds === 0)  {
+      return <div></div>
+    }
+
     return (
       <div className="shot-clock">
         <span>{this.state.seconds}</span>
