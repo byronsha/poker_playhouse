@@ -22,7 +22,7 @@ class SeatedPlayer extends React.Component {
 
         <div className="seat-info">
           <div className="seat-stack">
-            <div> ${seat.stack.toFixed(2)}</div>
+            <div>${seat.stack.toFixed(2)}</div>
           </div>
           
           <div>

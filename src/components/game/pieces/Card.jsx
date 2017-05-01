@@ -4,15 +4,15 @@ class Card extends React.Component {
   getSuitColor = suit => {
     switch(suit) {
       case 'spades':
-        return { color: 'black' }
+        return { background: 'black' }
       case 'diamonds':
-        return { color: 'blue' }
+        return { background: '#2196f3' }
       case 'hearts':
-        return { color: 'red' }
+        return { background: '#f44336' }
       case 'clubs':
-        return { color: 'green' }
+        return { background: '#4caf50' }
       default:
-        return { color: 'black' }
+        return { background: '#212121' }
     }
   }
 
@@ -28,7 +28,8 @@ class Card extends React.Component {
       'ace': 'A',
       'king': 'K',
       'queen': 'Q',
-      'jack': 'J' 
+      'jack': 'J',
+      '10': 'T'
     }
 
     const { card } = this.props
@@ -40,8 +41,11 @@ class Card extends React.Component {
     } else {
       return (
         <div className="card" style={this.getSuitColor(card.suit)}>
-          <div>{ranks[card.rank] ? ranks[card.rank] : card.rank}</div>
-          <div>{suits[card.suit]}</div>
+          <div className="small-picture">
+            <div>{ranks[card.rank] ? ranks[card.rank] : card.rank}</div>
+            <div>{suits[card.suit]}</div>
+          </div>
+          <div className="big-picture">{ranks[card.rank] ? ranks[card.rank] : card.rank}</div>
         </div>
       )
     }

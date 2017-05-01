@@ -12,7 +12,7 @@ const GameChat = ({ playerName, tableId, messages, onTableMessage}) => (
     <div>
       <div className="player-name">[{playerName}]: </div>
       <div className="game-chat-input">
-        <input onKeyUp={onTableMessage} type="text" placeholder="..." />
+        <input onKeyUp={onTableMessage} type="text" />
       </div>
     </div>
   </div>

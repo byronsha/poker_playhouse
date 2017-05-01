@@ -40,7 +40,7 @@
   z-index: -1;
 
   div {
-    background: #4caf50;
+    background: #555;
     border: 18px solid #333;
   }
   div:first-child,
@@ -69,17 +69,12 @@
   }
 }
 .board {
-  width: 340px;
-  height: 100px;
-  position: absolute;
-  left: calc(50% - 170px);
-  top: 37%;
+  padding-top: 190px;
   text-align: center;
   color: white;
   
   .chip-pile {
-    top: 5px;
-    left: -10px;
+    left: 35%;
     position: absolute;
   }
   .card {
@@ -88,8 +83,8 @@
   .card-silhouette {
     display: inline-block;
     outline: 1px dashed white;
-    height: 80px;
-    width: 60px;
+    height: 90px;
+    width: 70px;
     margin: 8px 3px;
     border-radius: 1px;
     vertical-align: top;

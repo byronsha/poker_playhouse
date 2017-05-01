@@ -7,9 +7,10 @@
 @import './small_table.scss';
 @import './table.scss';
 @import url('https://fonts.googleapis.com/css?family=Ubuntu');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
 
 body, button, input {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Roboto Mono', monospace;
 }
 body {
   margin: 0px;
@@ -19,7 +20,7 @@ th {
   font-weight: normal;
 }
 button {
-  font-size: 16px;
+  font-size: inherit;
   margin: 0px 5px;
   padding: 2px 5px;
   background: white;
@@ -59,8 +60,12 @@ button:hover {
   margin-right: 300px;
   box-sizing: border-box;
 }
-.table-list td {
-  text-align: center;
+.table-list {
+  font-size: 0.8em;
+
+  td {
+    text-align: center;
+  }
 }
 .player-list {
   list-style-type: none;
