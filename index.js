@@ -6,8 +6,8 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackConfig = require('./webpack.config.js')
 
-const Player = require('./game_logic/player.js')
-const Table = require('./game_logic/table.js')
+const Player = require('./src/game_logic/player.js')
+const Table = require('./src/game_logic/table.js')
 
 const app = express()
 const server = http.createServer(app)
