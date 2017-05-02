@@ -4,89 +4,85 @@
   height: 100vh;
   box-sizing: border-box;
   padding: 5px;
-  background: #fff;
+  background: #222;
   z-index: 0;
+  font-family: 'Oswald', sans-serif;
 
   .player-list {
-    color: #333;
+    color: #ccc;
     padding-top: 15px;
   }
-}
-.table-info {
-  color: #333;
+  .table-info {
+    color: #ccc;
 
-  div:first-child {
-    font-size: 22px;
+    button {
+      float: right;
+      border: none;
+      background: #444;
+      color: white;
+    }
+    button:hover {
+      background: #666;
+    }
   }
-  button {
-    float: right;
-    vertical-align: top;
-    border: none;
-    background: #444;
+  .table-background {
+    width: 80%;
+    height: 54%;
+    position: absolute;
+    left: 10%;
+    top: 16%;
+    box-sizing: border-box;
+    z-index: -1;
+
+    div {
+      background: #268644;
+      border: 18px solid #444;
+    }
+    div:first-child,
+    div:last-child {
+      width: 60%;
+      height: 100%;
+      top: 0px;
+      position: absolute;
+      border-radius: 50%;
+      z-index: -2;
+    }
+    div:first-child {
+      left: 0px;
+    }
+    div:last-child {
+      right: 0px;
+    }
+    div:nth-child(2) {
+      width: 40%;
+      height: 100%;
+      left: 30%;
+      position: absolute;
+      border-left: none;
+      border-right: none;
+      z-index: -1;  
+    }
+  }
+  .board {
+    padding-top: 190px;
+    text-align: center;
     color: white;
-    font-size: 14px;
-  }
-  button:hover {
-    background: #666;
-  }
-}
-.table-background {
-  width: 80%;
-  height: 54%;
-  position: absolute;
-  left: 10%;
-  top: 16%;
-  box-sizing: border-box;
-  z-index: -1;
-
-  div {
-    background: #555;
-    border: 18px solid #333;
-  }
-  div:first-child,
-  div:last-child {
-    width: 60%;
-    height: 100%;
-    top: 0px;
-    position: absolute;
-    border-radius: 50%;
-    z-index: -2;
-  }
-  div:first-child {
-    left: 0px;
-  }
-  div:last-child {
-    right: 0px;
-  }
-  div:nth-child(2) {
-    width: 40%;
-    height: 100%;
-    left: 30%;
-    position: absolute;
-    border-left: none;
-    border-right: none;
-    z-index: -1;  
-  }
-}
-.board {
-  padding-top: 190px;
-  text-align: center;
-  color: white;
-  
-  .chip-pile {
-    left: 35%;
-    position: absolute;
-  }
-  .card {
-    margin: 8px 3px;
-  }
-  .card-silhouette {
-    display: inline-block;
-    outline: 1px dashed white;
-    height: 90px;
-    width: 70px;
-    margin: 8px 3px;
-    border-radius: 1px;
-    vertical-align: top;
+    
+    .chip-pile {
+      left: 35%;
+      position: absolute;
+    }
+    .card {
+      margin: 8px 3px;
+    }
+    .card-silhouette {
+      display: inline-block;
+      outline: 1px dashed white;
+      height: 105px;
+      width: 70px;
+      margin: 8px 3px;
+      border-radius: 1px;
+      vertical-align: top;
+    }
   }
 }

@@ -12,7 +12,7 @@ class SeatedPlayer extends React.Component {
         {seat.bet > 0 &&
           <div className="bet">
             <ChipPile amount={seat.bet.toFixed(2)} />
-            ${seat.bet.toFixed(2)}
+            <span>${seat.bet.toFixed(2)}</span>
           </div>
         }
         
@@ -27,7 +27,7 @@ class SeatedPlayer extends React.Component {
           
           <div>
             <div className="seat-number">{seat.id}</div>
-            <div>{seat.player.name} {player.socketId === seat.player.socketId ? '(me)' : ''} </div>
+            <div className="seat-player">{seat.player.name} {player.socketId === seat.player.socketId ? '(me)' : ''} </div>
           </div>
         </div>
 

@@ -6,7 +6,7 @@
   bottom: -105px;
 }
 .seat2of6 {
-  right: 8%;
+  right: 6%;
   top: 18%;
 }
 .seat2of6 .bet {
@@ -14,7 +14,7 @@
   left: -150px;
 }
 .seat3of6 {
-  right: 8%;
+  right: 6%;
   bottom: 35%;
 }
 .seat3of6 .bet {
@@ -28,14 +28,14 @@
   top: -40px;
 }
 .seat5of6 {
-  left: 8%;
+  left: 6%;
   bottom: 35%;
 }
 .seat5of6 .bet {
   right: -150px;
 }
 .seat6of6 {
-  left: 8%;
+  left: 6%;
   top: 18%;
 }
 .seat6of6 .bet {
@@ -56,11 +56,11 @@
   bottom: 5px;
   color: white;
   box-sizing: border-box;
-  border: 3px solid #333;
+  border: 1px solid #ccc;
   background: #1e5799;
 }
 .seat-info > div:nth-child(2) {
-  border-top: 1px solid #333;
+  border-top: 1px solid #ccc;
   font-size: .75em;
   padding: 2px 0px;
 }
@@ -73,9 +73,13 @@
 .bet {
   position: absolute;
   width: 100%;
+
+  span {
+    font-size: 0.8em;
+  }
 }
-.seat-container.active .seat-info {
-  border: 3px solid #ff3b04;
+.seat-container.active .seat-info > div:nth-child(2) {
+  background: #ff3b04;
 }
 .seat-stack {
   font-size: 1.5em;
@@ -85,7 +89,7 @@
   position: absolute;
   text-align: center;
   width: 100%;
-  bottom: 120px;
+  bottom: 135px;
 
   .card:first-child {
     position: absolute;
@@ -106,7 +110,6 @@
   font-size: 12px;
   color: white;
   padding: 5px 0px 3px 0px;
-  border: 1px solid #333;
   box-sizing: border-box;
   letter-spacing: 1px;
 }
@@ -127,14 +130,15 @@
   }
 }
 .button-chip {
-  padding: 1px 1px 2px 2px;
   height: 20px;
   width: 20px;
   border-radius: 100%;
   position: absolute;
   right: -30px;
-  bottom: -20px;
-  background: #3662ca;
-  border: 1px solid #333;
-  color: #ddd;
+  top: 75px;
+  padding: 1px;
+  background: #ddd;
+  color: #555;
+  font-family: Verdana;
+  font-weight: bold;
 }

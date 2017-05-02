@@ -14,6 +14,7 @@
     vertical-align: top;
     color: white;
     border: none;
+    margin: 0px 5px;
   }
   button:hover {
     background: #1565c0;
@@ -29,7 +30,7 @@
 .raise-slider {
   margin: 10px 0px 5px 0px;
   text-align: center;
-  color: #333;
+  color: #ccc;
 
   span {
     top: -5px;
@@ -41,9 +42,6 @@
     width: 25px;
     margin: 0px;
     border-radius: 50%;
-  }
-  button:first-child {
-    padding-bottom: 10px;
   }
 }
 .pot-sizes {
