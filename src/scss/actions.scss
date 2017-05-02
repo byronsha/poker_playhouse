@@ -10,11 +10,12 @@
   button {
     height: 85px;
     width: 105px;
-    background: #0d47a1;
+    background: #1e5799;
     vertical-align: top;
-    color: white;
-    border: none;
+    color: #ccc;
+    border: 1px solid #ccc;
     margin: 0px 5px;
+    font-size: 1.2em;
   }
   button:hover {
     background: #1565c0;
@@ -33,7 +34,7 @@
   color: #ccc;
 
   span {
-    top: -5px;
+    top: -4px;
     margin: 5px;
     position: relative;
   }
@@ -42,6 +43,7 @@
     width: 25px;
     margin: 0px;
     border-radius: 50%;
+    font-size: 1em;
   }
 }
 .pot-sizes {

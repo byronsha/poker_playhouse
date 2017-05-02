@@ -71,6 +71,8 @@ th {
   button:hover {
     background: #ccc;
     cursor: pointer;
+    color: #333;
+    transition: 0.2s all;
   }
 }
 .player-list {
