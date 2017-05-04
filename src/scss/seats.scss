@@ -6,37 +6,37 @@
   bottom: -105px;
 }
 .seat2of6 {
-  right: 6%;
   top: 18%;
+  left: calc(94% - 180px);
 }
 .seat2of6 .bet {
   bottom: -70px;
   left: -150px;
 }
 .seat3of6 {
-  right: 6%;
-  bottom: 35%;
+  top: calc(65% - 150px);
+  left: calc(94% - 180px);
 }
 .seat3of6 .bet {
   left: -150px;
 }
 .seat4of6 {
+  top: calc(77% - 150px);
   left: calc(50% - 90px);
-  bottom: 23%;
 }
 .seat4of6 .bet {
   top: -40px;
 }
 .seat5of6 {
+  top: calc(65% - 150px);
   left: 6%;
-  bottom: 35%;
 }
 .seat5of6 .bet {
   right: -150px;
 }
 .seat6of6 {
-  left: 6%;
   top: 18%;
+  left: 6%;
 }
 .seat6of6 .bet {
   bottom: -70px;
@@ -49,6 +49,7 @@
   text-align: center;
   z-index: 5;
   color: white;
+  transition: 0.2s all;
 }
 .seat-info {
   position: absolute;
@@ -56,13 +57,13 @@
   bottom: 5px;
   color: white;
   box-sizing: border-box;
-  border: 1px solid #ccc;
-  background: #1e5799;
+  background: $blue-darken-3;
+  box-shadow: $box-shadow;
 }
 .seat-info > div:nth-child(2) {
-  border-top: 1px solid #ccc;
   font-size: .75em;
   padding: 2px 0px;
+  background: $blue-darken-4
 }
 .seat-number {
   padding: 2px 6px;
@@ -101,7 +102,6 @@
   }
 }
 .seat-last-action {
-  z-index: -1;
   position: absolute;
   bottom: -14px;
   text-align: center;
@@ -111,11 +111,13 @@
   color: white;
   box-sizing: border-box;
   letter-spacing: 1px;
+  box-shadow: $box-shadow;
 }
 .shot-clock {
   position: absolute;
   width: 100%;
   bottom: 0px;
+  box-shadow: $box-shadow;
 
   div {
     float: right;
@@ -129,10 +131,10 @@
   border-radius: 100%;
   position: absolute;
   right: -30px;
-  top: 75px;
-  padding: 1px;
+  top: 80px;
   background: #ddd;
-  color: #555;
+  color: #333;
   font-family: Verdana;
   font-weight: bold;
+  box-shadow: $box-shadow;
 }

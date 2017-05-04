@@ -4,15 +4,15 @@ class Card extends React.Component {
   getSuitColor = suit => {
     switch(suit) {
       case 'spades':
-        return { background: 'black' }
+        return { background: '#2a2a2a' }
       case 'diamonds':
-        return { background: '#2196f3' }
+        return { background: '#2962ff' }
       case 'hearts':
-        return { background: '#f44336' }
+        return { background: '#d32f2f' }
       case 'clubs':
         return { background: '#4caf50' }
       default:
-        return { background: '#212121' }
+        return { background: '#ccc' }
     }
   }
 

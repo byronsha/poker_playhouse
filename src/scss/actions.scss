@@ -7,10 +7,7 @@
   color: white;
   margin-left: 5px;
   background: rgb(22, 50, 82);
-  border-top: 2px solid #1a1a1a;
-  border-left: 2px solid #1a1a1a;
-  border-right: 2px solid #1a1a1a;
-  box-shadow: 0px 0px 5px #1a1a1a;
+  box-shadow: $box-shadow;
 }
 .actions {
   margin: 5px 3px;
@@ -21,7 +18,7 @@
     background: #1e5799;
     vertical-align: top;
     color: #ccc;
-    border: 1px solid #111;
+    border: none;
     margin: 0px 2px;
     font-size: 1.2em;
     border-radius: .3em;

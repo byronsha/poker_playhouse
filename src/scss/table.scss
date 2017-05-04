@@ -77,12 +77,13 @@
     }
     .card-silhouette {
       display: inline-block;
-      outline: 1px dashed white;
+      border: 1px dashed #ccc;
       height: 105px;
       width: 70px;
       margin: 8px 3px;
-      border-radius: 1px;
+      border-radius: 4px;
       vertical-align: top;
+      box-sizing: border-box;
     }
   }
 }
