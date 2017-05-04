@@ -86,6 +86,15 @@ class Lobby extends React.Component {
       if (newOpenTables[table.id]) {
         newOpenTables[table.id].table = table
         newOpenTables[table.id].messages.push(newMessage)
+
+        for (let winMessage of table.winMessages) {
+          let newMessage = {
+            message: winMessage,
+            from,
+            timestamp: Moment().format('LTS')
+          }
+          newOpenTables[table.id].messages.push(newMessage)          
+        }
       }
 
       this.setState({ openTables: newOpenTables })

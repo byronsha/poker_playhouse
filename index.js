@@ -34,17 +34,11 @@ tables[10] = new Table(10, 'Table 10', 9, 50)
 io.on('connection', socket => {
   socket.on('message', body => {
     const sender = players[socket.id]
-    socket.broadcast.emit('message', {
-      body,
-      from: sender.name
-    })
+    socket.broadcast.emit('message', { body, from: sender.name })
   })
 
   socket.on('fetch_lobby_info', () => {
-    socket.emit('receive_lobby_info', {
-      tables,
-      players
-    })
+    socket.emit('receive_lobby_info', { tables, players })
   })
 
   socket.on('join_lobby', playerName => {
@@ -69,96 +63,48 @@ io.on('connection', socket => {
   })
 
   socket.on('raise', ({ tableId, amount }) => {
-    const table = tables[tableId]
-    const seat = table.findPlayerBySocketId(socket.id)
-    const addToPot = amount - seat.bet
-    const message = `${seat.player.name} raises to $${amount.toFixed(2)}`
-
-    seat.raise(amount)
-
-    if (table.callAmount) {
-      table.minRaise = table.callAmount + (seat.bet - table.callAmount) * 2
-    } else {
-      table.minRaise = seat.bet * 2
-    }
-    
-    table.callAmount = amount
-    table.pot += addToPot
-
-    table.changeTurn(seat.id)
+    let table = tables[tableId]
+    let message = table.handleRaise(socket.id, amount)
 
     broadcastToTable(table, message)
   })
 
   socket.on('check', tableId => {
-    const table = tables[tableId]
-    const seat = table.findPlayerBySocketId(socket.id)
-    const message = `${seat.player.name} checks`
-
-    seat.check()
-    table.changeTurn(seat.id)
+    let table = tables[tableId]
+    let message = table.handleCheck(socket.id)
 
     broadcastToTable(table, message)
-
-    if (table.handOver) {
-      initNewHand(table)
-    }
+    if (table.handOver) initNewHand(table)
   })
 
   socket.on('call', tableId => {
-    const table = tables[tableId]
-    const seat = table.findPlayerBySocketId(socket.id)
-
-    let addToPot
-    if (table.callAmount > seat.stack) {
-      addToPot = seat.stack - seat.bet
-    } else {
-      addToPot = table.callAmount - seat.bet
-    }
-
-    const message = `${seat.player.name} calls $${addToPot.toFixed(2)}`
-
-    seat.callRaise(table.callAmount)
-    table.pot += addToPot
-    table.changeTurn(seat.id)
+    let table = tables[tableId]
+    let message = table.handleCall(socket.id)
 
     broadcastToTable(table, message)
-
-    if (table.handOver) {
-      initNewHand(table)
-    }
+    if (table.handOver) initNewHand(table)
   })
 
   socket.on('fold', tableId => {
-    const table = tables[tableId]
-    const seat = table.findPlayerBySocketId(socket.id)
-    const message = `${seat.player.name} folds`
-
-    seat.fold()
-    table.changeTurn(seat.id)
+    let table = tables[tableId]
+    let message = table.handleFold(socket.id)
 
     broadcastToTable(table, message)
-
-    if (table.handOver) {
-      initNewHand(table)
-    }
+    if (table.handOver) initNewHand(table)
   })
 
   socket.on('table_message', ({ message, from, tableId }) => {
-    const table = tables[tableId]
+    let table = tables[tableId]
     broadcastToTable(table, message, from)
   })
 
   socket.on('sit_down', ({ tableId, seatId }) => {
-    const table = tables[tableId]
-    const message = `${players[socket.id].name} sat down in Seat ${seatId}`
+    let table = tables[tableId]
+    let message = `${players[socket.id].name} sat down in Seat ${seatId}`
     table.sitPlayer(players[socket.id], seatId)
 
     broadcastToTable(table, message)
-
-    if (table.satPlayers().length === 2) {
-      initNewHand(table)
-    }
+    if (table.satPlayers().length === 2) initNewHand(table)
   })
 
   socket.on('disconnect', () => {
@@ -185,17 +131,18 @@ io.on('connection', socket => {
 
   function hideOpponentCards(table, socketId) {
     let tableCopy = JSON.parse(JSON.stringify(table))
-    let hiddenHand = [
-      { suit: 'hidden', rank: 'hidden'},
-      { suit: 'hidden', rank: 'hidden'}
-    ]
+    let hiddenCard = { suit: 'hidden', rank: 'hidden'}
+    let hiddenHand = [hiddenCard, hiddenCard]
 
     for (let i = 1; i <= tableCopy.maxPlayers; i++) {
-      if (tableCopy.seats[i]
-        && tableCopy.seats[i].hand.length > 0
-        && tableCopy.seats[i].player.socketId !== socketId)
-      {
-        tableCopy.seats[i].hand = hiddenHand
+      let currentSeat = tableCopy.seats[i]
+      if (
+        currentSeat &&
+        currentSeat.hand.length > 0 &&
+        currentSeat.lastAction !== 'WINNER' &&
+        currentSeat.player.socketId !== socketId
+      ) {
+        currentSeat.hand = hiddenHand
       }
     }
 
@@ -203,6 +150,7 @@ io.on('connection', socket => {
   }
 
   function initNewHand(table) {
+    table.clearWinMessages()
     broadcastToTable(table, '---New hand starting in 5 seconds---')
     setTimeout(() => {
       table.clearHand()
@@ -213,30 +161,3 @@ io.on('connection', socket => {
 })
 
 server.listen(9000)
-
-
-// 1. player sits down
-// 2. todo: player enters buyin amount
-// 3. check if two people are sitting
-// 4. start the game in x seconds
-// 5. create a new poker deck and deal hands
-//   need to keep track of:
-//     -player turn - options:
-//       -fold
-//       -call
-//       -bet amounts: 
-//         -min: small blind is limit/2
-
-//         e.g. 10NL - blinds 5c/10c, buyin $5-10
-
-//         -minbet 5c
-//         -minraise - double the amount raised (after calling previous)
-
-//         for each round keep track of
-//         -npm odds
-//         -pot
-//         -call amount
-
-//     -pot
-
-// 6. 

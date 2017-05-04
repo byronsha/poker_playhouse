@@ -23,6 +23,7 @@ class Table {
     this.bigBlind = null
     this.handOver = true
     this.mainPot = 0
+    this.winMessages = []
   }
   initSeats(maxPlayers) {
     const seats = {}
@@ -65,11 +66,8 @@ class Table {
     
     while (i < places) {
       current = current === this.maxPlayers ? 1 : current + 1
-      if (this.seats[current]) {
-        i++
-      }
+      if (this.seats[current]) i++
     }
-
     return current
   }
   getNextUnfoldedPlayer(player, places) {
@@ -78,11 +76,10 @@ class Table {
 
     while (i < places) {
       current = current === this.maxPlayers ? 1 : current + 1
-      if (this.seats[current] && !this.seats[current].folded && this.seats[current].stack > 0) {
-        i++
-      }
-    }
+      let currentSeat = this.seats[current]
 
+      if (currentSeat && !currentSeat.folded && currentSeat.stack > 0) i++
+    }
     return current
   }
   changeTurn(lastTurn) {
@@ -183,6 +180,9 @@ class Table {
       }
     }
   }
+  clearWinMessages() {
+    this.winMessages = []
+  }
   checkHandOver() {
     const satPlayers = this.satPlayers()
     const unfoldedPlayers = this.unfoldedPlayers()
@@ -209,7 +209,10 @@ class Table {
     }
   }
   allCheckedOrCalled() {
-    if (this.seats[this.bigBlind].bet === this.limit / 100 && !this.seats[this.bigBlind].checked && this.board.length === 0) {
+    if (this.seats[this.bigBlind].bet === this.limit / 100
+      && !this.seats[this.bigBlind].checked
+      && this.board.length === 0)
+    {
       return false
     }
 
@@ -251,19 +254,24 @@ class Table {
 
     for (let i = 1; i <= this.maxPlayers; i++) {
       if (this.seats[i]) {
-        const hand = PokerHand.score(this.seats[i].hand, this.board)
+        let hand = PokerHand.score(this.seats[i].hand, this.board)
 
         if (hand.value > highScore) {
-          winners = [i]
+          winners = [[i, hand]]
           highScore = hand.value
         } else if (hand.value === highScore) {
-          winners.push(i)
+          winners.push([i, hand])
         }
       }
     }
 
     for (let i = 0; i < winners.length; i++) {
-      this.seats[winners[i]].winHand(this.pot / winners.length)
+      let seat = this.seats[winners[i][0]]
+      let hand = winners[i][1]
+      let winAmount = this.pot / winners.length
+
+      seat.winHand(winAmount)
+      this.winMessages.push(`${seat.player.name} wins $${winAmount.toFixed(2)} with ${hand.name}`)
     }
 
     this.pot = 0
@@ -317,6 +325,49 @@ class Table {
       }
     }
     throw new Error('seat not found!')
+  }
+  handleFold(socketId) {
+    let seat = this.findPlayerBySocketId(socketId)
+    seat.fold()
+    this.changeTurn(seat.id)
+
+    return `${seat.player.name} folds`
+  }
+  handleCall(socketId) {
+    let seat = this.findPlayerBySocketId(socketId)
+    let addedToPot = this.callAmount > seat.stack
+      ? seat.stack - seat.bet
+      : this.callAmount - seat.bet
+
+    seat.callRaise(this.callAmount)
+    this.pot += addedToPot
+    this.changeTurn(seat.id)
+
+    return `${seat.player.name} calls $${addedToPot.toFixed(2)}`
+  }
+  handleCheck(socketId) {
+    let seat = this.findPlayerBySocketId(socketId)
+    seat.check()
+    this.changeTurn(seat.id)
+
+    return `${seat.player.name} checks`
+  }
+  handleRaise(socketId, amount) {
+    let seat = this.findPlayerBySocketId(socketId)
+    let addedToPot = amount - seat.bet
+
+    seat.raise(amount)
+    this.pot += addedToPot
+
+    if (this.callAmount) {
+      this.minRaise = this.callAmount + (seat.bet - this.callAmount) * 2
+    } else {
+      this.minRaise = seat.bet * 2
+    }
+    this.callAmount = amount
+    this.changeTurn(seat.id)
+
+    return `${seat.player.name} raises to $${amount.toFixed(2)}`
   }
 }
 

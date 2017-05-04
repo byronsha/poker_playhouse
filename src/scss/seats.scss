@@ -79,7 +79,7 @@
   }
 }
 .seat-container.active .seat-info > div:nth-child(2) {
-  background: #ff3b04;
+  background: #c62828;
 }
 .seat-stack {
   font-size: 1.5em;
@@ -100,32 +100,27 @@
     right: 40px;
   }
 }
-.seat-last-action, .shot-clock {
+.seat-last-action {
   z-index: -1;
   position: absolute;
-  bottom: -16px;
+  bottom: -14px;
   text-align: center;
   width: 100%;
   background: #c62828;
-  font-size: 12px;
+  font-size: .8em;
   color: white;
-  padding: 5px 0px 3px 0px;
   box-sizing: border-box;
   letter-spacing: 1px;
 }
 .shot-clock {
-  background: #333;
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
 
   div {
     float: right;
-    width: 4px;
-    height: 14px;
-    border-left: 1px solid #333;
-  }
-  span {
-    position: absolute;
-    left: 3px;
-    bottom: 2px;
+    height: 5px;
+    transition: 0.2s all;
   }
 }
 .button-chip {

@@ -24,20 +24,25 @@ class ShotClock extends React.Component {
   }
   
   render() {
-    if (this.state.seconds === 0)  {
+    let seconds = this.state.seconds
+
+    let background = 'green'
+    if (seconds <= 20) { background = 'yellow' }
+    if (seconds <= 10) { background = 'orange' }
+    if (seconds <= 5) { background = 'red' }
+
+    let style = {
+      background: background,
+      width: `${seconds * 3.3}%`
+    }
+
+    if (seconds === 0)  {
       return <div></div>
     }
 
     return (
       <div className="shot-clock">
-        <span>{this.state.seconds}</span>
-        {Array.from(Array(this.state.seconds).keys()).map(num => {
-          let color = 'green'
-          if (num <= 20) { color = 'yellow' }
-          if (num <= 10) { color = 'orange' }
-          if (num <= 5) { color = 'red' }
-          return <div key={num} style={{background: color}}></div>
-        })}
+        <div style={style}></div>
       </div>
     )
   }

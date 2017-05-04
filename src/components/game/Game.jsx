@@ -36,11 +36,14 @@ class Game extends React.Component {
     const { player, table } = this.props
 
     for (let i = 1; i <= Object.keys(table.seats).length; i++) {
-      if (table.seats[i] && table.seats[i].turn && table.seats[i].player.socketId === player.socketId) {
+      if (
+        table.seats[i] &&
+        table.seats[i].turn &&
+        table.seats[i].player.socketId === player.socketId
+      ) {
         return true
       }
     }
-
     return false
   }
 
