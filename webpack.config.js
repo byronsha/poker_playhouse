@@ -1,9 +1,11 @@
+var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
-  entry: ['./src/index.js', './src/scss/main.scss'],
+  entry: ['./src/index.js', './src/scss/main.scss', 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
   output: {
     path: '/',
+    publicPath: '/',
     filename: 'bundle.js'
   },
   resolve: {
@@ -14,11 +16,11 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'react'],
-          plugins: ['transform-class-properties']
-        }
+        exclude: /node_modules/,
+        loaders: [
+          'react-hot-loader',
+          'babel-loader?presets[]=es2015,presets[]=react,plugins[]=transform-class-properties'
+        ]
       },
       { // regular css files
         test: /\.css$/,
@@ -40,9 +42,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin({ // define where to save the file
+    new ExtractTextPlugin({
       filename: 'dist/[name].bundle.css',
       allChunks: true,
     }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   ]
 }

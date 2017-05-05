@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const socketIo = require('socket.io')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
+const webpackHotMiddleware = require('webpack-hot-middleware')
 const webpackConfig = require('./webpack.config.js')
 
 const Player = require('./src/game_logic/player.js')
@@ -12,9 +13,11 @@ const Table = require('./src/game_logic/table.js')
 const app = express()
 const server = http.createServer(app)
 const io = socketIo(server)
+const compiler = webpack(webpackConfig)
 
 app.use(express.static(__dirname))
-app.use(webpackDevMiddleware(webpack(webpackConfig)))
+app.use(webpackDevMiddleware(compiler, { publicPath: webpackConfig.output.publicPath }))
+app.use(webpackHotMiddleware(compiler))
 app.use(bodyParser.urlencoded({ extended: false }))
 
 const tables = {}
