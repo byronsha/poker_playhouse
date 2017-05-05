@@ -1,6 +1,7 @@
 import React from 'react'
 import Spectators from './Spectators'
 import Seats from './seats/Seats'
+import Background from './Background'
 import Board from './Board'
 import Actions from './actions/Actions'
 import ChipPile from './pieces/ChipPile'
@@ -84,11 +85,7 @@ class Game extends React.Component {
           </div>
         </div>
 
-        <div className="table-background">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
+        <Background />
 
         <Seats
           player={player}

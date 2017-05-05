@@ -10,7 +10,7 @@ class Card extends React.Component {
       case 'hearts':
         return { background: '#d32f2f' }
       case 'clubs':
-        return { background: '#4caf50' }
+        return { background: 'rgb(55, 183, 60)' }
       default:
         return { background: '#ccc' }
     }

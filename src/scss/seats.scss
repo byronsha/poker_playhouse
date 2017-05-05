@@ -61,7 +61,7 @@
   box-shadow: $box-shadow;
 }
 .seat-info > div:nth-child(2) {
-  font-size: .75em;
+  font-size: .8em;
   padding: 2px 0px;
   background: $blue-darken-4
 }
@@ -94,20 +94,20 @@
 
   .card:first-child {
     position: absolute;
-    left: 40px;
+    left: 38px;
   }
   .card:last-child {
     position: absolute;
-    right: 40px;
+    right: 38px;
   }
 }
 .seat-last-action {
   position: absolute;
-  bottom: -14px;
+  bottom: -13px;
   text-align: center;
   width: 100%;
   background: #c62828;
-  font-size: .8em;
+  font-size: 0.7em;
   color: white;
   box-sizing: border-box;
   letter-spacing: 1px;

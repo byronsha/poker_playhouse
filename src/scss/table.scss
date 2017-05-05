@@ -25,7 +25,7 @@
       background: #666;
     }
   }
-  .table-background {
+  .table-bg {
     width: 80%;
     height: 54%;
     position: absolute;
@@ -34,33 +34,47 @@
     box-sizing: border-box;
     z-index: -1;
 
-    div {
-      background: #268644;
+    .bg-outer {
+      background: #009688;
       border: 18px solid #444;
-    }
-    div:first-child,
-    div:last-child {
-      width: 60%;
       height: 100%;
-      top: 0px;
       position: absolute;
+
+      .bg-inner {
+        width: calc(100% - 10px);
+        height: calc(100% - 10px);
+        border: 5px solid #aaa;
+      }
+    }
+    .bg-outer:first-child,
+    .bg-outer:last-child {
+      width: 60%;
+      top: 0px;
       border-radius: 50%;
       z-index: -2;
+
+      .bg-inner {
+        border-radius: 50%;
+      }
     }
-    div:first-child {
+    .bg-outer:first-child {
       left: 0px;
     }
-    div:last-child {
+    .bg-outer:last-child {
       right: 0px;
     }
-    div:nth-child(2) {
+    .bg-outer:nth-child(2) {
       width: 40%;
-      height: 100%;
       left: 30%;
-      position: absolute;
       border-left: none;
       border-right: none;
-      z-index: -1;  
+      z-index: -1;
+
+      .bg-inner {
+        width: 100%;
+        border-left: none;
+        border-right: none;
+      }
     }
   }
   .board {
@@ -79,7 +93,7 @@
       display: inline-block;
       border: 1px dashed #ccc;
       height: 105px;
-      width: 70px;
+      width: 75px;
       margin: 8px 3px;
       border-radius: 4px;
       vertical-align: top;
