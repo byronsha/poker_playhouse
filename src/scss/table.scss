@@ -3,26 +3,29 @@
   width: 100%;
   height: 100vh;
   box-sizing: border-box;
-  padding: 5px;
-  background: #222;
+  padding: 5px 0px;
   z-index: 0;
   font-family: 'Oswald', sans-serif;
+  overflow: hidden;
 
   .player-list {
-    color: #ccc;
-    padding-top: 15px;
+    color: #333;
+    padding: 0px 10px;
   }
   .table-info {
-    color: #ccc;
+    color: #333;
+    padding: 0px 10px;
 
     button {
       float: right;
       border: none;
-      background: #444;
-      color: white;
+      background: $blue-grey-darken-3;
+      color: #ccc;
+      margin: 1px;
     }
     button:hover {
-      background: #666;
+      background: $blue-grey;
+      transition: 0.2s all;
     }
   }
   .table-bg {
@@ -30,13 +33,13 @@
     height: 54%;
     position: absolute;
     left: 10%;
-    top: 16%;
+    top: 15%;
     box-sizing: border-box;
     z-index: -1;
 
     .bg-outer {
-      background: #009688;
-      border: 18px solid #444;
+      background: $teal;
+      border: 22px solid #2a2a2a;
       height: 100%;
       position: absolute;
 
@@ -78,7 +81,9 @@
     }
   }
   .board {
-    padding-top: 20vh;
+    position: absolute;
+    width: 100%;
+    top: 33%;
     text-align: center;
     color: white;
     

@@ -56,13 +56,11 @@ class Game extends React.Component {
       <div className="poker-game">
         <div className="table-info">
           <div>
-            {table.name}
-            <button onClick={() => { onLeaveClick(table.id) }}>Leave table</button>
+            {table.name}, ${table.limit.toFixed(2)} NL Holdem, {table.maxPlayers} players
+            <button onClick={() => { onLeaveClick(table.id) }}><i className="fa fa-sign-out" aria-hidden="true"></i></button>
             <button onClick={this.rotateCounterClockwiseClick}><i className="fa fa-undo" aria-hidden="true"></i></button>
             <button onClick={this.rotateClockwiseClick}><i className="fa fa-repeat" aria-hidden="true"></i></button>
           </div>
-          <div>${table.limit.toFixed(2)} NL Holdem</div>
-          <div>{table.maxPlayers} players</div>
         </div>
         
         <Spectators

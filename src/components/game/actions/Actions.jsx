@@ -70,52 +70,53 @@ class ActionButtons extends React.Component {
     return (
       <div className="actions-container">
         <div className="actions">
-          <button onClick={() => {
-            onFoldClick(table.id)
-          }}>
-            Fold
-          </button>
-
-          {(!table.callAmount || seat.bet === table.callAmount) &&
+          <div className="main-action-buttons">
             <button onClick={() => {
-              onCheckClick(table.id)
+              onFoldClick(table.id)
             }}>
-              Check
+              Fold
             </button>
-          }
 
-          {(table.callAmount > 0 && seat.bet !== table.callAmount) &&
-            <button onClick={() => {
-              onCallClick(table.id)
-            }}>
-              Call
-              <br/>
-              ${(totalCallAmount).toFixed(2)}
-            </button>  
-          }
+            {(!table.callAmount || seat.bet === table.callAmount) &&
+              <button onClick={() => {
+                onCheckClick(table.id)
+              }}>
+                Check
+              </button>
+            }
+
+            {(table.callAmount > 0 && seat.bet !== table.callAmount) &&
+              <button onClick={() => {
+                onCallClick(table.id)
+              }}>
+                Call ${(totalCallAmount).toFixed(2)}
+              </button>  
+            }
+
+            {seat.stack > table.callAmount &&
+              <button onClick={() => {
+                onRaiseClick(table.id, parseFloat(this.state.raiseAmount))
+              }}>
+                Raise to ${parseFloat(this.state.raiseAmount).toFixed(2)}
+              </button>
+            }
+          </div>
 
           {seat.stack > table.callAmount &&
-            <button onClick={() => {
-              onRaiseClick(table.id, parseFloat(this.state.raiseAmount))
-            }}>
-              Raise to
-              <br/>
-              ${parseFloat(this.state.raiseAmount).toFixed(2)}
-            </button>
-          }
+            <div>
+              <div className="raise-slider-container">
+                <RaiseSlider
+                  raiseAmount={this.state.raiseAmount}
+                  decreaseRaiseAmount={() => this.handleRaiseUpdate(this.state.raiseAmount - table.minBet)}
+                  increaseRaiseAmount={() => this.handleRaiseUpdate(this.state.raiseAmount + table.minBet)}
+                  onRaiseChange={this.handleRaiseChange}
+                  table={table}
+                  seat={seat}
+                />
+                <input type="number" />
+              </div>
 
-          {seat.stack > table.callAmount &&
-            <div className="raise-sizing-container">
-              <RaiseSlider
-                raiseAmount={this.state.raiseAmount}
-                decreaseRaiseAmount={() => this.handleRaiseUpdate(this.state.raiseAmount - table.minBet)}
-                increaseRaiseAmount={() => this.handleRaiseUpdate(this.state.raiseAmount + table.minBet)}
-                onRaiseChange={this.handleRaiseChange}
-                table={table}
-                seat={seat}
-              />
-
-              <div className="pot-sizes">
+              <div className="raise-size-buttons">
                 {potSizes.map(potSize =>
                   <PotSizeButton
                     key={potSize[0]}

@@ -1,44 +1,32 @@
-.game-chat-container {
+.game-chat {
+  font-size: 0.9em;
   position: absolute;
   bottom: 0px;
   right: 0px;
-  width: 30%;
-  height: 20vh;
-  font-size: 0.8em;
+  width: calc(50% - 10px);
   font-family: 'Roboto Condensed', sans-serif;
-  margin-right: 5px;
-  background: #163252;
-  box-shadow: $box-shadow;
+  background: $blue-grey-lighten-4;
+  box-shadow: -1px -1px 2px #666, 1px 0px 2px #666;
+  box-sizing: border-box;
+  margin-right: 10px;
 
-  .game-chat {
-    height: calc(100% - 39px);
-    margin: 5px;
-    padding: 3px;
-    background: #1e5799;
+  .messages {
+    height: 13vh;
+    margin: 10px 10px 0px 10px;
+    padding-left: 5px;
+    padding-top: 5px;
     overflow: auto;
     color: #ccc;
+    background: $blue-grey-darken-4;
   }
-  .player-name {
-    display: inline-block;
-    background: white;
-    border: none;
-    margin: 0px 5px;
-    padding: 2px 2px 1px 2px;
-    width: calc(15% - 19px);
-    background: #1e5799;
-    color: white;
-  }
-  .game-chat-input {
-    display: inline-block;
-    width: 85%;
-    margin-right: 5px;
-  }
-  input {
-    width: 100%;
-    border: none;
-    font-family: inherit;
-    box-sizing: border-box;
-    color: #333;
-    background: #ccc
+  .chat-input {
+    padding: 5px 27px 7px 10px;
+
+    input {
+      width: 100%;
+      color: #ccc;
+      background: $blue-grey-darken-4;
+      border: none;
+    }
   }
 }

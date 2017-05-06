@@ -21,7 +21,7 @@
   left: -150px;
 }
 .seat4of6 {
-  top: calc(77% - 150px);
+  top: calc(76% - 150px);
   left: calc(50% - 90px);
 }
 .seat4of6 .bet {
@@ -57,13 +57,13 @@
   bottom: 5px;
   color: white;
   box-sizing: border-box;
-  background: $blue-darken-3;
+  background: $blue-grey-darken-3;
   box-shadow: $box-shadow;
 }
 .seat-info > div:nth-child(2) {
   font-size: .8em;
   padding: 2px 0px;
-  background: $blue-darken-4
+  background: $blue-grey-darken-4
 }
 .seat-number {
   padding: 2px 6px;
@@ -79,8 +79,8 @@
     font-size: 0.8em;
   }
 }
-.seat-container.active .seat-info > div:nth-child(2) {
-  background: #c62828;
+.seat-container.active .seat-info .seat-player {
+  color: #ffeb3b;
 }
 .seat-stack {
   font-size: 1.5em;
@@ -103,12 +103,12 @@
 }
 .seat-last-action {
   position: absolute;
-  bottom: -13px;
+  bottom: -11px;
   text-align: center;
   width: 100%;
-  background: #c62828;
+  background: $teal-lighten-3;
   font-size: 0.7em;
-  color: white;
+  color: #333;
   box-sizing: border-box;
   letter-spacing: 1px;
   box-shadow: $box-shadow;

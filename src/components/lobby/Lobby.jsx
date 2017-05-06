@@ -16,7 +16,9 @@ class Lobby extends React.Component {
       tables: {},
       players: {},
       openTables: {},
-      messages: []
+      messages: [],
+      leftColumnShowing: true,
+      rightColumnShowing: true
     }
 
     this.handleTableClick = this.handleTableClick.bind(this)
@@ -27,6 +29,9 @@ class Lobby extends React.Component {
     this.handleCheckClick = this.handleCheckClick.bind(this)
     this.handleCallClick = this.handleCallClick.bind(this)
     this.handleFoldClick = this.handleFoldClick.bind(this)
+
+    this.toggleLeftColumn = this.toggleLeftColumn.bind(this)
+    this.toggleRightColumn = this.toggleRightColumn.bind(this)
   }
 
   componentDidMount() {
@@ -165,16 +170,33 @@ class Lobby extends React.Component {
     }
   }
 
+  toggleLeftColumn() {
+    this.setState({ leftColumnShowing: !this.state.leftColumnShowing })
+  }
+
+  toggleRightColumn() {
+    this.setState({ rightColumnShowing: !this.state.rightColumnShowing })
+  }
+
   render() {
     const props = this.props
-    const { player, tables, players, openTables } = this.state
+    const { player, tables, players, openTables, leftColumnShowing, rightColumnShowing } = this.state
+
+    let leftColumnClass = leftColumnShowing ? 'left-column' : 'left-column hidden'
+    let rightColumnClass = rightColumnShowing ? 'right-column' : 'right-column hidden'
 
     return (
       <div>
-        <div id="left-column">
-          <div className="fancy-chip blue">
-            <div><span>PF</span></div>
-          </div>
+        <div className={leftColumnClass}>
+          <button
+            onClick={this.toggleLeftColumn}
+            className="toggle-left-column-btn"
+          >
+            {leftColumnShowing &&
+              <i className="fa fa-angle-left" aria-hidden="true"></i>}
+            {!leftColumnShowing &&
+              <i className="fa fa-angle-right" aria-hidden="true"></i>}
+          </button>
           
           <div className="player-info">Logged in as {player.name}</div>
           
@@ -185,7 +207,7 @@ class Lobby extends React.Component {
           />
         </div>
 
-        <div id="center-column">
+        <div className="center-column">
           {Object.keys(openTables).length > 0 &&
             Object.values(openTables).map(table =>
               <Game
@@ -205,7 +227,17 @@ class Lobby extends React.Component {
           }
         </div>
 
-        <div id="right-column">
+        <div className={rightColumnClass}>
+          <button
+            onClick={this.toggleRightColumn}
+            className="toggle-right-column-btn"
+          >
+            {rightColumnShowing &&
+              <i className="fa fa-angle-right" aria-hidden="true"></i>}
+            {!rightColumnShowing &&
+              <i className="fa fa-angle-left" aria-hidden="true"></i>}
+          </button>
+
           <PlayerList
             player={player} 
             players={players}
@@ -222,3 +254,7 @@ class Lobby extends React.Component {
 }
 
 export default Lobby
+
+//  <div className="fancy-chip blue">
+//   <div><span>PF</span></div>
+//  </div>

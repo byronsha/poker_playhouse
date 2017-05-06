@@ -26,10 +26,9 @@ class ShotClock extends React.Component {
   render() {
     let seconds = this.state.seconds
 
-    let background = 'green'
-    if (seconds <= 20) { background = 'yellow' }
-    if (seconds <= 10) { background = 'orange' }
-    if (seconds <= 5) { background = 'red' }
+    let background = '#ffeb3b'
+    if (seconds <= 10) { background = '#ff9800' }
+    if (seconds <= 5) { background = '#ff5722' }
 
     let style = {
       background: background,

@@ -9,7 +9,7 @@ const RaiseSlider = ({
 
   return (
     <div className="raise-slider">
-      <button onClick={decreaseRaiseAmount}>-</button>
+      <button onClick={decreaseRaiseAmount}><i className="fa fa-minus" aria-hidden="true"></i></button>
       <span>${minRaise.toFixed(2)}</span>
       <input
         type="range"
@@ -22,7 +22,7 @@ const RaiseSlider = ({
       >
       </input>
       <span>${maxBet.toFixed(2)}</span>
-      <button onClick={increaseRaiseAmount}>+</button>
+      <button onClick={increaseRaiseAmount}><i className="fa fa-plus" aria-hidden="true"></i></button>
     </div>
   )
 }
