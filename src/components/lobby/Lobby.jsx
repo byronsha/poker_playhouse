@@ -86,9 +86,8 @@ class Lobby extends React.Component {
       if (newOpenTables[table.id]) {
         newOpenTables[table.id].table = table
 
-        let newMessage
         if (message) {
-          newMessage = {
+          const newMessage = {
             message,
             from,
             timestamp: Moment().format('LTS')
@@ -97,8 +96,7 @@ class Lobby extends React.Component {
         }
 
         for (let winMessage of table.winMessages) {
-          console.log(winMessage)
-          newWinMessage = {
+          const newWinMessage = {
             message: winMessage,
             from,
             timestamp: Moment().format('LTS')

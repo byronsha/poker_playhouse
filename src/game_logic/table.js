@@ -44,8 +44,13 @@ class Table {
       }
     }
 
-    this.checkHandOver()
-    this.checkTableEmpty()
+    if (this.satPlayers().length === 1) {
+      this.endWithoutShowdown()
+    }
+
+    if (this.satPlayers().length === 0) {
+      this.resetEmptyTable()
+    }
   }
   sitPlayer(player, seatId) {
     this.seats[seatId] = new Seat(seatId, player, this.limit)
@@ -83,33 +88,35 @@ class Table {
     return current
   }
   changeTurn(lastTurn) {
-    this.checkHandOver()
+    if (this.unfoldedPlayers().length === 1) {
+      this.endWithoutShowdown()
+      return
+    }
 
     if (this.allAllIn()) {
-      while (this.board.length < 5) {
+      while (this.board.length < 5 && !this.handOver) {
         this.dealNextStreet()
       }
-      this.dealNextStreet()
     }
 
     if (this.allCheckedOrCalled()) {
       this.dealNextStreet()
-      if (this.handOver) {
-        this.turn = null
-      } else {
-        this.turn = this.nextUnfoldedPlayer(this.button, 1)
-      }
+      this.turn = this.handOver ? null : this.nextUnfoldedPlayer(this.button, 1)
     } else {
       this.turn = this.nextUnfoldedPlayer(lastTurn, 1)
     }
 
     for (let i = 1; i <= this.maxPlayers; i++) {
-      if (this.seats[i] && i === this.turn) {
-        this.seats[i].turn = true
-      } else if (this.seats[i]) {
-        this.seats[i].turn = false
+      if (this.seats[i]) {
+        this.seats[i].turn = i === this.turn ? true : false
       }
     }
+  }
+  endWithoutShowdown() {
+    const winner = this.unfoldedPlayers()[0]
+    winner.winHand(this.pot)
+    this.winMessages.push(`${winner.player.name} wins $${this.pot.toFixed(2)}`)
+    this.endHand()
   }
   unfoldPlayers() {
     for (let i = 1; i <= this.maxPlayers; i++) {
@@ -121,7 +128,8 @@ class Table {
   startHand() {
     this.deck = new Deck()
     this.handOver = false
-    
+    this.resetBoardAndPot()
+    this.clearSeatHands()
     this.unfoldPlayers()
     this.resetBetsAndActions()
     this.setTurn()
@@ -147,24 +155,20 @@ class Table {
     this.callAmount = this.minBet * 2
     this.minRaise = this.minBet * 4
   }
-  clearHand() {
-    this.handOver = true
-    this.deck = null
-    this.board = []
-    this.pot = 0
-    this.mainPot = 0
-    // this.minRaise = this.minBet * 2
-    this.clearSeatHands()
+  clearSeats() {
+    for (let i of Object.keys(this.seats)) {
+      this.seats[i] = null
+    }
   }
   clearSeatHands() {
-    for (let i = 1; i <= this.maxPlayers; i++) {
+    for (let i of Object.keys(this.seats)) {
       if (this.seats[i]) {
         this.seats[i].hand = []
       }
     }
   }
   clearSeatTurns() {
-    for (let i = 1; i <= this.maxPlayers; i++) {
+    for (let i of Object.keys(this.seats)) {
       if (this.seats[i]) {
         this.seats[i].turn = false
       }
@@ -173,46 +177,41 @@ class Table {
   clearWinMessages() {
     this.winMessages = []
   }
-  checkHandOver() {
-    const satPlayers = this.satPlayers()
-    const unfoldedPlayers = this.unfoldedPlayers()
-
-    if (satPlayers.length === 1) {
-      satPlayers[0].winHand(this.pot)
-      this.button = satPlayers[0].id
-      this.handOver = true
-      this.clearHand()
-    }
-
-    if (unfoldedPlayers.length === 1) {
-      unfoldedPlayers[0].winHand(this.pot)
-      this.button = this.nextSatPlayer(this.button, 1)
-      this.handOver = true
-      this.clearHand()
-    }
+  endHand() {
+    this.button = this.nextSatPlayer(this.button, 1)
+    this.clearSeatTurns()
+    this.handOver = true
   }
-  checkTableEmpty() {
-    if (this.satPlayers().length === 0) {
-      this.button = null
-      this.turn = null
-      this.clearHand()
-    }
+  resetEmptyTable() {
+    this.button = null
+    this.turn = null
+    this.handOver = true
+    this.deck = null
+    this.resetBoardAndPot()
+    this.clearWinMessages()
+    this.clearSeats()
+  }
+  resetBoardAndPot() {
+    this.board = []
+    this.pot = 0
+    this.mainPot = 0
   }
   allCheckedOrCalled() {
-    if (this.seats[this.bigBlind].bet === this.limit / 100
-      && !this.seats[this.bigBlind].checked
-      && this.board.length === 0)
-    {
+    if (
+      this.seats[this.bigBlind].bet === this.limit / 100 &&
+      !this.seats[this.bigBlind].checked &&
+      this.board.length === 0
+    ) {
       return false
     }
 
-    for (let i = 1; i <= this.maxPlayers; i++) {
-      if (this.seats[i] && !this.seats[i].folded && this.seats[i].stack > 0) {
-        if (!this.seats[i].checked && this.callAmount && this.seats[i].bet !== this.callAmount) {
-          return false
-        } else if (this.seats[i].checked && this.callAmount && this.seats[i].bet !== this.callAmount) {
-          return false
-        } else if (!this.callAmount && !this.seats[i].checked) {
+    for (let i of Object.keys(this.seats)) {
+      const seat = this.seats[i]
+      if (seat && !seat.folded && seat.stack > 0) {
+        if (
+          (this.callAmount && seat.bet !== this.callAmount) ||
+          (!this.callAmount && !seat.checked)
+        ) {
           return false
         }
       }
@@ -220,7 +219,7 @@ class Table {
     return true
   }
   allAllIn() {
-    for (let i = 1; i <= this.maxPlayers; i++) {
+    for (let i of Object.keys(this.seats)) {
       if (this.seats[i] && this.seats[i].stack > 0) {
         return false
       }
@@ -228,13 +227,14 @@ class Table {
     return true
   }
   dealNextStreet() {
+    const length = this.board.length
     this.resetBetsAndActions()
     this.mainPot = this.pot
-    if (this.board.length === 0) {
+    if (length === 0) {
       this.dealFlop()
-    } else if (this.board.length === 3 || this.board.length === 4) {
+    } else if (length === 3 || length === 4) {
       this.dealTurnOrRiver()
-    } else if (this.board.length === 5) {
+    } else if (length === 5) {
       this.determineWinner()
     }
   }
@@ -244,7 +244,7 @@ class Table {
 
     for (let i = 1; i <= this.maxPlayers; i++) {
       if (this.seats[i]) {
-        let hand = PokerHand.score(this.seats[i].hand, this.board)
+        const hand = PokerHand.score(this.seats[i].hand, this.board)
 
         if (hand.value > highScore) {
           winners = [[i, hand]]
@@ -256,19 +256,15 @@ class Table {
     }
 
     for (let i = 0; i < winners.length; i++) {
-      let seat = this.seats[winners[i][0]]
-      let hand = winners[i][1]
-      let winAmount = this.pot / winners.length
+      const seat = this.seats[winners[i][0]]
+      const hand = winners[i][1]
+      const winAmount = this.pot / winners.length
 
       seat.winHand(winAmount)
       this.winMessages.push(`${seat.player.name} wins $${winAmount.toFixed(2)} with ${hand.name}`)
     }
 
-    this.pot = 0
-    this.mainPot = 0
-    this.button = this.nextSatPlayer(this.button, 1)
-    this.clearSeatTurns()
-    this.handOver = true
+    this.endHand()
   }
   resetBetsAndActions() {
     for (let i = 1; i <= this.maxPlayers; i++) {
@@ -288,14 +284,10 @@ class Table {
      // deal cards to seated players
     for (let i = 0; i < 2; i++) {
       for (let j = 0; j < order.length; j++) {
-        const currentSeat = order[j]
-
-        if (this.seats[currentSeat]) {
-          this.seats[currentSeat].hand.push(this.deck.draw())
-
-          if (currentSeat === this.turn) {
-            this.seats[currentSeat].turn = true
-          }
+        const seat = this.seats[order[j]]
+        if (seat) {
+          seat.hand.push(this.deck.draw())
+          seat.turn = order[j] === this.turn ? true : false
         }
       }
     }
@@ -354,12 +346,9 @@ class Table {
 
     seat.raise(amount)
     this.pot += addedToPot
-
-    if (this.callAmount) {
-      this.minRaise = this.callAmount + (seat.bet - this.callAmount) * 2
-    } else {
-      this.minRaise = seat.bet * 2
-    }
+    
+    this.minRaise = this.callAmount ?
+      (this.callAmount + (seat.bet - this.callAmount) * 2) : seat.bet * 2
     this.callAmount = amount
 
     return {

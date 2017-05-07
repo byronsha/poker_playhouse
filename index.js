@@ -134,18 +134,19 @@ io.on('connection', socket => {
   }
 
   function changeTurnAndBroadcast(table, seatId) {
-    table.changeTurn(seatId)
     setTimeout(() => {
+      table.changeTurn(seatId)
       broadcastToTable(table)
+      if (table.handOver) {
+        initNewHand(table)
+      }
     }, 1000)
-    if (table.handOver) initNewHand(table)
   }
 
   function initNewHand(table) {
     table.clearWinMessages()
     broadcastToTable(table, '---New hand starting in 5 seconds---')
     setTimeout(() => {
-      table.clearHand()
       table.startHand()
       broadcastToTable(table, '---New hand started---')
     }, 5000)
