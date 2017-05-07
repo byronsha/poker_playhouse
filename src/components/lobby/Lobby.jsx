@@ -97,12 +97,13 @@ class Lobby extends React.Component {
         }
 
         for (let winMessage of table.winMessages) {
-          newMessage = {
+          console.log(winMessage)
+          newWinMessage = {
             message: winMessage,
             from,
             timestamp: Moment().format('LTS')
           }
-          newOpenTables[table.id].messages.push(newMessage)          
+          newOpenTables[table.id].messages.push(newWinMessage)          
         }
       }
 

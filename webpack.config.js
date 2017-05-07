@@ -25,7 +25,7 @@ module.exports = {
       { // regular css files
         test: /\.css$/,
         loader: ExtractTextPlugin.extract({
-          loader: 'css-loader?importLoaders=1',
+          use: 'css-loader?importLoaders=1',
         }),
       },
       { // sass / scss loader for webpack

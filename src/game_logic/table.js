@@ -60,7 +60,7 @@ class Table {
   unfoldedPlayers() {
     return Object.values(this.seats).filter(seat => seat !== null && !seat.folded)
   }
-  getNextSatPlayer(player, places) {
+  nextSatPlayer(player, places) {
     let i = 0
     let current = player
     
@@ -70,7 +70,7 @@ class Table {
     }
     return current
   }
-  getNextUnfoldedPlayer(player, places) {
+  nextUnfoldedPlayer(player, places) {
     let i = 0
     let current = player
 
@@ -97,10 +97,10 @@ class Table {
       if (this.handOver) {
         this.turn = null
       } else {
-        this.turn = this.getNextUnfoldedPlayer(this.button, 1)
+        this.turn = this.nextUnfoldedPlayer(this.button, 1)
       }
     } else {
-      this.turn = this.getNextUnfoldedPlayer(lastTurn, 1)
+      this.turn = this.nextUnfoldedPlayer(lastTurn, 1)
     }
 
     for (let i = 1; i <= this.maxPlayers; i++) {
@@ -115,46 +115,37 @@ class Table {
     for (let i = 1; i <= this.maxPlayers; i++) {
       if (this.seats[i]) {
         this.seats[i].folded = false
-        this.seats[i].checked = false
       }
     }
   }
   startHand() {
-    this.handOver = false
     this.deck = new Deck()
+    this.handOver = false
+    
     this.unfoldPlayers()
-    this.minRaise *= 2
-    this.callAmount = null
-    this.smallBlind = null
-    this.bigBlind = null
-
-    if (this.unfoldedPlayers().length <= 3) {
-      this.turn = this.button
-    } else {
-      this.turn = this.getNextUnfoldedPlayer(this.button, 3)
-    }
-
+    this.resetBetsAndActions()
+    this.setTurn()
     this.dealPreflop()
     this.setBlinds()
   }
+  setTurn() {
+    this.turn = this.unfoldedPlayers().length <= 3 ?
+      this.button : this.nextUnfoldedPlayer(this.button, 3)
+  }
   setBlinds() {
-    const unfoldedPlayers = this.unfoldedPlayers()
+    const isHeadsUp = this.unfoldedPlayers().length === 2 ? true : false
+    
+    this.smallBlind = isHeadsUp ?
+      this.button : this.nextUnfoldedPlayer(this.button, 1)
+    this.bigBlind = isHeadsUp ?
+      this.nextUnfoldedPlayer(this.button, 1) : this.nextUnfoldedPlayer(this.button, 2)
 
-    if (unfoldedPlayers.length === 2) {
-      this.smallBlind = this.button
-      this.bigBlind = this.getNextUnfoldedPlayer(this.button, 1)
-    } else {
-      this.smallBlind = this.getNextUnfoldedPlayer(this.button, 1)
-      this.bigBlind = this.getNextUnfoldedPlayer(this.button, 2)
-    }
-
-    this.seats[this.smallBlind].placeBlind(this.limit / 200)
-    this.pot += this.limit / 200
-
-    this.seats[this.bigBlind].placeBlind(this.limit / 100)
-    this.pot += this.limit / 100
-
-    this.callAmount = this.limit / 100
+    this.seats[this.smallBlind].placeBlind(this.minBet)
+    this.seats[this.bigBlind].placeBlind(this.minBet * 2)
+    
+    this.pot += this.minBet * 3
+    this.callAmount = this.minBet * 2
+    this.minRaise = this.minBet * 4
   }
   clearHand() {
     this.handOver = true
@@ -162,7 +153,7 @@ class Table {
     this.board = []
     this.pot = 0
     this.mainPot = 0
-    this.minRaise = this.limit / 100
+    // this.minRaise = this.minBet * 2
     this.clearSeatHands()
   }
   clearSeatHands() {
@@ -195,7 +186,7 @@ class Table {
 
     if (unfoldedPlayers.length === 1) {
       unfoldedPlayers[0].winHand(this.pot)
-      this.button = this.getNextSatPlayer(this.button, 1)
+      this.button = this.nextSatPlayer(this.button, 1)
       this.handOver = true
       this.clearHand()
     }
@@ -275,7 +266,7 @@ class Table {
 
     this.pot = 0
     this.mainPot = 0
-    this.button = this.getNextSatPlayer(this.button, 1)
+    this.button = this.nextSatPlayer(this.button, 1)
     this.clearSeatTurns()
     this.handOver = true
   }
