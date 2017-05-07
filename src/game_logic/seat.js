@@ -14,29 +14,34 @@ class Seat {
     this.bet = 0
     this.folded = true
     this.lastAction = 'FOLD'
+    this.turn = false
   }
   check() {
     this.checked = true
     this.lastAction = 'CHECK'
+    this.turn = false
   }
-  raise(amount, isBlind = false) {
+  raise(amount) {
     this.stack -= (amount - this.bet)
     this.bet = amount
-
-    if (!isBlind) {
-      this.lastAction = 'RAISE'
-    }
+    this.lastAction = 'RAISE'
+    this.turn = false
+  }
+  placeBlind(amount) {
+    this.stack -= (amount - this.bet)
+    this.bet = amount
   }
   callRaise(amount) {
     this.stack = this.stack - (amount - this.bet) < 0 ? 0 : this.stack - (amount - this.bet)
     this.bet = amount > this.stack ? this.stack : amount
     this.lastAction = 'CALL'
+    this.turn = false
   }
   winHand(amount) {
     this.bet = 0
     this.stack += amount
-    this.turn = false
     this.lastAction = 'WINNER'
+    this.turn = false
   }
 }
 

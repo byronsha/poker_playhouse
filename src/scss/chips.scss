@@ -2,16 +2,16 @@
   text-align: center;
 }
 .chips {
-  width: 35px;
+  width: 25px;
   display: inline-block;
 }
 .chips > div {
-  height: 8px;
-  width: 28px;
+  height: 6px;
+  width: 20px;
   border-bottom: 1px solid #333;
   border-radius: 0 0 50% 50%;
   position: absolute;
-  margin: 0px 3px;
+  margin: 0px 2px;
 }
 .chips > div:first-child {
   border-bottom: none;

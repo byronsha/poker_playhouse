@@ -3,7 +3,7 @@
   top: 4%;
 }
 .seat1of6 .bet {
-  bottom: -105px;
+  bottom: -90px;
 }
 .seat2of6 {
   top: 18%;
@@ -14,21 +14,21 @@
   left: -150px;
 }
 .seat3of6 {
-  top: calc(65% - 150px);
+  top: calc(60% - 150px);
   left: calc(94% - 180px);
 }
 .seat3of6 .bet {
   left: -150px;
 }
 .seat4of6 {
-  top: calc(76% - 150px);
+  top: calc(73% - 150px);
   left: calc(50% - 90px);
 }
 .seat4of6 .bet {
   top: -40px;
 }
 .seat5of6 {
-  top: calc(65% - 150px);
+  top: calc(60% - 150px);
   left: 6%;
 }
 .seat5of6 .bet {
@@ -66,9 +66,9 @@
   background: $blue-grey-darken-4
 }
 .seat-number {
-  padding: 2px 6px;
   position: absolute;
-  background: #333;
+  padding: 2px 6px;
+  background: $blue-darken-3;
   bottom: 0px;
 }
 .bet {
@@ -106,9 +106,9 @@
   bottom: -11px;
   text-align: center;
   width: 100%;
-  background: $teal-lighten-3;
+  background: $blue-grey;
   font-size: 0.7em;
-  color: #333;
+  color: #eee;
   box-sizing: border-box;
   letter-spacing: 1px;
   box-shadow: $box-shadow;

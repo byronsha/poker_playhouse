@@ -148,10 +148,10 @@ class Table {
       this.bigBlind = this.getNextUnfoldedPlayer(this.button, 2)
     }
 
-    this.seats[this.smallBlind].raise(this.limit / 200, true)
+    this.seats[this.smallBlind].placeBlind(this.limit / 200)
     this.pot += this.limit / 200
 
-    this.seats[this.bigBlind].raise(this.limit / 100, true)
+    this.seats[this.bigBlind].placeBlind(this.limit / 100)
     this.pot += this.limit / 100
 
     this.callAmount = this.limit / 100
@@ -169,7 +169,6 @@ class Table {
     for (let i = 1; i <= this.maxPlayers; i++) {
       if (this.seats[i]) {
         this.seats[i].hand = []
-        this.seats[i].lastAction = null
       }
     }
   }
@@ -329,9 +328,11 @@ class Table {
   handleFold(socketId) {
     let seat = this.findPlayerBySocketId(socketId)
     seat.fold()
-    this.changeTurn(seat.id)
 
-    return `${seat.player.name} folds`
+    return {
+      seatId: seat.id,
+      message: `${seat.player.name} folds`
+    }
   }
   handleCall(socketId) {
     let seat = this.findPlayerBySocketId(socketId)
@@ -341,16 +342,20 @@ class Table {
 
     seat.callRaise(this.callAmount)
     this.pot += addedToPot
-    this.changeTurn(seat.id)
 
-    return `${seat.player.name} calls $${addedToPot.toFixed(2)}`
+    return {
+      seatId: seat.id,
+      message: `${seat.player.name} calls $${addedToPot.toFixed(2)}`
+    }
   }
   handleCheck(socketId) {
     let seat = this.findPlayerBySocketId(socketId)
     seat.check()
-    this.changeTurn(seat.id)
 
-    return `${seat.player.name} checks`
+    return {
+      seatId: seat.id,
+      message: `${seat.player.name} checks`
+    }
   }
   handleRaise(socketId, amount) {
     let seat = this.findPlayerBySocketId(socketId)
@@ -365,9 +370,11 @@ class Table {
       this.minRaise = seat.bet * 2
     }
     this.callAmount = amount
-    this.changeTurn(seat.id)
 
-    return `${seat.player.name} raises to $${amount.toFixed(2)}`
+    return {
+      seatId: seat.id,
+      message: `${seat.player.name} raises to $${amount.toFixed(2)}`
+    }
   }
 }
 

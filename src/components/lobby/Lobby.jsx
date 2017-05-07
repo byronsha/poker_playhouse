@@ -82,18 +82,22 @@ class Lobby extends React.Component {
     })
     socket.on('table_updated', ({ table, message, from }) => {
       let newOpenTables = this.state.openTables
-      let newMessage = {
-        message,
-        from,
-        timestamp: Moment().format('LTS')
-      }
 
       if (newOpenTables[table.id]) {
         newOpenTables[table.id].table = table
-        newOpenTables[table.id].messages.push(newMessage)
+
+        let newMessage
+        if (message) {
+          newMessage = {
+            message,
+            from,
+            timestamp: Moment().format('LTS')
+          }
+          newOpenTables[table.id].messages.push(newMessage)
+        }
 
         for (let winMessage of table.winMessages) {
-          let newMessage = {
+          newMessage = {
             message: winMessage,
             from,
             timestamp: Moment().format('LTS')

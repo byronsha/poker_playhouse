@@ -65,35 +65,36 @@ io.on('connection', socket => {
     socket.emit('table_left', { tables, tableId })
   })
 
-  socket.on('raise', ({ tableId, amount }) => {
+  socket.on('fold', tableId => {
     let table = tables[tableId]
-    let message = table.handleRaise(socket.id, amount)
+    let { seatId, message } = table.handleFold(socket.id)
 
     broadcastToTable(table, message)
+    changeTurnAndBroadcast(table, seatId)
   })
 
   socket.on('check', tableId => {
     let table = tables[tableId]
-    let message = table.handleCheck(socket.id)
+    let { seatId, message } = table.handleCheck(socket.id)
 
     broadcastToTable(table, message)
-    if (table.handOver) initNewHand(table)
+    changeTurnAndBroadcast(table, seatId)
   })
 
   socket.on('call', tableId => {
     let table = tables[tableId]
-    let message = table.handleCall(socket.id)
+    let { seatId, message } = table.handleCall(socket.id)
 
     broadcastToTable(table, message)
-    if (table.handOver) initNewHand(table)
+    changeTurnAndBroadcast(table, seatId)
   })
 
-  socket.on('fold', tableId => {
+  socket.on('raise', ({ tableId, amount }) => {
     let table = tables[tableId]
-    let message = table.handleFold(socket.id)
+    let { seatId, message } = table.handleRaise(socket.id, amount)
 
     broadcastToTable(table, message)
-    if (table.handOver) initNewHand(table)
+    changeTurnAndBroadcast(table, seatId)
   })
 
   socket.on('table_message', ({ message, from, tableId }) => {
@@ -124,12 +125,30 @@ io.on('connection', socket => {
     }
   }
 
-  function broadcastToTable(table, message, from = null) {
+  function broadcastToTable(table, message = null, from = null) {
     for (let i = 0; i < table.players.length; i++) {
       let socketId = table.players[i].socketId
       let tableCopy = hideOpponentCards(table, socketId)
       io.to(socketId).emit('table_updated', { table: tableCopy, message, from })
     }
+  }
+
+  function changeTurnAndBroadcast(table, seatId) {
+    table.changeTurn(seatId)
+    setTimeout(() => {
+      broadcastToTable(table)
+    }, 1000)
+    if (table.handOver) initNewHand(table)
+  }
+
+  function initNewHand(table) {
+    table.clearWinMessages()
+    broadcastToTable(table, '---New hand starting in 5 seconds---')
+    setTimeout(() => {
+      table.clearHand()
+      table.startHand()
+      broadcastToTable(table, '---New hand started---')
+    }, 5000)
   }
 
   function hideOpponentCards(table, socketId) {
@@ -150,16 +169,6 @@ io.on('connection', socket => {
     }
 
     return tableCopy
-  }
-
-  function initNewHand(table) {
-    table.clearWinMessages()
-    broadcastToTable(table, '---New hand starting in 5 seconds---')
-    setTimeout(() => {
-      table.clearHand()
-      table.startHand()
-      broadcastToTable(table, '---New hand started---')
-    }, 5000)
   }
 })
 

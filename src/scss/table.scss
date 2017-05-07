@@ -30,7 +30,7 @@
   }
   .table-bg {
     width: 80%;
-    height: 54%;
+    height: 50%;
     position: absolute;
     left: 10%;
     top: 15%;
@@ -51,7 +51,7 @@
     }
     .bg-outer:first-child,
     .bg-outer:last-child {
-      width: 60%;
+      width: 50%;
       top: 0px;
       border-radius: 50%;
       z-index: -2;
@@ -67,8 +67,8 @@
       right: 0px;
     }
     .bg-outer:nth-child(2) {
-      width: 40%;
-      left: 30%;
+      width: 48%;
+      left: 26%;
       border-left: none;
       border-right: none;
       z-index: -1;

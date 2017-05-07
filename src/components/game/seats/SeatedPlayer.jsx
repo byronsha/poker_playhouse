@@ -31,7 +31,7 @@ class SeatedPlayer extends React.Component {
           </div>
         </div>
 
-        {seat.lastAction &&
+        {seat.lastAction && !seat.turn &&
           <div className="seat-last-action">{seat.lastAction}</div>
         }
 
