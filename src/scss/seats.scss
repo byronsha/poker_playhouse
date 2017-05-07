@@ -63,7 +63,7 @@
 .seat-info > div:nth-child(2) {
   font-size: .8em;
   padding: 2px 0px;
-  background: $blue-grey-darken-4
+  background: $blue-grey-darken-4;
 }
 .seat-number {
   position: absolute;
@@ -92,13 +92,27 @@
   width: 100%;
   bottom: 135px;
 
-  .card:first-child {
+  .card {
     position: absolute;
+    transition: 0.2s all;
+  }
+  .card:first-child {
+    top: 0px;
     left: 38px;
   }
   .card:last-child {
-    position: absolute;
+    top: 0px;
     right: 38px;
+  }
+}
+.hand:hover {
+  .card:first-child {
+    top: -50px;
+    left: 10px;
+  }
+  .card:last-child {
+    top: -50px;
+    right: 10px;
   }
 }
 .seat-last-action {

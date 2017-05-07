@@ -32,17 +32,20 @@ class Table {
     }
     return seats
   }
+  findPlayerBySocketId(socketId) {
+    for (let i = 1; i <= this.maxPlayers; i++) {
+      if (this.seats[i] && this.seats[i].player.socketId === socketId) {
+        return this.seats[i]
+      }
+    }
+    throw new Error('seat not found!')
+  }
   addPlayer(player) {
     this.players.push(player)
   }
   removePlayer(socketId) {
     this.players = this.players.filter(player => player.socketId !== socketId)
-    
-    for (let i = 1; i <= this.maxPlayers; i++) {
-      if (this.seats[i] && this.seats[i].player.socketId === socketId) {
-        this.seats[i] = null
-      }
-    }
+    this.standPlayer(socketId)
 
     if (this.satPlayers().length === 1) {
       this.endWithoutShowdown()
@@ -54,16 +57,17 @@ class Table {
   }
   sitPlayer(player, seatId) {
     this.seats[seatId] = new Seat(seatId, player, this.limit)
-    
-    if (this.satPlayers().length === 1) {
-      this.button = seatId
+    this.button = this.satPlayers().length === 1 ? seatId : this.button
+  }
+  standPlayer(socketId) {
+    for (let i of Object.keys(this.seats)) {
+      if (this.seats[i] && this.seats[i].player.socketId === socketId) {
+        this.seats[i] = null
+      }
     }
   }
   satPlayers() {
     return Object.values(this.seats).filter(seat => seat !== null)
-  }
-  unfoldedPlayers() {
-    return Object.values(this.seats).filter(seat => seat !== null && !seat.folded)
   }
   nextSatPlayer(player, places) {
     let i = 0
@@ -74,6 +78,9 @@ class Table {
       if (this.seats[current]) i++
     }
     return current
+  }
+  unfoldedPlayers() {
+    return Object.values(this.seats).filter(seat => seat !== null && !seat.folded)
   }
   nextUnfoldedPlayer(player, places) {
     let i = 0
@@ -87,44 +94,6 @@ class Table {
     }
     return current
   }
-  changeTurn(lastTurn) {
-    if (this.unfoldedPlayers().length === 1) {
-      this.endWithoutShowdown()
-      return
-    }
-
-    if (this.allAllIn()) {
-      while (this.board.length < 5 && !this.handOver) {
-        this.dealNextStreet()
-      }
-    }
-
-    if (this.allCheckedOrCalled()) {
-      this.dealNextStreet()
-      this.turn = this.handOver ? null : this.nextUnfoldedPlayer(this.button, 1)
-    } else {
-      this.turn = this.nextUnfoldedPlayer(lastTurn, 1)
-    }
-
-    for (let i = 1; i <= this.maxPlayers; i++) {
-      if (this.seats[i]) {
-        this.seats[i].turn = i === this.turn ? true : false
-      }
-    }
-  }
-  endWithoutShowdown() {
-    const winner = this.unfoldedPlayers()[0]
-    winner.winHand(this.pot)
-    this.winMessages.push(`${winner.player.name} wins $${this.pot.toFixed(2)}`)
-    this.endHand()
-  }
-  unfoldPlayers() {
-    for (let i = 1; i <= this.maxPlayers; i++) {
-      if (this.seats[i]) {
-        this.seats[i].folded = false
-      }
-    }
-  }
   startHand() {
     this.deck = new Deck()
     this.handOver = false
@@ -135,6 +104,13 @@ class Table {
     this.setTurn()
     this.dealPreflop()
     this.setBlinds()
+  }
+  unfoldPlayers() {
+    for (let i = 1; i <= this.maxPlayers; i++) {
+      if (this.seats[i]) {
+        this.seats[i].folded = false
+      }
+    }
   }
   setTurn() {
     this.turn = this.unfoldedPlayers().length <= 3 ?
@@ -182,6 +158,12 @@ class Table {
     this.clearSeatTurns()
     this.handOver = true
   }
+  endWithoutShowdown() {
+    const winner = this.unfoldedPlayers()[0]
+    winner.winHand(this.pot)
+    this.winMessages.push(`${winner.player.name} wins $${this.pot.toFixed(2)}`)
+    this.endHand()
+  }
   resetEmptyTable() {
     this.button = null
     this.turn = null
@@ -195,6 +177,31 @@ class Table {
     this.board = []
     this.pot = 0
     this.mainPot = 0
+  }
+  changeTurn(lastTurn) {
+    if (this.unfoldedPlayers().length === 1) {
+      this.endWithoutShowdown()
+      return
+    }
+
+    if (this.allAllIn()) {
+      while (this.board.length < 5 && !this.handOver) {
+        this.dealNextStreet()
+      }
+    }
+
+    if (this.allCheckedOrCalled()) {
+      this.dealNextStreet()
+      this.turn = this.handOver ? null : this.nextUnfoldedPlayer(this.button, 1)
+    } else {
+      this.turn = this.nextUnfoldedPlayer(lastTurn, 1)
+    }
+
+    for (let i = 1; i <= this.maxPlayers; i++) {
+      if (this.seats[i]) {
+        this.seats[i].turn = i === this.turn ? true : false
+      }
+    }
   }
   allCheckedOrCalled() {
     if (
@@ -300,14 +307,6 @@ class Table {
   dealTurnOrRiver() {
     this.board.push(this.deck.draw())
   }
-  findPlayerBySocketId(socketId) {
-    for (let i = 1; i <= this.maxPlayers; i++) {
-      if (this.seats[i] && this.seats[i].player.socketId === socketId) {
-        return this.seats[i]
-      }
-    }
-    throw new Error('seat not found!')
-  }
   handleFold(socketId) {
     let seat = this.findPlayerBySocketId(socketId)
     seat.fold()
@@ -346,7 +345,7 @@ class Table {
 
     seat.raise(amount)
     this.pot += addedToPot
-    
+
     this.minRaise = this.callAmount ?
       (this.callAmount + (seat.bet - this.callAmount) * 2) : seat.bet * 2
     this.callAmount = amount
