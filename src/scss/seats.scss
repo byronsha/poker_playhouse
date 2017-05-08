@@ -1,46 +1,52 @@
 .seat1of6 {
   left: calc(50% - 90px);
   top: 4%;
-}
-.seat1of6 .bet {
-  bottom: -90px;
+  
+  .bet {
+    bottom: -90px;
+  }
 }
 .seat2of6 {
   top: 18%;
   left: calc(94% - 180px);
-}
-.seat2of6 .bet {
-  bottom: -70px;
-  left: -150px;
+ 
+  .bet {
+    bottom: -70px;
+    left: -150px;
+  }
 }
 .seat3of6 {
   top: calc(60% - 150px);
   left: calc(94% - 180px);
-}
-.seat3of6 .bet {
-  left: -150px;
+  
+  .bet {
+    left: -150px;
+  }
 }
 .seat4of6 {
   top: calc(73% - 150px);
   left: calc(50% - 90px);
-}
-.seat4of6 .bet {
-  top: -40px;
+  
+  .bet {
+    top: -40px;
+  }
 }
 .seat5of6 {
   top: calc(60% - 150px);
   left: 6%;
-}
-.seat5of6 .bet {
-  right: -150px;
+  
+  .bet {
+    right: -150px;
+  }
 }
 .seat6of6 {
   top: 18%;
   left: 6%;
-}
-.seat6of6 .bet {
-  bottom: -70px;
-  right: -150px;
+  
+  .bet {
+    bottom: -70px;
+    right: -150px;
+  }
 }
 .seat-container {
   width: 180px;
@@ -61,7 +67,7 @@
   box-shadow: $box-shadow;
 }
 .seat-info > div:nth-child(2) {
-  font-size: .8em;
+  font-size: 0.8em;
   padding: 2px 0px;
   background: $blue-grey-darken-4;
 }
@@ -120,7 +126,7 @@
   bottom: -11px;
   text-align: center;
   width: 100%;
-  background: $orange-accent-4;
+  background: $deep-orange-lighten-1;
   font-size: 0.7em;
   color: #eee;
   box-sizing: border-box;

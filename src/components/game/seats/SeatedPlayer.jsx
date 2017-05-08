@@ -11,7 +11,7 @@ class SeatedPlayer extends React.Component {
       <div>
         {seat.bet > 0 &&
           <div className="bet">
-            <ChipPile amount={seat.bet.toFixed(2)} />
+            <ChipPile amount={seat.bet} />
             <span>${seat.bet.toFixed(2)}</span>
           </div>
         }

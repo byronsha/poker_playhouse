@@ -87,12 +87,13 @@
     text-align: center;
     color: white;
     
-    .chip-pile {
-      left: 35%;
-      position: absolute;
-    }
     .card {
       margin: 8px 3px;
+    }
+    .chip-pile {
+      position: absolute;
+      top: -10%;
+      left: 35%;
     }
     .card-silhouette {
       display: inline-block;

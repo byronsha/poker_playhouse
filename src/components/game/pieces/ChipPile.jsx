@@ -11,7 +11,7 @@ const ChipPile = ({ amount }) => {
   const grey = '#2a2a2a'
 
   let leftover = amount
-  let tenDollarChips, oneDollarChips, tenCentChips, fiveCentChips
+  let tenDollarChips, oneDollarChips, tenCentChips, fiveCentChips, oneCentChips
 
   if (leftover >= 10) {
     tenDollarChips = Math.floor(leftover / 10)
@@ -26,7 +26,10 @@ const ChipPile = ({ amount }) => {
   tenCentChips = Math.floor(leftover / 0.10)
   leftover = leftover % 0.10
 
-  fiveCentChips = parseFloat(leftover.toFixed(2)) === 0.05 ? 1 : 0
+  fiveCentChips = Math.floor(leftover / 0.05)
+  leftover = leftover % 0.05
+
+  oneCentChips = Math.floor(leftover / 0.01)
 
   return (
     <div className="chip-pile">
@@ -41,6 +44,9 @@ const ChipPile = ({ amount }) => {
       }
       {fiveCentChips > 0 &&
         <ChipStack number={fiveCentChips} color={white} />
+      }
+      {oneCentChips > 0 &&
+        <ChipStack number={oneCentChips} color={orange} />
       }
     </div>
   )

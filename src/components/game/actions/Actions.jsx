@@ -22,6 +22,10 @@ class ActionButtons extends React.Component {
   }
 
   handleRaiseChange(e) {
+    const { table } = this.props
+    if (e.target.value < table.minRaise || e.target.value > table.maxBet) {
+      return
+    }
     this.setState({ raiseAmount: e.target.value })
   }
 
@@ -113,7 +117,7 @@ class ActionButtons extends React.Component {
                   table={table}
                   seat={seat}
                 />
-                <input type="number" />
+                <input type="number" onChange={this.handleRaiseChange} />
               </div>
 
               <div className="raise-size-buttons">

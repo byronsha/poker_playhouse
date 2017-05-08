@@ -1,5 +1,6 @@
 .chip-pile {
   text-align: center;
+  position: relative;
 }
 .chips {
   width: 25px;
@@ -12,9 +13,6 @@
   border-radius: 0 0 50% 50%;
   position: absolute;
   margin: 0px 2px;
-}
-.chips > div:first-child {
-  border-bottom: none;
 }
 .chips > div:last-child {
   border-radius: 50%;
