@@ -52,6 +52,7 @@ class Game extends React.Component {
     const { player, table, messages, onLeaveClick, onSeatClick, onRaiseClick,
             onCheckClick, onCallClick, onFoldClick, onTableMessage } = this.props
 
+    // poker-game-small
     return (
       <div className="poker-game">
         <div className="table-info">

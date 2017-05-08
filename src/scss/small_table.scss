@@ -1,84 +1,51 @@
-.poker-game.small-table {
+.poker-game.poker-game-small {
   width: 50%;
   height: 50vh;
+  font-size: 12px;
 
-  .actions {
-    margin: 0px 0px 2px 0px;
+  .game-chat {
+    font-size: 1em;
 
-    button {
-      height: 45px;
-      width: 79px;
-      font-size: 14px;
-      margin: 2px;
+    .messages {
+      height: 6.5vh;
+      margin: 5px 5px 0px 5px;
+    }
+    .chat-input {
+      padding: 3px 27px 3px 5px;
     }
   }
-  .raise-sizing-container {
-    button {
-      height: 20px;
-      width: 59px;
-      margin: 2px;
-    }
-  }
-  .raise-slider {
-    font-size: 14px;
-    margin: 0px;
+  .actions-container {
+    .actions {
+      margin: 5px 2px 3px 2px;
+      
+      button {
+        height: 25px;
+      }
+      .raise-slider-container {
+        padding: 5px 3px;
+        font-size: 1em;
 
-    button {
-      height: 15px;
-      width: 15px;
-      margin: 5px 2px;
-    }
-    span {
-      margin: 0px;
-    }
-  }
-  .pot-sizes {
-    margin-left: 0px;
-  }
-  .card, .board .card-silhouette {
-    height: 40px;
-    width: 30px;
-  }
-  .card {
-    font-size: 20px;
-    font-weight: bold;
-    background: #eee;
-
-    div:nth-child(2) {
-      font-size: 25px;
-      margin-top: -10px;
-    }
-    .card-back {
-      margin: 2px;
-      height: 36px;
-    }
-  }
-  .seat-info {
-    padding: 0px;
-    
-    .seat-number {
-      padding: 7px 12px;
-      margin: 3px;
-    }
-  }
-  .hand {
-    bottom: 45px;
-  }
-  .table-background {
-    div {
-      border-width: 10px;
-    }
-  }
-  .board {
-    top: 30%;
-  }
-  .game-chat-container {
-    width: 62%;
-    height: 100px;
-
-    .game-chat {
-      height: 68px;
-      font-size: 13px;
+        .raise-slider {
+          input {
+            width: 50%;
+          }
+          span {
+            top: -6px;
+          }
+          button {
+            font-size: 0.75em;
+            width: 20px;
+            height: 20px;
+            margin-top: 3px;
+          }
+        }
+      }
+      .raise-size-buttons {
+        button {
+          height: 20px;
+          font-size: 0.9em;
+        }
+      }
     }
   }
 }
