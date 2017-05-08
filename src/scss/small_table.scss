@@ -2,7 +2,110 @@
   width: 50%;
   height: 50vh;
   font-size: 12px;
+  border: 1px solid #ccc;
 
+  .seat1of6 {
+    left: calc(50% - 50px);
+    top: 5%;
+  }
+  .seat2of6 {
+    left: calc(94% - 100px);
+  }
+  .seat3of6 {
+    top: calc(63% - 80px);
+    left: calc(94% - 100px);
+  }
+  .seat4of6 {
+    top: calc(76% - 80px);
+    left: calc(50% - 50px);
+  }
+  .seat5of6 {
+    top: calc(63% - 80px);
+  }
+  .seat-container {
+    width: 100px;
+    height: 80px;
+
+    .seat-stack {
+      font-size: 2em;
+      padding: 0px;
+    }
+    .hand {
+      bottom: 100px;
+
+      .card:first-child {
+        left: 13px;
+      }
+      .card:last-child {
+        right: 13px;
+      }
+    }
+    .hand:hover {
+      .card:first-child {
+        top: -42px;
+        left: -9px;
+      }
+      .card:last-child {
+        top: -42px;
+        right: -9px;
+      }
+    }
+    .seat-last-action {
+      bottom: -7px;
+    }
+    .button-chip {
+      width: 15px;
+      height: 15px;
+      top: 25px;
+      right: -20px;
+    }
+  }
+  .card {
+    width: 55px;
+    height: 77px;
+    margin: 2px;
+    border-radius: 2px;
+
+    .card-back {
+      width: 51px;
+      height: 73px;
+      margin: 2px;
+    }
+    .small-picture {
+      padding-left: 3px;
+
+      div:last-child {
+        margin-top: -8px;
+      }
+    }
+    .big-picture {
+      padding-right: 5px;
+    }
+  }
+  .board {
+    top: 30%;
+
+    .card {
+      margin: 5px 2px;
+    }
+    .card-silhouette {
+      width: 55px;
+      height: 77px;
+      margin: 5px 2px;
+      border-radius: 2px;
+    }
+  }
+  .table-bg {
+    .bg-outer {
+      border-width: 12px;
+
+      .bg-inner {
+        width: calc(100% - 6px);
+        height: calc(100% - 6px);
+        border-width: 3px;
+      }
+    }
+  }
   .game-chat {
     font-size: 1em;
 

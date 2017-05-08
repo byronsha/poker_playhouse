@@ -50,11 +50,12 @@ class Game extends React.Component {
 
   render() {
     const { player, table, messages, onLeaveClick, onSeatClick, onRaiseClick,
-            onCheckClick, onCallClick, onFoldClick, onTableMessage } = this.props
+            onCheckClick, onCallClick, onFoldClick, onTableMessage, gridViewOn } = this.props
 
-    // poker-game-small
+    const gameClass = gridViewOn ? 'poker-game poker-game-small' : 'poker-game'
+    
     return (
-      <div className="poker-game">
+      <div className={gameClass}>
         <div className="table-info">
           <div>
             {table.name}, ${table.limit.toFixed(2)} NL Holdem, {table.maxPlayers} players

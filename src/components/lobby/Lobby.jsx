@@ -18,7 +18,8 @@ class Lobby extends React.Component {
       openTables: {},
       messages: [],
       leftColumnShowing: true,
-      rightColumnShowing: true
+      rightColumnShowing: true,
+      gridViewOn: false
     }
 
     this.handleTableClick = this.handleTableClick.bind(this)
@@ -32,6 +33,7 @@ class Lobby extends React.Component {
 
     this.toggleLeftColumn = this.toggleLeftColumn.bind(this)
     this.toggleRightColumn = this.toggleRightColumn.bind(this)
+    this.toggleGridView = this.toggleGridView.bind(this)
   }
 
   componentDidMount() {
@@ -181,9 +183,14 @@ class Lobby extends React.Component {
     this.setState({ rightColumnShowing: !this.state.rightColumnShowing })
   }
 
+  toggleGridView() {
+    this.setState({ gridViewOn: !this.state.gridViewOn })
+  }
+
   render() {
     const props = this.props
-    const { player, tables, players, openTables, leftColumnShowing, rightColumnShowing } = this.state
+    const { player, tables, players, openTables, gridViewOn,
+      leftColumnShowing, rightColumnShowing } = this.state
 
     let leftColumnClass = leftColumnShowing ? 'left-column' : 'left-column hidden'
     let rightColumnClass = rightColumnShowing ? 'right-column' : 'right-column hidden'
@@ -217,6 +224,7 @@ class Lobby extends React.Component {
                 key={table.table.id}
                 player={player}
                 table={table.table}
+                gridViewOn={gridViewOn}
                 messages={table.messages}
                 onLeaveClick={this.handleLeaveClick}
                 onSeatClick={this.handleSeatClick}
@@ -250,6 +258,10 @@ class Lobby extends React.Component {
             messages={this.state.messages}
             sendMessage={this.sendMessage}
           />
+
+          <button onClick={this.toggleGridView}>
+            Grid view
+          </button>
         </div>
       </div>
     )
