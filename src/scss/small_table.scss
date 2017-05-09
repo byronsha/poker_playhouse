@@ -74,11 +74,11 @@
     .hand:hover {
       .card:first-child {
         top: -25px;
-        left: 5px;
+        left: 7px;
       }
       .card:last-child {
         top: -25px;
-        right: 5px;
+        right: 7px;
       }
     }
     .seat-info > div:nth-child(2) {
@@ -117,7 +117,7 @@
       }
     }
     .big-picture {
-      font-size: 3em;
+      font-size: 3.5em;
       padding-right: 2px;
     }
   }
@@ -129,7 +129,7 @@
     }
     .chip-pile {
       top: -5%;
-      left: 36%;
+      left: 33%;
     }
     .card-silhouette {
       width: 40px;
