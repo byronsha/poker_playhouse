@@ -22,7 +22,10 @@ class Seat {
     this.turn = false
   }
   raise(amount) {
-    this.stack -= (amount - this.bet)
+    const amountToCall = amount - this.bet
+    if (amountToCall > this.stack) { return }
+
+    this.stack -= amountToCall
     this.bet = amount
     this.lastAction = 'RAISE'
     this.turn = false
@@ -32,8 +35,11 @@ class Seat {
     this.bet = amount
   }
   callRaise(amount) {
-    this.stack = this.stack - (amount - this.bet) < 0 ? 0 : this.stack - (amount - this.bet)
-    this.bet = amount > this.stack ? this.stack : amount
+    const stackBefore = this.stack
+    const amountToCall = amount - this.bet
+    
+    this.stack = this.stack < amountToCall ? 0 : this.stack - amountToCall
+    this.bet = amount > stackBefore ? stackBefore : amount
     this.lastAction = 'CALL'
     this.turn = false
   }

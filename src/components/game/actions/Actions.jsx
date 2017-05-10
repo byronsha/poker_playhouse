@@ -36,8 +36,8 @@ class ActionButtons extends React.Component {
 
     if (amount < table.minRaise) {
       newRaiseAmount = table.minRaise
-    } else if (amount > seat.stack) {
-      newRaiseAmount = seat.stack
+    } else if (amount > seat.stack + seat.bet) {
+      newRaiseAmount = seat.stack + seat.bet
     }
 
     this.setState({ raiseAmount: newRaiseAmount })
@@ -65,10 +65,12 @@ class ActionButtons extends React.Component {
     }
 
     const potSizes = [
-      ['½ pot', 1/2],
-      ['⅔ pot', 2/3],
-      ['¾ pot', 3/4],
-      ['Pot', 1]
+      ['Min', table.minRaise],
+      ['½ pot', pot * 1/2],
+      ['⅔ pot', pot * 2/3],
+      ['¾ pot', pot * 3/4],
+      ['Pot', pot],
+      ['All in', seat.bet + seat.stack]
     ]
 
     return (
@@ -125,7 +127,7 @@ class ActionButtons extends React.Component {
                   <PotSizeButton
                     key={potSize[0]}
                     text={potSize[0]}
-                    onRaiseClick={() => this.handleRaiseUpdate(pot*potSize[1])}
+                    onRaiseClick={() => this.handleRaiseUpdate(potSize[1])}
                   />
                 )}
               </div>

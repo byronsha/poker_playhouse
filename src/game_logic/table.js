@@ -16,13 +16,13 @@ class Table {
     this.button = null
     this.turn = null
     this.pot = 0
+    this.mainPot = 0
     this.callAmount = null
     this.minBet = this.limit / 200
     this.minRaise = this.limit / 100
     this.smallBlind = null
     this.bigBlind = null
     this.handOver = true
-    this.mainPot = 0
     this.winMessages = []
   }
   initSeats(maxPlayers) {
@@ -32,16 +32,20 @@ class Table {
     }
     return seats
   }
-  findPlayerBySocketId(socketId) {
-    for (let i = 1; i <= this.maxPlayers; i++) {
-      if (this.seats[i] && this.seats[i].player.socketId === socketId) {
-        return this.seats[i]
-      }
-    }
-    throw new Error('seat not found!')
-  }
   addPlayer(player) {
     this.players.push(player)
+  }
+  sitPlayer(player, seatId) {
+    if (this.seats[seatId]) { return }
+    this.seats[seatId] = new Seat(seatId, player, this.limit)
+    this.button = this.satPlayers().length === 1 ? seatId : this.button
+  }
+  standPlayer(socketId) {
+    for (let i of Object.keys(this.seats)) {
+      if (this.seats[i] && this.seats[i].player.socketId === socketId) {
+        this.seats[i] = null
+      }
+    }
   }
   removePlayer(socketId) {
     this.players = this.players.filter(player => player.socketId !== socketId)
@@ -55,16 +59,13 @@ class Table {
       this.resetEmptyTable()
     }
   }
-  sitPlayer(player, seatId) {
-    this.seats[seatId] = new Seat(seatId, player, this.limit)
-    this.button = this.satPlayers().length === 1 ? seatId : this.button
-  }
-  standPlayer(socketId) {
-    for (let i of Object.keys(this.seats)) {
+  findPlayerBySocketId(socketId) {
+    for (let i = 1; i <= this.maxPlayers; i++) {
       if (this.seats[i] && this.seats[i].player.socketId === socketId) {
-        this.seats[i] = null
+        return this.seats[i]
       }
     }
+    throw new Error('seat not found!')
   }
   satPlayers() {
     return Object.values(this.seats).filter(seat => seat !== null)

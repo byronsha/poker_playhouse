@@ -3,12 +3,12 @@ var should = require('chai').should()
 var Seat = require('../game_logic/seat')
 
 describe('Seat', function() {
-  describe('initialization', () => {
-    let id = '123456',
-      player = { name: 'Byron' },
-      stack = 100
+  const id = '123456'
+  const player = { name: 'Byron' }
+  const stack = 100
 
-    let seat = new Seat(id, player, stack)
+  describe('initialization', () => {
+    const seat = new Seat(id, player, stack)
 
     it('has correct id', () => {
       expect(seat.id).to.be.equal('123456')
@@ -22,11 +22,7 @@ describe('Seat', function() {
   })
 
   describe('#fold()', () => {
-    let id = '123456',
-      player = { name: 'Byron' },
-      stack = 100
-
-    let seat = new Seat(id, player, stack)
+    const seat = new Seat(id, player, stack)
     seat.fold()
 
     it(`sets seat's bet to 0`, () => {
@@ -44,11 +40,7 @@ describe('Seat', function() {
   })
   
   describe('#check()', () => {
-    let id = '123456',
-      player = { name: 'Byron' },
-      stack = 100
-
-    let seat = new Seat(id, player, stack)
+    const seat = new Seat(id, player, stack)
     seat.check()
 
     it(`sets seat's checked flag to true`, () => {
@@ -62,12 +54,8 @@ describe('Seat', function() {
     })
   })
 
-  describe('#raise()', () => {
-    let id = '123456',
-      player = { name: 'Byron' },
-      stack = 100
-
-    let seat = new Seat(id, player, stack)
+  describe('#raise(amount)', () => {
+    const seat = new Seat(id, player, stack)
     seat.raise(20)
 
     it(`subtracts from the stack`, () => {
@@ -82,14 +70,15 @@ describe('Seat', function() {
     it(`sets seat's turn to false`, () => {
       expect(seat.turn).to.be.false
     })
+
+    it(`cannot raise more than it's stack`, () => {
+      seat.raise(110)
+      expect(seat.bet).to.be.equal(20)
+    })
   })
 
-  describe('#placeBlind()', () => {
-    let id = '123456',
-      player = { name: 'Byron' },
-      stack = 100
-
-    let seat = new Seat(id, player, stack)
+  describe('#placeBlind(amount)', () => {
+    const seat = new Seat(id, player, stack)
     seat.placeBlind(5)
     
     it(`subtracts from the stack`, () => {
@@ -103,12 +92,8 @@ describe('Seat', function() {
     })
   })
 
-  describe('#callRaise()', () => {
-    let id = '123456',
-      player = { name: 'Byron' },
-      stack = 100
-
-    let seat = new Seat(id, player, stack)
+  describe('#callRaise(amount) [amount <= stack]', () => {
+    const seat = new Seat(id, player, stack)
     seat.callRaise(50)
 
     it(`subtracts from the stack`, () => {
@@ -125,11 +110,33 @@ describe('Seat', function() {
     })
   })
 
-  describe(`#callRaise() when amount is greater than seat's stack`, () => {
+  describe(`#callRaise(amount) [amount > stack]`, () => {
+    const seat = new Seat(id, player, stack)
+    seat.callRaise(200)
 
+    it(`sets seat's stack to 0 - all in`, () => {
+      expect(seat.stack).to.be.equal(0)
+    })
+    it(`sets seat's bet to remaining stack`, () => {
+      expect(seat.bet).to.be.equal(100)
+    })
   })
 
-  describe('#winHand()', () => {
+  describe('#winHand(amount)', () => {
+    const seat = new Seat(id, player, stack)
+    seat.winHand(125)
 
+    it(`adds won amount to stack`, () => {
+      expect(seat.stack).to.be.equal(225)
+    })
+    it(`sets seat's bet to 0`, () => {
+      expect(seat.bet).to.be.equal(0)
+    })
+    it(`changes seat's last action to 'WINNER'`, () => {
+      expect(seat.lastAction).to.be.equal('WINNER')
+    })
+    it(`sets seat's turn to false`, () => {
+      expect(seat.turn).to.be.false
+    })
   })
 })
