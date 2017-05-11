@@ -158,17 +158,16 @@ io.on('connection', socket => {
     let hiddenHand = [hiddenCard, hiddenCard]
 
     for (let i = 1; i <= tableCopy.maxPlayers; i++) {
-      let currentSeat = tableCopy.seats[i]
+      let seat = tableCopy.seats[i]
       if (
-        currentSeat &&
-        currentSeat.hand.length > 0 &&
-        currentSeat.lastAction !== 'WINNER' &&
-        currentSeat.player.socketId !== socketId
+        seat &&
+        seat.hand.length > 0 &&
+        seat.player.socketId !== socketId &&
+        !(seat.lastAction === 'WINNER' && tableCopy.wentToShowdown) 
       ) {
-        currentSeat.hand = hiddenHand
+        seat.hand = hiddenHand
       }
     }
-
     return tableCopy
   }
 })

@@ -63,4 +63,29 @@ describe('Table', function() {
     })
   })
 
+  describe('#standPlayer(socketId)', () => {
+    const table = new Table(1, 'Test Table', 6, 100)
+    const player = new Player('9988', 'Byron', 1000)
+    table.sitPlayer(player, 6)
+    table.standPlayer('9988')
+
+    it('sets seat with matching player socket id to null', () => {
+      expect(table.seats[6]).to.be.equal(null)
+    })
+  })
+
+  describe('#removePlayer(socketId)', () => {
+    const table = new Table(1, 'Test Table', 6, 100)
+    const player = new Player('9988', 'Byron', 1000)
+    table.addPlayer(player)
+    table.sitPlayer(player, 3)
+    table.removePlayer('9988')
+
+    it('removes player with matching socket id from players array', () => {
+      expect(table.players.filter(player => player.socketId === '9988')).to.have.lengthOf(0)
+    })
+    it('sets seat with matching player socket id to null', () => {
+      expect(table.seats[3]).to.be.equal(null)
+    })
+  })
 })

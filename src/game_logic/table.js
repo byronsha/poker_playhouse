@@ -24,6 +24,7 @@ class Table {
     this.bigBlind = null
     this.handOver = true
     this.winMessages = []
+    this.wentToShowdown = false
   }
   initSeats(maxPlayers) {
     const seats = {}
@@ -96,8 +97,10 @@ class Table {
     return current
   }
   startHand() {
+    this.button = this.nextSatPlayer(this.button, 1)
     this.deck = new Deck()
     this.handOver = false
+    this.wentToShowdown = false
     this.resetBoardAndPot()
     this.clearSeatHands()
     this.unfoldPlayers()
@@ -155,7 +158,6 @@ class Table {
     this.winMessages = []
   }
   endHand() {
-    this.button = this.nextSatPlayer(this.button, 1)
     this.clearSeatTurns()
     this.handOver = true
   }
@@ -170,6 +172,7 @@ class Table {
     this.turn = null
     this.handOver = true
     this.deck = null
+    this.wentToShowdown = false
     this.resetBoardAndPot()
     this.clearWinMessages()
     this.clearSeats()
@@ -272,6 +275,7 @@ class Table {
       this.winMessages.push(`${seat.player.name} wins $${winAmount.toFixed(2)} with ${hand.name}`)
     }
 
+    this.wentToShowdown = true
     this.endHand()
   }
   resetBetsAndActions() {
