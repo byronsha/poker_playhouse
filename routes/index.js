@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
 
 if (!process.env.JWT_SECRET) {
-  console.error('ERROR!: Please set JWT_SECRET before running the app. \n run: export JWT_SECRET=<some secret string> to set JWTSecret. ')
+  console.error('ERROR!: Please set JWT_SECRET before running the app. \n run: export JWT_SECRET=...')
   process.exit();
 }
 
