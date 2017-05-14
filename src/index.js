@@ -6,6 +6,7 @@ import App from './components/App'
 import NoMatch from './components/NoMatch'
 import Lobby from './components/lobby/Lobby'
 import Login from './components/login/Login'
+import Signup from './components/signup/Signup'
 import Game from './components/game/Game'
 
 const Root = () => (
@@ -13,6 +14,7 @@ const Root = () => (
     <Route path="/" component={App}>
       <IndexRedirect to="/login" />
       <Route path="login" component={Login} />
+      <Route path="signup" component={Signup} />
       <Route path="lobby" component={Lobby} />
       <Route path="*" component={NoMatch} />
     </Route>

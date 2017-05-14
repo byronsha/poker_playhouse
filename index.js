@@ -6,6 +6,8 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const webpackConfig = require('./webpack.config.js')
+const routes = require('./routes/index')
+const db = require('./models')
 
 const Player = require('./src/game_logic/player.js')
 const Table = require('./src/game_logic/table.js')
@@ -16,9 +18,12 @@ const io = socketIo(server)
 const compiler = webpack(webpackConfig)
 
 app.use(express.static(__dirname))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(webpackDevMiddleware(compiler, { publicPath: webpackConfig.output.publicPath }))
 app.use(webpackHotMiddleware(compiler))
-app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use('/api', routes)
 
 const tables = {}
 const players = {}
@@ -172,4 +177,5 @@ io.on('connection', socket => {
   }
 })
 
+db.sequelize.sync()
 server.listen(9000)
