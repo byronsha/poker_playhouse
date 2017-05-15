@@ -9,8 +9,8 @@ const webpackConfig = require('./webpack.config.js')
 const routes = require('./routes/index')
 const db = require('./models')
 
-const Player = require('./src/game_logic/player.js')
-const Table = require('./src/game_logic/table.js')
+const Player = require('./poker_logic/player.js')
+const Table = require('./poker_logic/table.js')
 
 const app = express()
 const server = http.createServer(app)
@@ -45,14 +45,10 @@ io.on('connection', socket => {
     socket.broadcast.emit('message', { body, from: sender.name })
   })
 
-  socket.on('fetch_lobby_info', () => {
-    socket.emit('receive_lobby_info', { tables, players })
-  })
+  socket.on('fetch_lobby_info', user => {
+    players[socket.id] = new Player(socket.id, user.username, user.bankroll)
 
-  socket.on('join_lobby', playerName => {
-    players[socket.id] = new Player(socket.id, playerName, 1000)
-    
-    socket.emit('lobby_joined', players[socket.id])
+    socket.emit('receive_lobby_info', { tables, players, socketId: socket.id })
     socket.broadcast.emit('players_updated', players)
   })
 

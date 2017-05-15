@@ -2,7 +2,7 @@ var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
-  entry: ['./src/index.js', './src/scss/main.scss', 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
+  entry: ['./client/js/index.js', './client/scss/main.scss', 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
   output: {
     path: '/',
     publicPath: '/',
@@ -19,7 +19,7 @@ module.exports = {
         exclude: /node_modules/,
         loaders: [
           'react-hot-loader',
-          'babel-loader?presets[]=es2015,presets[]=react,plugins[]=transform-class-properties'
+          'babel-loader?presets[]=es2015,presets[]=react,presets[]=stage-0,plugins[]=transform-class-properties'
         ]
       },
       { // regular css files

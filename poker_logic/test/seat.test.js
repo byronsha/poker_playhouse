@@ -1,6 +1,6 @@
 var expect = require('chai').expect
 var should = require('chai').should()
-var Seat = require('../game_logic/seat')
+var Seat = require('../seat')
 
 describe('Seat', function() {
   const id = '123456'

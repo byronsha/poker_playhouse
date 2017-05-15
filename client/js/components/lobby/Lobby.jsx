@@ -3,20 +3,18 @@ import TableList from '../left_column/TableList'
 import PlayerList from '../right_column/PlayerList'
 import Chat from '../right_column/Chat'
 import Game from '../game/Game'
-import Moment from 'moment'
+import { connect } from 'react-redux'
+import { logout } from '../../actions/user'
+import {
+  receiveLobbyInfo, tablesUpdated, playersUpdated,
+  tableJoined, tableLeft, tableUpdated, messageReceived
+} from '../../actions/lobby'
 
 class Lobby extends React.Component {
   constructor(props) {
     super(props)
 
-    const locationState = this.props.location.state
-
     this.state = {
-      player: locationState.player,
-      tables: {},
-      players: {},
-      openTables: {},
-      messages: [],
       leftColumnShowing: true,
       rightColumnShowing: true,
       gridViewOn: false
@@ -37,90 +35,40 @@ class Lobby extends React.Component {
   }
 
   componentDidMount() {
-    const { socket } = this.props
-    
-    socket.on('receive_lobby_info', ({ tables, players }) => {
-      this.setState({
-        tables: tables,
-        players: players
-      })
+    const {
+      socket, user, receiveLobbyInfo, tablesUpdated, playersUpdated,
+      tableJoined, tableLeft, tableUpdated, messageReceived
+    } = this.props
+
+    socket.emit('fetch_lobby_info', user)
+
+    socket.on('receive_lobby_info', ({ tables, players, socketId }) => {
+      receiveLobbyInfo(tables, players, socketId)
     })
     socket.on('tables_updated', tables => {
-      let newOpenTables = this.state.openTables
-
-      for (let tableId of Object.keys(newOpenTables)) {
-        newOpenTables[tableId].table = tables[tableId]
-      }
-
-      this.setState({
-        tables: tables,
-        openTables: newOpenTables
-      })
+      tablesUpdated(tables)
     })
     socket.on('players_updated', players => {
-      this.setState({ players: players })
+      playersUpdated(players)
     })
     socket.on('table_joined', ({ tables, tableId }) => {
-      let newOpenTables = this.state.openTables
-
-      newOpenTables[tableId] = {
-        table: tables[tableId],
-        messages: []
-      }
-
-      this.setState({
-        tables,
-        openTables: newOpenTables
-      })
+      tableJoined(tables, tableId)
     })
     socket.on('table_left', ({ tables, tableId }) => {
-      let newOpenTables = this.state.openTables
-      delete newOpenTables[tableId]
-
-      this.setState({
-        tables: tables,
-        openTables: newOpenTables
-      })
+      tableLeft(tables, tableId)
     })
     socket.on('table_updated', ({ table, message, from }) => {
-      let newOpenTables = this.state.openTables
-
-      if (newOpenTables[table.id]) {
-        newOpenTables[table.id].table = table
-
-        if (message) {
-          const newMessage = {
-            message,
-            from,
-            timestamp: Moment().format('LTS')
-          }
-          newOpenTables[table.id].messages.push(newMessage)
-        }
-
-        for (let winMessage of table.winMessages) {
-          const newWinMessage = {
-            message: winMessage,
-            from,
-            timestamp: Moment().format('LTS')
-          }
-          newOpenTables[table.id].messages.push(newWinMessage)          
-        }
-      }
-
-      this.setState({ openTables: newOpenTables })
-
+      tableUpdated(table, message, from)
       let gameChat = document.getElementById(`table-${table.id}-game-chat`)
       gameChat.scrollTop = gameChat.scrollHeight
     })
     socket.on('message', message => {
-      this.setState({ messages: [message, ...this.state.messages] })
+      messageReceived(message)
     })
-
-    socket.emit('fetch_lobby_info')
   }
 
   handleTableClick(tableId) {
-    if (Object.keys(this.state.openTables).length < 4) {
+    if (Object.keys(this.props.openTables).length < 4) {
       this.props.socket.emit('join_table', tableId)
     }
   }
@@ -150,12 +98,11 @@ class Lobby extends React.Component {
   }
 
   sendTableMessage = (e, tableId) => {
-    const { socket } = this.props
-    const { player } = this.state
+    const { socket, user } = this.props
     const body = e.target.value
 
     if (e.keyCode === 13 && body) {
-      socket.emit('table_message', { message: body, from: player.name, tableId })
+      socket.emit('table_message', { message: body, from: user.username, tableId })
       e.target.value = ''
     }
   }
@@ -188,9 +135,8 @@ class Lobby extends React.Component {
   }
 
   render() {
-    const props = this.props
-    const { player, tables, players, openTables, gridViewOn,
-      leftColumnShowing, rightColumnShowing } = this.state
+    const { user, tables, players, openTables, messages } = this.props
+    const { gridViewOn, leftColumnShowing, rightColumnShowing } = this.state
 
     let leftColumnClass = leftColumnShowing ? 'left-column' : 'left-column hidden'
     let rightColumnClass = rightColumnShowing ? 'right-column' : 'right-column hidden'
@@ -208,7 +154,7 @@ class Lobby extends React.Component {
               <i className="fa fa-angle-right" aria-hidden="true"></i>}
           </button>
           
-          <div className="player-info">Logged in as {player.name}</div>
+          <div className="player-info">Logged in as {user.username}</div>
           
           <TableList
             openTables={Object.keys(openTables)}
@@ -222,7 +168,7 @@ class Lobby extends React.Component {
             Object.values(openTables).map(table =>
               <Game
                 key={table.table.id}
-                player={player}
+                user={user}
                 table={table.table}
                 gridViewOn={gridViewOn}
                 messages={table.messages}
@@ -250,12 +196,12 @@ class Lobby extends React.Component {
           </button>
 
           <PlayerList
-            player={player} 
+            user={user} 
             players={players}
           />
 
           <Chat
-            messages={this.state.messages}
+            messages={messages}
             sendMessage={this.sendMessage}
           />
 
@@ -268,8 +214,28 @@ class Lobby extends React.Component {
   }
 }
 
-export default Lobby
+function mapStateToProps(state) {
+  return {
+    user: state.user.user,
+    tables: state.lobby.tables,
+    players: state.lobby.players,
+    openTables: state.lobby.openTables,
+    messages: state.lobby.messages
+  }
+}
 
-//  <div className="fancy-chip blue">
-//   <div><span>PF</span></div>
-//  </div>
+const mapDispatchToProps = ({
+  logout,
+  receiveLobbyInfo,
+  tablesUpdated,
+  playersUpdated,
+  tableJoined,
+  tableLeft,
+  tableUpdated,
+  messageReceived
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Lobby)

@@ -6,9 +6,9 @@ class ActionButtons extends React.Component {
   constructor(props) {
     super(props)
 
-    const { player, table } = this.props
+    const { user, table } = this.props
     const seat = Object.values(table.seats).filter(seat =>
-      seat !== null && seat.player.socketId === player.socketId
+      seat !== null && seat.player.name === user.username
     )[0]
     
     const raiseAmount = table.minRaise > seat.stack + seat.bet ?
@@ -44,17 +44,16 @@ class ActionButtons extends React.Component {
   }
 
   findOwnSeat() {
-    const { player, table } = this.props
+    const { user, table } = this.props
     const seat = Object.values(table.seats).filter(seat =>
-      seat !== null && seat.player.socketId === player.socketId
+      seat !== null && seat.player.name === user.username
     )[0]
 
     return seat
   }
 
   render() {
-    const { player, table, onRaiseClick, onCheckClick,
-            onCallClick, onFoldClick } = this.props
+    const { table, onRaiseClick, onCheckClick, onCallClick, onFoldClick } = this.props
 
     const seat = this.findOwnSeat()
     const totalCallAmount = table.callAmount - seat.bet > seat.stack ? seat.stack : table.callAmount - seat.bet

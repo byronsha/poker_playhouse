@@ -1,21 +1,17 @@
 import React from 'react'
 import axios from 'axios'
+import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { signUp } from '../../actions/user'
 
 class Signup extends React.Component {
   handleSubmit = e => {
     e.preventDefault()
-    
     const username = this.username.value
     const password = this.password.value
+    
     if (!username || !password) { return }
-
-    axios.post(`http://localhost:9000/api/signup`, { username, password })
-      .then(response => {
-        console.log(response)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.props.signUp({ username, password })
   }
 
   render() {
@@ -38,9 +34,24 @@ class Signup extends React.Component {
             value="Sign up"
           />
         </form>
+        <Link to="/login">Already have an account?</Link>
       </div>
     )
   }
 }
 
-export default Signup
+function mapStateToProps(state) { 
+  return {
+    isFetching: state.user.isFetching,
+    errorMessage: state.user.errorMessage
+  }
+}
+
+const mapDispatchToProps = ({
+  signUp
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Signup)

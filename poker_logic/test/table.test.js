@@ -1,8 +1,8 @@
 var expect = require('chai').expect
 var should = require('chai').should()
-var Table = require('../game_logic/table')
-var Seat = require('../game_logic/seat')
-var Player = require('../game_logic/player')
+var Table = require('../table')
+var Seat = require('../seat')
+var Player = require('../player')
 
 describe('Table', function() {
   describe('initialization', () => {

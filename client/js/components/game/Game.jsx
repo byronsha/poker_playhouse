@@ -34,13 +34,13 @@ class Game extends React.Component {
   }
 
   isOwnTurn() {
-    const { player, table } = this.props
+    const { user, table } = this.props
 
     for (let i = 1; i <= Object.keys(table.seats).length; i++) {
       if (
         table.seats[i] &&
         table.seats[i].turn &&
-        table.seats[i].player.socketId === player.socketId
+        table.seats[i].player.name === user.username
       ) {
         return true
       }
@@ -49,7 +49,7 @@ class Game extends React.Component {
   }
 
   render() {
-    const { player, table, messages, onLeaveClick, onSeatClick, onRaiseClick,
+    const { user, table, messages, onLeaveClick, onSeatClick, onRaiseClick,
             onCheckClick, onCallClick, onFoldClick, onTableMessage, gridViewOn } = this.props
 
     const gameClass = gridViewOn ? 'poker-game poker-game-small' : 'poker-game'
@@ -66,7 +66,7 @@ class Game extends React.Component {
         </div>
         
         <Spectators
-          player={player}
+          user={user}
           table={table}
         />
 
@@ -88,7 +88,7 @@ class Game extends React.Component {
         <Background />
 
         <Seats
-          player={player}
+          user={user}
           table={table}
           onSeatClick={onSeatClick}
           displayOffset={this.state.displayOffset}
@@ -96,7 +96,7 @@ class Game extends React.Component {
 
         {this.isOwnTurn() &&
           <Actions
-            player={player}
+            user={user}
             table={table}
             onRaiseClick={onRaiseClick}
             onCheckClick={onCheckClick}
@@ -106,7 +106,7 @@ class Game extends React.Component {
         }
 
         <GameChat
-          playerName={player.name}
+          playerName={user.username}
           tableId={table.id}
           messages={messages}
           onTableMessage={e => onTableMessage(e, table.id)}  

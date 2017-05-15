@@ -1,6 +1,6 @@
 var expect = require('chai').expect
 var should = require('chai').should()
-var Deck = require('../game_logic/deck')
+var Deck = require('../deck')
 
 describe('Deck', () => {
   describe('#count()', () => {

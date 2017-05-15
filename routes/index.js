@@ -37,7 +37,7 @@ router.post('/signup', (req, res, next) => {
     })
 })
 
-router.post('/signin', (req, res, next) => {
+router.post('/login', (req, res, next) => {
   const body = req.body
 
   db.User

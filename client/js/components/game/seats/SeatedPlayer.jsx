@@ -5,7 +5,7 @@ import ShotClock from './ShotClock'
 
 class SeatedPlayer extends React.Component {
   render() {
-    const { player, seat, isButton } = this.props
+    const { user, seat, isButton } = this.props
 
     return (
       <div>
@@ -27,7 +27,7 @@ class SeatedPlayer extends React.Component {
           
           <div>
             <div className="seat-number">{seat.id}</div>
-            <div className="seat-player">{seat.player.name} {player.socketId === seat.player.socketId ? '(me)' : ''} </div>
+            <div className="seat-player">{seat.player.name} {user.username === seat.player.name ? '(me)' : ''} </div>
           </div>
         </div>
 

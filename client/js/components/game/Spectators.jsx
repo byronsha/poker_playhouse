@@ -3,19 +3,19 @@ import Player from '../right_column/Player'
 
 class Spectators extends React.Component {
   render() {
-    const { player, table } = this.props
+    const { user, table } = this.props
 
     if (table.players.length > 0) {
       return (
         <div>
           <ul className="player-list">
-            {table.players.map((tablePlayer) => {
-              let active = player.socketId === tablePlayer.socketId ? true : false
+            {table.players.map(player => {
+              let active = user.userame === player.name ? true : false
 
               return (
                 <Player
-                  key={tablePlayer.socketId}
-                  player={tablePlayer}
+                  key={player.socketId}
+                  player={player}
                   active={active}
                 />
               )

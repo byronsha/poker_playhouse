@@ -4,13 +4,13 @@ import EmptySeat from './EmptySeat'
 
 class Seats extends React.Component {
   render() {
-    const { player, table, onSeatClick, displayOffset } = this.props
+    const { user, table, onSeatClick, displayOffset } = this.props
     let seats = Object.keys(table.seats)
 
     let seated = false
     for (let i = 0; i < Object.values(table.seats).length; i++) {
       let seat = Object.values(table.seats)[i]
-      if (seat && seat.player.socketId === player.socketId) {
+      if (seat && seat.player.name === user.username) {
         seated = true
       }
     }
@@ -37,7 +37,7 @@ class Seats extends React.Component {
             return (
               <div key={seatId} className={className}>
                 <SeatedPlayer
-                  player={player}
+                  user={user}
                   seat={seat}
                   isButton={isButton}
                 />
