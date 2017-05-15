@@ -16,6 +16,13 @@ import Game from './components/game/Game'
 
 const history = syncHistoryWithStore(hashHistory, store)
 
+function requireLogin() {
+  if (!store.getState().user.isAuthenticated) {
+    store.dispatch(push('/login'))
+    return
+  }
+}
+
 const Root = () => (
   <Provider store={store}>
     <Router history={history}>
@@ -23,7 +30,7 @@ const Root = () => (
         <IndexRedirect to="/login" />
         <Route path="login" component={Login} />
         <Route path="signup" component={Signup} />
-        <Route path="lobby" component={Lobby} />
+        <Route path="lobby" component={Lobby} onEnter={requireLogin} />
         <Route path="*" component={NoMatch} />
       </Route>
     </Router>
