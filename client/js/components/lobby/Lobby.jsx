@@ -9,29 +9,21 @@ import {
   receiveLobbyInfo, tablesUpdated, playersUpdated,
   tableJoined, tableLeft, tableUpdated, messageReceived
 } from '../../actions/lobby'
+import {
+  toggleLeftColumn, toggleRightColumn, toggleGridView
+} from '../../actions/ui'
 
 class Lobby extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      leftColumnShowing: true,
-      rightColumnShowing: true,
-      gridViewOn: false
-    }
+  constructor() {
+    super()
 
     this.handleTableClick = this.handleTableClick.bind(this)
     this.handleLeaveClick = this.handleLeaveClick.bind(this)
     this.handleSeatClick = this.handleSeatClick.bind(this)
-
     this.handleRaiseClick = this.handleRaiseClick.bind(this)
     this.handleCheckClick = this.handleCheckClick.bind(this)
     this.handleCallClick = this.handleCallClick.bind(this)
     this.handleFoldClick = this.handleFoldClick.bind(this)
-
-    this.toggleLeftColumn = this.toggleLeftColumn.bind(this)
-    this.toggleRightColumn = this.toggleRightColumn.bind(this)
-    this.toggleGridView = this.toggleGridView.bind(this)
   }
 
   componentDidMount() {
@@ -40,7 +32,9 @@ class Lobby extends React.Component {
       tableJoined, tableLeft, tableUpdated, messageReceived
     } = this.props
 
-    socket.emit('fetch_lobby_info', user)
+    if (user) {
+      socket.emit('fetch_lobby_info', user)
+    }
 
     socket.on('receive_lobby_info', ({ tables, players, socketId }) => {
       receiveLobbyInfo(tables, players, socketId)
@@ -65,6 +59,13 @@ class Lobby extends React.Component {
     socket.on('message', message => {
       messageReceived(message)
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { socket, user } = nextProps
+    if (!this.props.user && user) {
+      socket.emit('fetch_lobby_info', user)    
+    }
   }
 
   handleTableClick(tableId) {
@@ -122,30 +123,25 @@ class Lobby extends React.Component {
     }
   }
 
-  toggleLeftColumn() {
-    this.setState({ leftColumnShowing: !this.state.leftColumnShowing })
-  }
-
-  toggleRightColumn() {
-    this.setState({ rightColumnShowing: !this.state.rightColumnShowing })
-  }
-
-  toggleGridView() {
-    this.setState({ gridViewOn: !this.state.gridViewOn })
-  }
-
   render() {
-    const { user, tables, players, openTables, messages } = this.props
-    const { gridViewOn, leftColumnShowing, rightColumnShowing } = this.state
+    const {
+      user, tables, players, openTables, messages, leftColumnShowing,
+      rightColumnShowing, gridViewOn, toggleLeftColumn, toggleRightColumn,
+      toggleGridView, logout
+    } = this.props
 
-    let leftColumnClass = leftColumnShowing ? 'left-column' : 'left-column hidden'
-    let rightColumnClass = rightColumnShowing ? 'right-column' : 'right-column hidden'
+    const leftColumnClass = leftColumnShowing ? 'left-column' : 'left-column hidden'
+    const rightColumnClass = rightColumnShowing ? 'right-column' : 'right-column hidden'
+
+    if (!user) {
+      return <div></div>
+    }
 
     return (
       <div>
         <div className={leftColumnClass}>
           <button
-            onClick={this.toggleLeftColumn}
+            onClick={toggleLeftColumn}
             className="toggle-left-column-btn"
           >
             {leftColumnShowing &&
@@ -155,6 +151,7 @@ class Lobby extends React.Component {
           </button>
           
           <div className="player-info">Logged in as {user.username}</div>
+          <button onClick={logout}>Logout</button>
           
           <TableList
             openTables={Object.keys(openTables)}
@@ -186,7 +183,7 @@ class Lobby extends React.Component {
 
         <div className={rightColumnClass}>
           <button
-            onClick={this.toggleRightColumn}
+            onClick={toggleRightColumn}
             className="toggle-right-column-btn"
           >
             {rightColumnShowing &&
@@ -205,7 +202,7 @@ class Lobby extends React.Component {
             sendMessage={this.sendMessage}
           />
 
-          <button onClick={this.toggleGridView}>
+          <button onClick={toggleGridView}>
             Grid view
           </button>
         </div>
@@ -220,7 +217,10 @@ function mapStateToProps(state) {
     tables: state.lobby.tables,
     players: state.lobby.players,
     openTables: state.lobby.openTables,
-    messages: state.lobby.messages
+    messages: state.lobby.messages,
+    leftColumnShowing: state.ui.leftColumnShowing,
+    rightColumnShowing: state.ui.rightColumnShowing,
+    gridViewOn: state.ui.gridViewOn
   }
 }
 
@@ -232,7 +232,10 @@ const mapDispatchToProps = ({
   tableJoined,
   tableLeft,
   tableUpdated,
-  messageReceived
+  messageReceived,
+  toggleLeftColumn,
+  toggleRightColumn,
+  toggleGridView
 })
 
 export default connect(

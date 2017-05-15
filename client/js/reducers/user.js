@@ -5,7 +5,10 @@ import {
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
-  LOGOUT
+  LOGOUT,
+  TOKEN_LOGIN_REQUEST,
+  TOKEN_LOGIN_SUCCESS,
+  TOKEN_LOGIN_FAILURE
 } from '../actions/user'
 
 const initialState = {
@@ -67,13 +70,37 @@ function user(state = initialState, action) {
         errorMessage: action.message.response.data.message
       }
     case LOGOUT:
-      localStorage.removeItem('client');
+      localStorage.removeItem('client')
       return {
-        ...state,
         isFetching: false,
         isAuthenticated: false,
         user: null,
-        token: null
+        token: null,
+        errorMessage: ''
+      }
+    case TOKEN_LOGIN_REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+        isAuthenticated: false,
+        errorMessage: ''
+      }
+    case TOKEN_LOGIN_SUCCESS:
+      return {
+        isFetching: false,
+        isAuthenticted: true,
+        user: action.user,
+        token: action.token,
+        errorMessage: ''
+      }
+    case TOKEN_LOGIN_FAILURE:
+      localStorage.removeItem('client')
+      return {
+        isFetching: false,
+        isAuthentication: false,
+        user: null,
+        token: null,
+        errorMessage: action.message.response.data.message
       }
     default:
       return state

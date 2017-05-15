@@ -6,10 +6,12 @@ import thunkMiddleware from 'redux-thunk'
 
 import user from '../reducers/user'
 import lobby from '../reducers/lobby'
+import ui from '../reducers/ui'
 
 const rootReducer = combineReducers({
   user,
   lobby,
+  ui,
   routing: routerReducer
 })
 

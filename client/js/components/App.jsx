@@ -1,9 +1,19 @@
 import React from 'react'
-import io from 'socket.io-client'
+import { connect } from 'react-redux'
+import { tokenLogin } from '../actions/user'
 
+import io from 'socket.io-client'
 const socket = io('/')
 
 class App extends React.Component {
+  componentDidMount() {
+    const { token, tokenLogin } = this.props
+
+    if (token) {
+      tokenLogin(token)
+    }
+  }
+
   render() {
     return (
       <div>
@@ -15,4 +25,17 @@ class App extends React.Component {
   }
 }
 
-export default App
+function mapStateToProps(state) {
+  return {
+    token: state.user.token
+  }
+}
+
+const mapDispatchToProps = ({
+  tokenLogin
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)

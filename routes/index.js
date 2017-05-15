@@ -66,4 +66,20 @@ router.post('/login', (req, res, next) => {
     })
 })
 
+router.post('/verify_jwt', (req, res, next) => {
+  jwt.verify(req.body.token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(404).json({
+        error: true,
+        message: 'JWT invalid'
+      })
+    }
+
+    res.send({
+      user: utils.getCleanUser(decoded),
+      token: req.body.token
+    })
+  })
+})
+
 module.exports = router

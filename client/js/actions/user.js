@@ -1,5 +1,6 @@
 import axios from 'axios'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+import { hashHistory } from 'react-router'
 import { push } from 'react-router-redux'
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
@@ -11,6 +12,10 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
 
 export const LOGOUT = 'LOGOUT'
+
+export const TOKEN_LOGIN_REQUEST = 'TOKEN_LOGIN_REQUEST'
+export const TOKEN_LOGIN_SUCCESS = 'TOKEN_LOGIN_SUCCESS'
+export const TOKEN_LOGIN_FAILURE = 'TOKEN_LOGIN_FAILURE'
 
 // login
 export function requestLogin(params) {
@@ -97,7 +102,7 @@ export function signUp(params) {
           console.log(res)
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err)
         dispatch(signUpFailure(err))        
       })
@@ -106,8 +111,55 @@ export function signUp(params) {
 
 // logout
 export function logout() {
-  dispatch(push('/login'))
+  return function(dispatch) {
+    dispatch({ type: LOGOUT })
+    dispatch(push('/login'))
+  }
+}
+
+// jwt token verification
+export function requestTokenLogin() {
   return {
-    type: LOGOUT
+    type: TOKEN_LOGIN_REQUEST
+  }
+}
+
+export function tokenLoginSuccess(user, token) {
+  return {
+    type: TOKEN_LOGIN_SUCCESS,
+    user,
+    token
+  }
+}
+
+export function tokenLoginFailure(message) {
+  return {
+    type: TOKEN_LOGIN_FAILURE,
+    message
+  }
+}
+
+export function tokenLogin(token) {
+  return function(dispatch) {
+    dispatch(requestTokenLogin())
+
+    return axios.post(`http://localhost:9000/api/verify_jwt`, { token })
+      .then(res => {
+        const user = res.data.user
+        const token = res.data.token
+
+        if (user) {
+          dispatch(tokenLoginSuccess(user, token))
+          if (hashHistory.getCurrentLocation().pathname !== '/lobby') {
+            dispatch(push('/lobby'))
+          }
+        } else {
+          console.log(res)
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        dispatch(tokenLoginFailure(message))
+      })
   }
 }
