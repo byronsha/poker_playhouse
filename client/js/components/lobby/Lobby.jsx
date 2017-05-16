@@ -7,10 +7,10 @@ import { connect } from 'react-redux'
 import { logout } from '../../actions/user'
 import {
   receiveLobbyInfo, tablesUpdated, playersUpdated,
-  tableJoined, tableLeft, tableUpdated, messageReceived
+  tableJoined, tableLeft, tableUpdated, receiveMessage
 } from '../../actions/lobby'
 import {
-  toggleLeftColumn, toggleRightColumn, toggleGridView, sendChatMessage
+  toggleLeftColumn, toggleRightColumn, toggleGridView
 } from '../../actions/ui'
 
 class Lobby extends React.Component {
@@ -109,7 +109,7 @@ class Lobby extends React.Component {
   }
 
   sendMessage = e => {
-    const { socket, sendChatMessage } = this.props
+    const { socket, receiveMessage } = this.props
     const body = e.target.value
 
     if (e.keyCode === 13 && body) {
@@ -117,7 +117,7 @@ class Lobby extends React.Component {
         body,
         from: 'Me'
       }
-      sendChatMessage(message)
+      receiveMessage(message)
       socket.emit('message', body)
       e.target.value = ''
     }
@@ -232,11 +232,10 @@ const mapDispatchToProps = ({
   tableJoined,
   tableLeft,
   tableUpdated,
-  messageReceived,
+  receiveMessage,
   toggleLeftColumn,
   toggleRightColumn,
-  toggleGridView,
-  sendChatMessage
+  toggleGridView
 })
 
 export default connect(

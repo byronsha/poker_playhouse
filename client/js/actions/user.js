@@ -159,7 +159,7 @@ export function tokenLogin(token) {
       })
       .catch(err => {
         console.log(err)
-        dispatch(tokenLoginFailure(message))
+        dispatch(tokenLoginFailure(err))
       })
   }
 }

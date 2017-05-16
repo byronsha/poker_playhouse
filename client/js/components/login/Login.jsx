@@ -9,7 +9,7 @@ class Login extends React.Component {
     e.preventDefault()
     const username = this.username.value
     const password = this.password.value
-    
+
     if (!username || !password) { return }
     this.props.login({ username, password })
   }
@@ -27,14 +27,11 @@ class Login extends React.Component {
             ref={ref => {this.username = ref}}
           />
           <input
-            type="text"
-            placeholder="password"
+            type="password"
+            placeholder="Enter your password"
             ref={ref => {this.password = ref}}
           />
-          <input
-            type="submit"
-            value="Login"
-          />
+          <input type="submit" value="Login" />
         </form>
         <Link to="/signup">Don't have an account?</Link>
 

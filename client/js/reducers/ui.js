@@ -1,15 +1,13 @@
 import {
   TOGGLE_LEFT_COLUMN,
   TOGGLE_RIGHT_COLUMN,
-  TOGGLE_GRID_VIEW,
-  SEND_CHAT_MESSAGE
+  TOGGLE_GRID_VIEW
 } from '../actions/ui'
 
 const initialState = {
   leftColumnShowing: true,
   rightColumnShowing: true,
-  gridViewOn: false,
-  messages: []
+  gridViewOn: false
 }
 
 function ui(state = initialState, action) {
@@ -27,12 +25,7 @@ function ui(state = initialState, action) {
     case TOGGLE_GRID_VIEW:
       return {
         ...state,
-        gridViewShowing: !state.gridViewShowing
-      }
-    case SEND_CHAT_MESSAGE:
-      return {
-        ...state,
-        messages: [action.message, ...state.messages]
+        gridViewOn: !state.gridViewOn
       }
     default:
       return state

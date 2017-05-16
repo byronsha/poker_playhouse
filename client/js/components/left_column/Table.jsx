@@ -12,11 +12,7 @@ class Table extends React.Component {
         <td>{table.name}</td>
         <td>${table.minBet.toFixed(2)}/${(table.minBet * 2).toFixed(2)}</td>
         <td>{table.players.length}/{table.maxPlayers}</td>
-        <td>
-          <button onClick={() => { onTableClick(table.id) }}>
-            <i className="fa fa-sign-in" aria-hidden="true"></i>
-          </button>
-        </td>
+        <td><button onClick={() => { onTableClick(table.id) }}>Join</button></td>
       </tr>
     )
   }

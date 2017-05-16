@@ -9,12 +9,14 @@ class Signup extends React.Component {
     e.preventDefault()
     const username = this.username.value
     const password = this.password.value
-    
+
     if (!username || !password) { return }
     this.props.signUp({ username, password })
   }
 
   render() {
+    const { isFetching, errorMessage } = this.props
+
     return (
       <div>
         <h1>Sign up</h1>
@@ -25,16 +27,21 @@ class Signup extends React.Component {
             ref={ref => {this.username = ref}}
           />
           <input
-            type="text"
-            placeholder="password"
+            type="password"
+            placeholder="Enter your password"
             ref={ref => {this.password = ref}}
           />
-          <input
-            type="submit"
-            value="Sign up"
-          />
+          <input type="submit" value="Sign up" />
         </form>
         <Link to="/login">Already have an account?</Link>
+
+        {isFetching &&
+          <div>Attemping signup...</div>
+        }
+
+        {errorMessage &&
+          <div>{errorMessage}</div>
+        }
       </div>
     )
   }

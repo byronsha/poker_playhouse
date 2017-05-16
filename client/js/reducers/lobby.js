@@ -6,7 +6,7 @@ import {
   TABLE_JOINED,
   TABLE_LEFT,
   TABLE_UPDATED,
-  MESSAGE_RECEIVED
+  RECEIVE_MESSAGE
 } from '../actions/lobby'
 
 const initialState = {
@@ -91,7 +91,7 @@ function lobby(state = initialState, action) {
         ...state,
         openTables: newOpenTables
       }
-    case MESSAGE_RECEIVED:
+    case RECEIVE_MESSAGE:
       return {
         ...state,
         messages: [action.message, ...state.messages]
