@@ -10,7 +10,7 @@ import {
   tableJoined, tableLeft, tableUpdated, messageReceived
 } from '../../actions/lobby'
 import {
-  toggleLeftColumn, toggleRightColumn, toggleGridView
+  toggleLeftColumn, toggleRightColumn, toggleGridView, sendChatMessage
 } from '../../actions/ui'
 
 class Lobby extends React.Component {
@@ -109,7 +109,7 @@ class Lobby extends React.Component {
   }
 
   sendMessage = e => {
-    const { socket } = this.props
+    const { socket, sendChatMessage } = this.props
     const body = e.target.value
 
     if (e.keyCode === 13 && body) {
@@ -117,7 +117,7 @@ class Lobby extends React.Component {
         body,
         from: 'Me'
       }
-      this.setState({ messages: [message, ...this.state.messages] })
+      sendChatMessage(message)
       socket.emit('message', body)
       e.target.value = ''
     }
@@ -235,7 +235,8 @@ const mapDispatchToProps = ({
   messageReceived,
   toggleLeftColumn,
   toggleRightColumn,
-  toggleGridView
+  toggleGridView,
+  sendChatMessage
 })
 
 export default connect(

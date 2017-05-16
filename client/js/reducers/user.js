@@ -88,7 +88,7 @@ function user(state = initialState, action) {
     case TOKEN_LOGIN_SUCCESS:
       return {
         isFetching: false,
-        isAuthenticted: true,
+        isAuthenticated: true,
         user: action.user,
         token: action.token,
         errorMessage: ''
@@ -97,7 +97,7 @@ function user(state = initialState, action) {
       localStorage.removeItem('client')
       return {
         isFetching: false,
-        isAuthentication: false,
+        isAuthenticated: false,
         user: null,
         token: null,
         errorMessage: action.message.response.data.message
