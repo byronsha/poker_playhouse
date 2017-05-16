@@ -75,10 +75,21 @@ router.post('/verify_jwt', (req, res, next) => {
       })
     }
 
-    res.send({
-      user: utils.getCleanUser(decoded),
-      token: req.body.token
-    })
+    db.User
+      .find({where: {id: decoded.id}})
+      .then(user => {
+        if (!user) {
+          return res.status(404).json({
+            error: true,
+            message: 'JWT invalid'
+          })
+        }
+
+        res.send({
+          user: utils.getCleanUser(user),
+          token: utils.generateToken(user)
+        })
+      })
   })
 })
 

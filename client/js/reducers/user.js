@@ -86,6 +86,7 @@ function user(state = initialState, action) {
         errorMessage: ''
       }
     case TOKEN_LOGIN_SUCCESS:
+      localStorage.setItem('client', action.token)
       return {
         isFetching: false,
         isAuthenticated: true,
