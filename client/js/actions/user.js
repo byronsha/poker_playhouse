@@ -17,6 +17,8 @@ export const TOKEN_LOGIN_REQUEST = 'TOKEN_LOGIN_REQUEST'
 export const TOKEN_LOGIN_SUCCESS = 'TOKEN_LOGIN_SUCCESS'
 export const TOKEN_LOGIN_FAILURE = 'TOKEN_LOGIN_FAILURE'
 
+const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:9000/api' : '/api'
+
 // login
 export function requestLogin(params) {
   return {
@@ -44,7 +46,7 @@ export function login(params) {
   return function(dispatch) {
     dispatch(requestLogin(params))
 
-    return axios.post('http://localhost:9000/api/login', params)
+    return axios.post(`${ROOT_URL}/login`, params)
       .then(res => {
         const user = res.data.user
         const token = res.data.token
@@ -90,7 +92,7 @@ export function signUp(params) {
   return function(dispatch) {
     dispatch(requestSignUp(params))
 
-    return axios.post(`http://localhost:9000/api/signup`, params)
+    return axios.post(`${ROOT_URL}/signup`, params)
       .then(res => {
         const user = res.data.user
         const token = res.data.token
@@ -143,7 +145,7 @@ export function tokenLogin(token) {
   return function(dispatch) {
     dispatch(requestTokenLogin())
 
-    return axios.post(`http://localhost:9000/api/verify_jwt`, { token })
+    return axios.post(`${ROOT_URL}/verify_jwt`, { token })
       .then(res => {
         const user = res.data.user
         const token = res.data.token

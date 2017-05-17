@@ -29,7 +29,7 @@ class Lobby extends React.Component {
   componentDidMount() {
     const {
       socket, user, receiveLobbyInfo, tablesUpdated, playersUpdated,
-      tableJoined, tableLeft, tableUpdated, messageReceived
+      tableJoined, tableLeft, tableUpdated, receiveMessage
     } = this.props
 
     if (user) {
@@ -57,7 +57,7 @@ class Lobby extends React.Component {
       gameChat.scrollTop = gameChat.scrollHeight
     })
     socket.on('message', message => {
-      messageReceived(message)
+      receiveMessage(message)
     })
   }
 
