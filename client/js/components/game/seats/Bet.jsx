@@ -1,10 +1,15 @@
 import React from 'react'
 import ChipPile from '../pieces/ChipPile'
 
-const Bet = ({ bet }) => (
+const Bet = ({ seat }) => (
   <div className="bet">
-    <ChipPile amount={bet} />
-    <span>${bet.toFixed(2)}</span>
+    <ChipPile amount={seat.bet} />
+    <span>
+      {seat.lastAction && !seat.turn &&
+        <span>{seat.lastAction + ' - '}</span>
+      }
+      ${seat.bet.toFixed(2)}
+    </span>
   </div>
 )
 

@@ -8,10 +8,11 @@ const styleSheet = createStyleSheet('ActionButtons', theme => ({
   },
   button: {
     flex: 1,
-    margin: '2px',
+    color: '#fff',
+    margin: '4px',
     verticalAlign: 'top',
-    height: '100px',
-    fontSize: '2em',
+    height: '80px',
+    fontSize: '1.5em',
   }
 }))
 
@@ -29,8 +30,8 @@ const ActionButtons = ({
   <div className={classes.container}>
     <Button
       raised
-      className={classes.button}
       color="accent"
+      className={classes.button}
       onClick={handleFoldClick}>
       Fold
     </Button>
@@ -38,8 +39,8 @@ const ActionButtons = ({
     {(!table.callAmount || seat.bet === table.callAmount) &&
       <Button
         raised
-        className={classes.button}
         color="accent"
+        className={classes.button}
         onClick={handleCheckClick}>
         Check
       </Button>
@@ -48,8 +49,8 @@ const ActionButtons = ({
     {(table.callAmount > 0 && seat.bet !== table.callAmount) &&
       <Button
         raised
-        className={classes.button}
         color="accent"
+        className={classes.button}
         onClick={handleCallClick}>
         Call ${(totalCallAmount).toFixed(2)}
       </Button>  
@@ -58,8 +59,8 @@ const ActionButtons = ({
     {seat.stack > table.callAmount &&
       <Button
         raised
-        className={classes.button}
         color="accent"
+        className={classes.button}
         onClick={handleRaiseClick}>
         Raise to ${parseFloat(raiseAmount).toFixed(2)}
       </Button>

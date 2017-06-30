@@ -1,8 +1,9 @@
 import React from 'react'
 import RaiseSlider from './RaiseSlider'
 import PotSizeButton from './PotSizeButton'
-import Paper from 'material-ui/Paper'
 import ActionButtons from './ActionButtons'
+import Paper from 'material-ui/Paper'
+import { blueGrey } from 'material-ui/styles/colors'
 
 class Actions extends React.Component {
   constructor(props) {
@@ -75,7 +76,7 @@ class Actions extends React.Component {
     ]
 
     return (
-      <Paper className="actions-container">
+      <Paper className="actions-container" style={{background: blueGrey[100]}}>
         <div className="actions">
           <ActionButtons
             seat={seat}

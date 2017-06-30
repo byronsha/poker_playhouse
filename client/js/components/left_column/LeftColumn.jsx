@@ -5,6 +5,7 @@ import Chat from './Chat'
 import { withStyles, createStyleSheet } from 'material-ui/styles'
 import Drawer from 'material-ui/Drawer'
 import Button from 'material-ui/Button'
+import { blueGrey } from 'material-ui/styles/colors'
 
 const styleSheet = createStyleSheet('LeftColumn', theme => ({
   button: {
@@ -13,8 +14,10 @@ const styleSheet = createStyleSheet('LeftColumn', theme => ({
     bottom: '0px'
   },
   drawer: {
+    background: blueGrey[100],
     padding: '10px',
-    width: '260px'
+    width: '260px',
+    height: '100vh'
   },
 }))
 

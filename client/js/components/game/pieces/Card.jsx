@@ -7,6 +7,21 @@ import {
   green
 } from 'material-ui/styles/colors'
 
+const suits = {
+  'spades': '♠',
+  'diamonds': '♦',
+  'hearts': '♥',
+  'clubs': '♣'
+}
+
+const ranks = {
+  'ace': 'A',
+  'king': 'K',
+  'queen': 'Q',
+  'jack': 'J',
+  '10': 'T'
+}
+
 class Card extends React.Component {
   getSuitColor = suit => {
     switch(suit) {
@@ -24,21 +39,6 @@ class Card extends React.Component {
   }
 
   render() {
-    const suits = {
-      'spades': '♠',
-      'diamonds': '♦',
-      'hearts': '♥',
-      'clubs': '♣'
-    }
-
-    const ranks = {
-      'ace': 'A',
-      'king': 'K',
-      'queen': 'Q',
-      'jack': 'J',
-      '10': 'T'
-    }
-
     const { card } = this.props
 
     if (card.rank === '0') {

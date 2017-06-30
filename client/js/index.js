@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
 import createPalette from 'material-ui/styles/palette'
-import { blue } from 'material-ui/styles/colors'
+import { blue, red } from 'material-ui/styles/colors'
 
 import { Provider } from 'react-redux'
 import { Router, Route, IndexRedirect, hashHistory } from 'react-router'
@@ -43,7 +43,8 @@ const Root = () => (
 const theme = createMuiTheme({
   palette: createPalette({
     type: 'light',
-    primary: blue
+    primary: blue,
+    accent: red
   }),
 })
 
