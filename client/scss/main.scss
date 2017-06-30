@@ -52,7 +52,8 @@ $blue-grey-darken-2: #455a64;
 $blue-grey-darken-3: #37474f;
 $blue-grey-darken-4: #263238;
 
-$box-shadow: 0px 1px 2px #222;
+// $box-shadow: 0px 1px 2px #222;
+$box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 
 @import './actions.scss';
 @import './card.scss';
@@ -61,18 +62,15 @@ $box-shadow: 0px 1px 2px #222;
 @import './seats.scss';
 @import './small_table.scss';
 @import './table.scss';
-@import url('https://fonts.googleapis.com/css?family=Ubuntu');
-@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
 @import url('https://fonts.googleapis.com/css?family=Oswald:400,700');
-@import url('https://fonts.googleapis.com/css?family=Raleway:700');
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 body {
   margin: 0px;
   overflow: hidden;
   font-size: 16px;
-  font-family: 'Roboto Condensed', sans-serif;
-  background: $grey-lighten-5;
+  font-family: 'Roboto', sans-serif;
+  // background: $grey-lighten-5;
 }
 button, input {
   font-size: inherit;
@@ -81,114 +79,112 @@ button, input {
 th {
   font-weight: normal;
 }
-.left-column {
-  position: absolute;
-  width: 280px;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  background: $blue-grey-lighten-4;
-  padding: 5px 10px;
-  box-sizing: border-box;
-  color: #333;
-  box-shadow: 1px 0px 2px #666;
-  z-index: 2;
-  transition: 0.2s all;
+// .left-column {
+//   position: absolute;
+//   width: 280px;
+//   top: 0;
+//   left: 0;
+//   bottom: 0;
+//   background: $blue-grey-lighten-4;
+//   padding: 5px 10px;
+//   box-sizing: border-box;
+//   color: #333;
+//   box-shadow: $box-shadow;
+//   z-index: 2;
+//   transition: 0.2s all;
 
-  .toggle-left-column-btn {
-    position: absolute;
-    top: 49%;
-    right: 0px;
-    color: #666;
-    background: transparent;
-    border: none;
-  }
-  .toggle-left-column-btn:hover {
-    cursor: pointer;
-    background: $blue-grey-lighten-5;
-    transition: 0.2s all;
-  }
-}
-.left-column.hidden {
-  left: -280px;
+//   .toggle-left-column-btn {
+//     position: absolute;
+//     top: 49%;
+//     right: 0px;
+//     color: #666;
+//     background: transparent;
+//     border: none;
+//   }
+//   .toggle-left-column-btn:hover {
+//     cursor: pointer;
+//     background: $blue-grey-lighten-5;
+//     transition: 0.2s all;
+//   }
+// }
+// .left-column.hidden {
+//   left: -280px;
 
-  .toggle-left-column-btn {
-    right: -25px;
-  }
-}
-.right-column {
-  position: absolute;
-  width: 300px;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background: $blue-grey-lighten-4;
-  padding: 5px 10px;
-  box-sizing: border-box;
-  color: #333;
-  box-shadow: -1px 0px 2px #666;
-  z-index: 2;
-  transition: 0.2s all;  
+//   .toggle-left-column-btn {
+//     right: -25px;
+//   }
+// }
+// .right-column {
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+// }
+//   background: $blue-grey-lighten-4;
+//   padding: 5px 10px;
+//   box-sizing: border-box;
+//   color: #333;
+//   box-shadow: $box-shadow;
+//   z-index: 2;
+//   transition: 0.2s all;  
 
-  .toggle-right-column-btn {
-    position: absolute;
-    top: 49%;
-    left: 0px;
-    color: #666;
-    background: transparent;
-    border: none;
-  }
-  .toggle-right-column-btn:hover {
-    cursor: pointer;
-    background: $blue-grey-lighten-5;
-    transition: 0.2s all;
-  }
-}
-.right-column.hidden {
-  right: -300px;
+//   .toggle-right-column-btn {
+//     position: absolute;
+//     top: 49%;
+//     left: 0px;
+//     color: #666;
+//     background: transparent;
+//     border: none;
+//   }
+//   .toggle-right-column-btn:hover {
+//     cursor: pointer;
+//     background: $blue-grey-lighten-5;
+//     transition: 0.2s all;
+//   }
+// }
+// .right-column.hidden {
+//   right: -300px;
 
-  .toggle-right-column-btn {
-    left: -25px;
-  }
-}
+//   .toggle-right-column-btn {
+//     left: -25px;
+//   }
+// }
 .center-column {
-  position: relative;
   height: 100%;
   margin-left: 280px;
-  margin-right: 300px;
+  // margin-right: 280px;
   box-sizing: border-box;
 }
-.table-list {
-  font-size: 0.8em;
-  width: 100%;
+// .table-list {
+//   font-size: 0.8em;
+//   width: 100%;
 
-  th {
-    text-align: left;
-    text-decoration: underline;
-    font-weight: bold;
-  }
-  button {
-    font-size: inherit;
-    background: $blue-grey-darken-3;
-    border-radius: 2px;
-    border: none;
-    color: #ccc;
-  }
-  button:hover {
-    background: $blue-grey;
-    cursor: pointer;
-    transition: 0.2s all;
-  }
-}
-.player-list {
-  list-style-type: none;
-  padding-left: 0px;
-  font-size: 12px;
-}
-.chat ul {
-  max-height: 500px;
-  width: 200px;
-  overflow: auto;
-  list-style-type: none;
-  padding-left: 0px;
-}
+//   th {
+//     text-align: left;
+//     text-decoration: underline;
+//     font-weight: bold;
+//   }
+//   button {
+//     font-size: inherit;
+//     background: $blue-grey-darken-3;
+//     border-radius: 2px;
+//     border: none;
+//     color: #ccc;
+//   }
+//   button:hover {
+//     background: $blue-grey;
+//     cursor: pointer;
+//     transition: 0.2s all;
+//   }
+// }
+// .player-list {
+//   list-style-type: none;
+//   padding-left: 0px;
+//   font-size: 12px;
+// }
+// .chat ul {
+//   max-height: 500px;
+//   width: 200px;
+//   overflow: auto;
+//   list-style-type: none;
+//   padding-left: 0px;
+// }

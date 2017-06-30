@@ -1,8 +1,10 @@
 import React from 'react'
 import RaiseSlider from './RaiseSlider'
 import PotSizeButton from './PotSizeButton'
+import Paper from 'material-ui/Paper'
+import ActionButtons from './ActionButtons'
 
-class ActionButtons extends React.Component {
+class Actions extends React.Component {
   constructor(props) {
     super(props)
 
@@ -73,43 +75,22 @@ class ActionButtons extends React.Component {
     ]
 
     return (
-      <div className="actions-container">
+      <Paper className="actions-container">
         <div className="actions">
-          <div className="main-action-buttons">
-            <button onClick={() => {
-              onFoldClick(table.id)
-            }}>
-              Fold
-            </button>
-
-            {(!table.callAmount || seat.bet === table.callAmount) &&
-              <button onClick={() => {
-                onCheckClick(table.id)
-              }}>
-                Check
-              </button>
-            }
-
-            {(table.callAmount > 0 && seat.bet !== table.callAmount) &&
-              <button onClick={() => {
-                onCallClick(table.id)
-              }}>
-                Call ${(totalCallAmount).toFixed(2)}
-              </button>  
-            }
-
-            {seat.stack > table.callAmount &&
-              <button onClick={() => {
-                onRaiseClick(table.id, parseFloat(this.state.raiseAmount))
-              }}>
-                Raise to ${parseFloat(this.state.raiseAmount).toFixed(2)}
-              </button>
-            }
-          </div>
+          <ActionButtons
+            seat={seat}
+            table={table}
+            raiseAmount={this.state.raiseAmount}
+            totalCallAmount={totalCallAmount}
+            handleFoldClick={() => onFoldClick(table.id)}
+            handleCheckClick={() => onCheckClick(table.id)}
+            handleCallClick={() => onCallClick(table.id)}
+            handleRaiseClick={() => onRaiseClick(table.id, parseFloat(this.state.raiseAmount))}
+          />
 
           {seat.stack > table.callAmount &&
             <div>
-              <div className="raise-slider-container">
+              <div>
                 <RaiseSlider
                   raiseAmount={this.state.raiseAmount}
                   decreaseRaiseAmount={() => this.handleRaiseUpdate(this.state.raiseAmount - table.minBet)}
@@ -118,10 +99,9 @@ class ActionButtons extends React.Component {
                   table={table}
                   seat={seat}
                 />
-                <input type="number" onChange={this.handleRaiseChange} />
               </div>
-
-              <div className="raise-size-buttons">
+              
+              <div style={{display: 'flex'}}>
                 {potSizes.map(potSize =>
                   <PotSizeButton
                     key={potSize[0]}
@@ -133,9 +113,9 @@ class ActionButtons extends React.Component {
             </div>
           }
         </div>
-      </div>
+      </Paper>
     )
   }
 }
 
-export default ActionButtons
+export default Actions

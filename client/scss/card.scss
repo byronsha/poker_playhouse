@@ -1,14 +1,14 @@
 .card {
   display: inline-block;
   font-weight: bold;
-  background: #eee;
+  // background: #eee;
   width: 75px;
   height: 105px;
   overflow: hidden;
   margin: 3px;
   vertical-align: top;
   box-sizing: border-box;
-  box-shadow: $box-shadow;
+  // box-shadow: $box-shadow;
   border-radius: 4px;
 
   .card-back {

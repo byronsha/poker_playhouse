@@ -1,7 +1,8 @@
 import React from 'react'
 import Hand from './Hand'
-import ChipPile from '../pieces/ChipPile'
 import ShotClock from './ShotClock'
+import Bet from './Bet'
+import Paper from 'material-ui/Paper'
 
 class SeatedPlayer extends React.Component {
   render() {
@@ -9,18 +10,13 @@ class SeatedPlayer extends React.Component {
 
     return (
       <div>
-        {seat.bet > 0 &&
-          <div className="bet">
-            <ChipPile amount={seat.bet} />
-            <span>${seat.bet.toFixed(2)}</span>
-          </div>
-        }
+        {seat.bet > 0 && <Bet bet={seat.bet} />}
         
         {seat.hand.length > 0 && 
           <Hand seat={seat} />  
         }
 
-        <div className="seat-info">
+        <Paper className="seat-info">
           <div className="seat-stack">
             <div>${seat.stack.toFixed(2)}</div>
           </div>
@@ -29,15 +25,13 @@ class SeatedPlayer extends React.Component {
             <div className="seat-number">{seat.id}</div>
             <div className="seat-player">{seat.player.name} {user.username === seat.player.name ? '(me)' : ''} </div>
           </div>
-        </div>
 
-        {seat.lastAction && !seat.turn &&
-          <div className="seat-last-action">{seat.lastAction}</div>
-        }
+          {seat.lastAction && !seat.turn &&
+            <div className="seat-last-action">{seat.lastAction}</div>
+          }
 
-        {seat.turn &&
-          <ShotClock seconds={30} /> 
-        }
+          {seat.turn && <ShotClock seconds={30} />}
+        </Paper>
 
         {isButton && <span className="button-chip">D</span>}
       </div>

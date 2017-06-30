@@ -6,6 +6,22 @@ import Board from './Board'
 import Actions from './actions/Actions'
 import ChipPile from './pieces/ChipPile'
 import GameChat from './chat/GameChat'
+import Button from 'material-ui/Button'
+import Icon from 'material-ui/Icon'
+import { withStyles, createStyleSheet } from 'material-ui/styles'
+
+const styleSheet = createStyleSheet('Game', theme => ({
+  tableInfo: {
+    fontFamily: 'Roboto',
+    padding: '0px 10px'
+  },
+  controlButton: {
+    float: 'right',
+    margin: '2px',
+    width: '36px',
+    height: '36px'
+  }
+}))
 
 class Game extends React.Component {
   constructor() {
@@ -49,19 +65,42 @@ class Game extends React.Component {
   }
 
   render() {
-    const { user, table, messages, onLeaveClick, onSeatClick, onRaiseClick,
+    const { classes, user, table, messages, onLeaveClick, onSeatClick, onRaiseClick,
             onCheckClick, onCallClick, onFoldClick, onTableMessage, gridViewOn } = this.props
 
     const gameClass = gridViewOn ? 'poker-game poker-game-small' : 'poker-game'
     
     return (
       <div className={gameClass}>
-        <div className="table-info">
+        <div className={classes.tableInfo}>
           <div>
             {table.name}, ${table.limit.toFixed(2)} NL Holdem, {table.maxPlayers} players
-            <button onClick={() => { onLeaveClick(table.id) }}><i className="fa fa-sign-out" aria-hidden="true"></i></button>
-            <button onClick={this.rotateCounterClockwiseClick}><i className="fa fa-undo" aria-hidden="true"></i></button>
-            <button onClick={this.rotateClockwiseClick}><i className="fa fa-repeat" aria-hidden="true"></i></button>
+            <Button
+              fab
+              color="primary"
+              className={classes.controlButton}
+              onClick={() => { onLeaveClick(table.id) }}
+            >
+              <Icon>exit_to_app</Icon>
+            </Button>
+
+            <Button
+              fab
+              color="primary"
+              className={classes.controlButton}
+              onClick={this.rotateCounterClockwiseClick}
+            >
+              <Icon>loop</Icon>
+            </Button>
+
+            <Button
+              fab
+              color="primary"
+              className={classes.controlButton}
+              onClick={this.rotateClockwiseClick}
+            >
+              <Icon>autorenew</Icon>
+            </Button>
           </div>
         </div>
         
@@ -70,29 +109,31 @@ class Game extends React.Component {
           table={table}
         />
 
-        <div className="board">
-          {table.mainPot > 0 &&
-            <div>
-              <ChipPile amount={table.mainPot.toFixed(2)} />
-              <div>Main Pot: ${table.mainPot.toFixed(2)}</div>  
+        <div>
+          <div className="board">
+            {table.mainPot > 0 &&
+              <div>
+                <ChipPile amount={table.mainPot.toFixed(2)} />
+                <div>Main Pot: ${table.mainPot.toFixed(2)}</div>  
+              </div>
+            }
+
+            <Board table={table} />
+            
+            <div className="pot">
+              Total Pot: ${table.pot.toFixed(2)}
             </div>
-          }
-
-          <Board table={table} />
-          
-          <div className="pot">
-            Total Pot: ${table.pot.toFixed(2)}
           </div>
+
+          <Background />
+
+          <Seats
+            user={user}
+            table={table}
+            onSeatClick={onSeatClick}
+            displayOffset={this.state.displayOffset}
+          />
         </div>
-
-        <Background />
-
-        <Seats
-          user={user}
-          table={table}
-          onSeatClick={onSeatClick}
-          displayOffset={this.state.displayOffset}
-        />
 
         {this.isOwnTurn() &&
           <Actions
@@ -116,4 +157,10 @@ class Game extends React.Component {
   }
 }
 
-export default Game
+export default withStyles(styleSheet)(Game)
+
+
+//  style={{width: '75%', height: '85%',
+//         top: '0px',
+//         left: '0px',
+//         position: 'relative'}}

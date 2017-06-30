@@ -1,16 +1,17 @@
 import React from 'react'
+import Paper from 'material-ui/Paper'
 
 const EmptySeat = ({ seatId, onSeatClick }) => (
-  <div onClick={onSeatClick} className="seat-info">
+  <Paper onClick={onSeatClick} className="seat-info">
     <div className="seat-stack">
-      <div>$0.00</div>
+      <div>SIT DOWN</div>
     </div>
 
     <div>
       <div className="seat-number">{seatId}</div>
-      <div>SIT HERE</div>
+      <div>.</div>
     </div>
-  </div>
+  </Paper>
 )
 
 export default EmptySeat

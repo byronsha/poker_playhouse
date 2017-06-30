@@ -25,6 +25,8 @@
     "extract-text-webpack-plugin": "^2.1.0",
     "jsonwebtoken": "^7.4.0",
     "lodash": "^4.17.4",
+    "material-ui": "^1.0.0-alpha.20",
+    "material-ui-icons": "^1.0.0-alpha.19",
     "moment": "^2.18.1",
     "node-gyp": "^3.5.0",
     "node-sass": "^4.5.2",

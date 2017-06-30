@@ -1,7 +1,10 @@
 require('!style-loader!css-loader!sass-loader!../scss/main.scss')
-
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
+import createPalette from 'material-ui/styles/palette'
+import { blue } from 'material-ui/styles/colors'
+
 import { Provider } from 'react-redux'
 import { Router, Route, IndexRedirect, hashHistory } from 'react-router'
 import { syncHistoryWithStore, push } from 'react-router-redux'
@@ -37,4 +40,16 @@ const Root = () => (
   </Provider>
 )
 
-ReactDOM.render(<Root />, document.getElementById('root'))
+const theme = createMuiTheme({
+  palette: createPalette({
+    type: 'light',
+    primary: blue
+  }),
+})
+
+ReactDOM.render(
+  <MuiThemeProvider theme={theme}>
+    <Root />
+  </MuiThemeProvider>,
+  document.getElementById('root')
+)

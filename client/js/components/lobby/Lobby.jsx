@@ -1,7 +1,5 @@
 import React from 'react'
-import TableList from '../left_column/TableList'
-import PlayerList from '../right_column/PlayerList'
-import Chat from '../right_column/Chat'
+import LeftColumn from '../left_column/LeftColumn'
 import Game from '../game/Game'
 import { connect } from 'react-redux'
 import { logout } from '../../actions/user'
@@ -12,6 +10,8 @@ import {
 import {
   toggleLeftColumn, toggleRightColumn, toggleGridView
 } from '../../actions/ui'
+import { withStyles, createStyleSheet } from 'material-ui/styles'
+import Drawer from 'material-ui/Drawer'
 
 class Lobby extends React.Component {
   constructor() {
@@ -130,35 +130,25 @@ class Lobby extends React.Component {
       toggleGridView, logout
     } = this.props
 
-    const leftColumnClass = leftColumnShowing ? 'left-column' : 'left-column hidden'
-    const rightColumnClass = rightColumnShowing ? 'right-column' : 'right-column hidden'
-
     if (!user) {
       return <div></div>
     }
 
     return (
       <div>
-        <div className={leftColumnClass}>
-          <button
-            onClick={toggleLeftColumn}
-            className="toggle-left-column-btn"
-          >
-            {leftColumnShowing &&
-              <i className="fa fa-angle-left" aria-hidden="true"></i>}
-            {!leftColumnShowing &&
-              <i className="fa fa-angle-right" aria-hidden="true"></i>}
-          </button>
-          
-          <div className="player-info">Logged in as {user.username}</div>
-          <button onClick={logout}>Logout</button>
-          
-          <TableList
-            openTables={Object.keys(openTables)}
-            tables={tables}
-            onTableClick={this.handleTableClick}
-          />
-        </div>
+        <LeftColumn
+          open={leftColumnShowing}
+          user={user}
+          logout={logout}
+          openTables={openTables}
+          tables={tables}
+          handleTableClick={this.handleTableClick}
+          toggle={toggleLeftColumn}
+          toggleGridView={toggleGridView}
+          players={players}
+          messages={messages}
+          sendMessage={this.sendMessage}
+        />
 
         <div className="center-column">
           {Object.keys(openTables).length > 0 &&
@@ -179,32 +169,6 @@ class Lobby extends React.Component {
               />
             )
           }
-        </div>
-
-        <div className={rightColumnClass}>
-          <button
-            onClick={toggleRightColumn}
-            className="toggle-right-column-btn"
-          >
-            {rightColumnShowing &&
-              <i className="fa fa-angle-right" aria-hidden="true"></i>}
-            {!rightColumnShowing &&
-              <i className="fa fa-angle-left" aria-hidden="true"></i>}
-          </button>
-
-          <PlayerList
-            user={user} 
-            players={players}
-          />
-
-          <Chat
-            messages={messages}
-            sendMessage={this.sendMessage}
-          />
-
-          <button onClick={toggleGridView}>
-            Grid view
-          </button>
         </div>
       </div>
     )

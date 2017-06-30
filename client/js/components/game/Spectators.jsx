@@ -1,5 +1,5 @@
 import React from 'react'
-import Player from '../right_column/Player'
+import Player from '../left_column/Player'
 
 class Spectators extends React.Component {
   render() {

@@ -1,17 +1,13 @@
 .game-chat {
-  font-size: 0.9em;
   position: absolute;
   bottom: 0px;
   right: 0px;
-  width: calc(50% - 10px);
-  font-family: 'Roboto Condensed', sans-serif;
-  background: $blue-grey-lighten-4;
-  box-shadow: -1px -1px 2px #666, 1px 0px 2px #666;
+  width: calc(40% - 10px);
+  font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
-  margin-right: 10px;
 
   .messages {
-    height: 13vh;
+    height: 20vh;
     margin: 10px 10px 0px 10px;
     padding-left: 5px;
     padding-top: 5px;
@@ -20,7 +16,7 @@
     background: $blue-grey-darken-4;
   }
   .chat-input {
-    padding: 5px 32px 7px 10px;
+    padding: 7px 32px 7px 10px;
 
     input {
       width: 100%;

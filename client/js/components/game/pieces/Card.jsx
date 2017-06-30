@@ -1,18 +1,25 @@
 import React from 'react'
+import Paper from 'material-ui/Paper'
+import {
+  red,
+  grey,
+  blue,
+  green
+} from 'material-ui/styles/colors'
 
 class Card extends React.Component {
   getSuitColor = suit => {
     switch(suit) {
       case 'spades':
-        return { background: '#2a2a2a' }
+        return { color: grey[900] }
       case 'diamonds':
-        return { background: '#2962ff' }
+        return { color: blue[500] }
       case 'hearts':
-        return { background: '#d32f2f' }
+        return { color: red[500] }
       case 'clubs':
-        return { background: 'rgb(55, 183, 60)' }
+        return { color: green[500] }
       default:
-        return { background: '#ccc' }
+        return { color: 'purple' }
     }
   }
 
@@ -37,16 +44,16 @@ class Card extends React.Component {
     if (card.rank === '0') {
       return <div className="card-silhouette"></div>
     } else if (card.rank === 'hidden') {
-      return <div className="card"><div className="card-back"></div></div>
+      return <Paper className="card"><div className="card-back"></div></Paper>
     } else {
       return (
-        <div className="card" style={this.getSuitColor(card.suit)}>
-          <div className="small-picture">
+        <Paper className="card" elevation={4}>
+          <div className="small-picture" style={this.getSuitColor(card.suit)}>
             <div>{ranks[card.rank] ? ranks[card.rank] : card.rank}</div>
             <div>{suits[card.suit]}</div>
           </div>
-          <div className="big-picture">{ranks[card.rank] ? ranks[card.rank] : card.rank}</div>
-        </div>
+          <div className="big-picture" style={this.getSuitColor(card.suit)}>{ranks[card.rank] ? ranks[card.rank] : card.rank}</div>
+        </Paper>
       )
     }
   }

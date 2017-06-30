@@ -2,78 +2,12 @@
   position: absolute;
   bottom: 0px;
   left: 0px;
-  width: calc(50% - 10px);
+  width: calc(40% - 10px);
   color: white;
-  background: $blue-grey-lighten-4;
-  box-shadow: -1px -1px 2px #666;
   z-index: 1;
-  margin-left: 10px;
+  font-family: 'Roboto';
 
   .actions {
-    margin: 10px 5px;
-    
-    button {
-      height: 50px;
-      width: 33%;
-      background: $blue-grey-darken-3;
-      vertical-align: top;
-      color: #ccc;
-      border: none;
-      box-sizing: border-box;
-      margin: 0px 3px;
-      font-size: 1.2em;
-      transition: 0.2s all;
-    }
-    button:hover {
-      background: $blue-grey;
-      cursor: pointer;
-    }
-    .main-action-buttons {
-      display: flex;
-      justify-content: space-between;
-    }
-    .raise-slider-container {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 3px;
-      font-size: 0.8em;
-
-      input {
-        width: 20%;
-      }
-      .raise-slider {
-        width: 80%;
-        text-align: center;
-        color: #ccc;
-
-        input {
-          width: 65%;
-        }
-        span {
-          color: #333;
-          top: -4px;
-          margin: 5px;
-          position: relative;
-        }
-        button {
-          font-size: 0.6em;
-          height: 25px;
-          width: 25px;
-          margin: 0px;
-          border-radius: 50%;
-        }
-      }
-    }
-    .raise-size-buttons {
-      display: flex;
-      justify-content: space-between;
-
-      button {
-        height: 30px;
-        width: 25%;
-        margin: 0px 3px;
-        font-size: 0.8em;
-      }
-    }
+    margin: 10px;
   }
 }

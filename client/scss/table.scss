@@ -29,16 +29,16 @@
     }
   }
   .table-bg {
-    width: 80%;
-    height: 50%;
+    width: 66%;
+    height: 46%;
     position: absolute;
-    left: 10%;
-    top: 15%;
+    left: 17%;
+    top: 17%;
     box-sizing: border-box;
     z-index: -1;
 
     .bg-outer {
-      background: $teal;
+      // background: $teal;
       border: 22px solid #2a2a2a;
       height: 100%;
       position: absolute;
@@ -83,7 +83,7 @@
   .board {
     position: absolute;
     width: 100%;
-    top: 33%;
+    top: 35%;
     text-align: center;
     color: white;
     

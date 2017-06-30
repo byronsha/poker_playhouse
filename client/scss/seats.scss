@@ -1,6 +1,6 @@
 .seat1of6 {
   left: calc(50% - 90px);
-  top: 4%;
+  top: 5%;
   
   .bet {
     bottom: -90px;
@@ -8,7 +8,7 @@
 }
 .seat2of6 {
   top: 18%;
-  left: calc(94% - 180px);
+  left: calc(89% - 180px);
  
   .bet {
     bottom: -70px;
@@ -17,14 +17,14 @@
 }
 .seat3of6 {
   top: calc(60% - 150px);
-  left: calc(94% - 180px);
+  left: calc(89% - 180px);
   
   .bet {
     left: -150px;
   }
 }
 .seat4of6 {
-  top: calc(73% - 150px);
+  top: calc(72% - 150px);
   left: calc(50% - 90px);
   
   .bet {
@@ -33,7 +33,7 @@
 }
 .seat5of6 {
   top: calc(60% - 150px);
-  left: 6%;
+  left: 11%;
   
   .bet {
     right: -150px;
@@ -41,7 +41,7 @@
 }
 .seat6of6 {
   top: 18%;
-  left: 6%;
+  left: 11%;
   
   .bet {
     bottom: -70px;
@@ -54,27 +54,27 @@
   position: absolute;
   text-align: center;
   z-index: 5;
-  color: white;
+  // color: white;
   transition: 0.2s all;
 }
 .seat-info {
   position: absolute;
   width: 100%;
   bottom: 5px;
-  color: white;
-  box-sizing: border-box;
-  background: $blue-grey-darken-3;
-  box-shadow: $box-shadow;
+  // color: white;
+  // box-sizing: border-box;
+  // background: $blue-grey-darken-3;
+  // box-shadow: $box-shadow;
 }
 .seat-info > div:nth-child(2) {
   font-size: 0.8em;
   padding: 2px 0px;
-  background: $blue-grey-darken-4;
+  // background: $blue-grey-darken-4;
 }
 .seat-number {
   position: absolute;
   padding: 2px 6px;
-  background: $blue-darken-3;
+  // background: $blue-darken-3;
   bottom: 0px;
 }
 .bet {
@@ -123,7 +123,7 @@
 }
 .seat-last-action {
   position: absolute;
-  bottom: -11px;
+  bottom: -15px;
   text-align: center;
   width: 100%;
   background: $deep-orange-lighten-1;
@@ -131,13 +131,11 @@
   color: #eee;
   box-sizing: border-box;
   letter-spacing: 1px;
-  box-shadow: $box-shadow;
 }
 .shot-clock {
   position: absolute;
   width: 100%;
-  bottom: 0px;
-  box-shadow: $box-shadow;
+  bottom: -5px;
 
   div {
     float: right;
@@ -146,15 +144,16 @@
   }
 }
 .button-chip {
-  height: 20px;
-  width: 20px;
+  color: #fff;
+  height: 22px;
+  width: 22px;
+  padding: 3px;
+  font-size: 1.2em;
   border-radius: 100%;
   position: absolute;
-  right: -30px;
+  right: -50px;
   top: 80px;
-  background: #ddd;
-  color: #333;
-  font-family: Verdana;
-  font-weight: bold;
-  box-shadow: $box-shadow;
+  background: #bbb;
+  font-family: 'Roboto';
+  border: 1px solid #333;
 }
