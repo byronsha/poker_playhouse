@@ -13,12 +13,12 @@ class Board extends React.Component {
         suit: '0'
       })
     }
-
+    
     return (
       <div className="board">
         {table.mainPot > 0 &&
           <div>
-            <ChipPile amount={table.mainPot.toFixed(2)} />
+            <ChipPile amount={table.mainPot} />
             <div>Main Pot: ${table.mainPot.toFixed(2)}</div>  
           </div>
         }

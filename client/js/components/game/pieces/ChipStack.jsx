@@ -1,19 +1,32 @@
 import React from 'react'
+import { withStyles, createStyleSheet } from 'material-ui/styles'
 
-const Chips = ({ number, color }) => {
-  const chips = Array.from(Array(number).keys()).map(num => {
-    return <div key={num} style={{background: color, bottom: `${num*3}px`}}></div>
-  })
+const styleSheet = createStyleSheet('ChipStack', theme => ({
+  chip: {
+    width: '20px',
+    height: '3px',
+    margin: '1px 3px',
+  }
+}))
+
+const ChipStack = ({
+  number,
+  color,
+  classes
+}) => {
+  const chips = Array.from(Array(number).keys()).map(num => (
+    <div
+      key={num}
+      className={classes.chip}
+      style={{ background: color }}>
+    </div>
+  ))
 
   if (number > 0) {
-    return (
-      <div className="chips">
-        {chips}
-      </div>
-    )
+    return <div>{chips}</div>
   } else {
     return <div></div>
   }
 }
 
-export default Chips
+export default withStyles(styleSheet)(ChipStack)

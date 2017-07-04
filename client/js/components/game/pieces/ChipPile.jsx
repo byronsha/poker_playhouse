@@ -1,55 +1,64 @@
 import React from 'react'
 import ChipStack from './ChipStack'
+import { withStyles, createStyleSheet } from 'material-ui/styles'
+import { red, green, purple, orange } from 'material-ui/styles/colors'
 
-const ChipPile = ({ amount }) => {
-  const purple = '#6a1b9a'
-  const red = '#d32f2f'
-  const blue = '#2962ff'
-  const white = '#eee'
-  const orange = '#ff9800'
-  const cyan = '#4dd0e1'
-  const grey = '#2a2a2a'
+const styleSheet = createStyleSheet('ChipPile', theme => ({
+  chipPile: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  }
+}))
 
+const ChipPile = ({ amount, classes }) => {
   let leftover = amount
-  let tenDollarChips, oneDollarChips, tenCentChips, fiveCentChips, oneCentChips
+  let tenDollarChips,
+      oneDollarChips,
+      fiftyCentChips,
+      tenCentChips,
+      fiveCentChips,
+      oneCentChips
 
-  if (leftover >= 10) {
-    tenDollarChips = Math.floor(leftover / 10)
-    leftover = leftover % 10
-  }
+  tenDollarChips = Math.floor(leftover / 10)
+  leftover = Math.round(leftover % 10 * 100)/100
 
-  if (leftover >= 1) {
-    oneDollarChips = Math.floor(leftover / 1)
-    leftover = leftover % 1
-  }
+  oneDollarChips = Math.floor(leftover / 1)
+  leftover = Math.round(leftover % 1 * 100)/100
 
-  tenCentChips = Math.floor(leftover / 0.10)
-  leftover = leftover % 0.10
+  fiftyCentChips = Math.floor(leftover / 0.5)
+  leftover = Math.round(leftover % 0.5 * 100)/100
+
+  tenCentChips = Math.floor(leftover / 0.1)
+  leftover = Math.round(leftover % 0.1 * 100)/100
 
   fiveCentChips = Math.floor(leftover / 0.05)
-  leftover = leftover % 0.05
+  leftover = Math.round(leftover % 0.05 * 100)/100
 
   oneCentChips = Math.round(leftover / 0.01)
 
   return (
-    <div className="chip-pile">
+    <div className={classes.chipPile}>
       {tenDollarChips > 0 &&
-        <ChipStack number={tenDollarChips} color={purple} />
+        <ChipStack number={tenDollarChips} color={orange[500]} />
       }
       {oneDollarChips > 0 &&
-        <ChipStack number={oneDollarChips} color={blue} />
+        <ChipStack number={oneDollarChips} color={purple[500]} />
+      }
+      {fiftyCentChips > 0 &&
+        <ChipStack number={fiftyCentChips} color={green[500]} />
       }
       {tenCentChips > 0 &&
-        <ChipStack number={tenCentChips} color={red} />
+        <ChipStack number={tenCentChips} color={red[500]} />
       }
       {fiveCentChips > 0 &&
-        <ChipStack number={fiveCentChips} color={grey} />
+        <ChipStack number={fiveCentChips} color={'#222'} />
       }
       {oneCentChips > 0 &&
-        <ChipStack number={oneCentChips} color={white} />
+        <ChipStack number={oneCentChips} color={'#eee'} />
       }
     </div>
   )
 }
 
-export default ChipPile
+export default withStyles(styleSheet)(ChipPile)
