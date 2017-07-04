@@ -9,8 +9,7 @@ const styleSheet = createStyleSheet('ActionButtons', theme => ({
   button: {
     flex: 1,
     color: '#fff',
-    margin: '4px',
-    verticalAlign: 'top',
+    margin: '3px',
     height: '80px',
     fontSize: '1.5em',
   }

@@ -16,13 +16,22 @@ const styleSheet = createStyleSheet('RaiseSlider', theme => ({
   },
   container: {
     color: '#333',
+    display: 'flex',
+    margin: '10px 0px',
+    alignItems: 'center',
+    fontFamily: 'Roboto'    
+  },
+  sliderContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    flex: 4
   },
   slider: {
-    width: '40%'
+    flex: 5
   },
   input: {
-    width: '25%',
-    display: 'inline-block'
+    flex: 1,
+    height: '65%'
   }
 }))
 
@@ -40,37 +49,39 @@ const RaiseSlider = ({
 
   return (
     <div className={classes.container}>
-      <Button
-        fab
-        color="primary"
-        className={classes.button}
-        onClick={decreaseRaiseAmount}>
-        <AddIcon className={classes.icon} />
-      </Button>
+      <div className={classes.sliderContainer}>
+        <Button
+          fab
+          color="primary"
+          className={classes.button}
+          onClick={decreaseRaiseAmount}>
+          <AddIcon className={classes.icon} />
+        </Button>
 
-      <span>${minRaise.toFixed(2)}</span>
+        <span>${minRaise.toFixed(2)}</span>
 
-      <input
-        type="range"
-        className={classes.slider}
-        min={minRaise.toFixed(2)}
-        max={maxBet.toFixed(2)}
-        value={raiseAmount}
-        step={table.minBet.toFixed(2)}
-        onInput={onRaiseChange}
-        onChange={onRaiseChange}
-      >
-      </input>
+        <input
+          type="range"
+          className={classes.slider}
+          min={minRaise.toFixed(2)}
+          max={maxBet.toFixed(2)}
+          value={raiseAmount}
+          step={table.minBet.toFixed(2)}
+          onInput={onRaiseChange}
+          onChange={onRaiseChange}
+        >
+        </input>
 
-      <span>${maxBet.toFixed(2)}</span>
+        <span>${maxBet.toFixed(2)}</span>
 
-      <Button
-        fab
-        color="primary"
-        className={classes.button}
-        onClick={increaseRaiseAmount}>
-        <AddIcon className={classes.icon} />
-      </Button>
+        <Button
+          fab
+          color="primary"
+          className={classes.button}
+          onClick={increaseRaiseAmount}>
+          <AddIcon className={classes.icon} />
+        </Button>
+      </div>
 
       <Input
         type="number"

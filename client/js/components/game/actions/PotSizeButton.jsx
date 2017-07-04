@@ -5,7 +5,9 @@ import { withStyles, createStyleSheet } from 'material-ui/styles'
 const styleSheet = createStyleSheet('Actions', theme => ({
   button: {
     flex: 1,
+    fontSize: '1.2em',
     margin: '3px',
+    minWidth: '50px'
   }
 }))
 

@@ -2,8 +2,6 @@ import React from 'react'
 import RaiseSlider from './RaiseSlider'
 import PotSizeButton from './PotSizeButton'
 import ActionButtons from './ActionButtons'
-import Paper from 'material-ui/Paper'
-import { blueGrey } from 'material-ui/styles/colors'
 
 class Actions extends React.Component {
   constructor(props) {
@@ -35,7 +33,7 @@ class Actions extends React.Component {
   handleRaiseUpdate(amount) {
     const { table } = this.props
     const seat = this.findOwnSeat()
-    let newRaiseAmount = amount
+    let newRaiseAmount = parseFloat(amount)
 
     if (amount < table.minRaise) {
       newRaiseAmount = table.minRaise
@@ -56,7 +54,13 @@ class Actions extends React.Component {
   }
 
   render() {
-    const { table, onRaiseClick, onCheckClick, onCallClick, onFoldClick } = this.props
+    const {
+      table,
+      onRaiseClick,
+      onCheckClick,
+      onCallClick,
+      onFoldClick
+    } = this.props
 
     const seat = this.findOwnSeat()
     const totalCallAmount = table.callAmount - seat.bet > seat.stack ? seat.stack : table.callAmount - seat.bet
@@ -76,45 +80,41 @@ class Actions extends React.Component {
     ]
 
     return (
-      <Paper className="actions-container" style={{background: blueGrey[100]}}>
-        <div className="actions">
-          <ActionButtons
-            seat={seat}
-            table={table}
-            raiseAmount={this.state.raiseAmount}
-            totalCallAmount={totalCallAmount}
-            handleFoldClick={() => onFoldClick(table.id)}
-            handleCheckClick={() => onCheckClick(table.id)}
-            handleCallClick={() => onCallClick(table.id)}
-            handleRaiseClick={() => onRaiseClick(table.id, parseFloat(this.state.raiseAmount))}
-          />
+      <div>
+        <ActionButtons
+          seat={seat}
+          table={table}
+          raiseAmount={this.state.raiseAmount}
+          totalCallAmount={totalCallAmount}
+          handleFoldClick={() => onFoldClick(table.id)}
+          handleCheckClick={() => onCheckClick(table.id)}
+          handleCallClick={() => onCallClick(table.id)}
+          handleRaiseClick={() => onRaiseClick(table.id, parseFloat(this.state.raiseAmount))}
+        />
 
-          {seat.stack > table.callAmount &&
-            <div>
-              <div>
-                <RaiseSlider
-                  raiseAmount={this.state.raiseAmount}
-                  decreaseRaiseAmount={() => this.handleRaiseUpdate(this.state.raiseAmount - table.minBet)}
-                  increaseRaiseAmount={() => this.handleRaiseUpdate(this.state.raiseAmount + table.minBet)}
-                  onRaiseChange={this.handleRaiseChange}
-                  table={table}
-                  seat={seat}
-                />
-              </div>
-              
-              <div style={{display: 'flex'}}>
-                {potSizes.map(potSize =>
-                  <PotSizeButton
-                    key={potSize[0]}
-                    text={potSize[0]}
-                    onRaiseClick={() => this.handleRaiseUpdate(potSize[1])}
-                  />
-                )}
-              </div>
-            </div>
-          }
-        </div>
-      </Paper>
+        {seat.stack > table.callAmount &&
+          <RaiseSlider
+            raiseAmount={this.state.raiseAmount}
+            decreaseRaiseAmount={() => this.handleRaiseUpdate(this.state.raiseAmount - table.minBet)}
+            increaseRaiseAmount={() => this.handleRaiseUpdate(this.state.raiseAmount + table.minBet)}
+            onRaiseChange={this.handleRaiseChange}
+            table={table}
+            seat={seat}
+          />
+        }
+
+        {seat.stack > table.callAmount &&
+          <div style={{display: 'flex'}}>
+            {potSizes.map(potSize =>
+              <PotSizeButton
+                key={potSize[0]}
+                text={potSize[0]}
+                onRaiseClick={() => this.handleRaiseUpdate(potSize[1])}
+              />
+            )}
+          </div>
+        }
+      </div>
     )
   }
 }

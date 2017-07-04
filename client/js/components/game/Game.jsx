@@ -8,6 +8,7 @@ import ChipPile from './pieces/ChipPile'
 import GameChat from './chat/GameChat'
 import Button from 'material-ui/Button'
 import Icon from 'material-ui/Icon'
+import { blueGrey } from 'material-ui/styles/colors'
 import { withStyles, createStyleSheet } from 'material-ui/styles'
 
 const styleSheet = createStyleSheet('Game', theme => ({
@@ -20,6 +21,23 @@ const styleSheet = createStyleSheet('Game', theme => ({
     margin: '2px',
     width: '36px',
     height: '36px'
+  },
+  controls: {
+    width: '100%',
+    position: 'absolute',
+    bottom: '0px',
+    height: '20vh',
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  panel: {
+    width: '50%',
+    padding: '5px',
+    backgroundColor: blueGrey[100],
+    border: `1px solid ${blueGrey[100]}`
+  },
+  emptyPanel: {
+    width: '50%'
   }
 }))
 
@@ -52,15 +70,21 @@ class Game extends React.Component {
   isOwnTurn() {
     const { user, table } = this.props
 
-    for (let i = 1; i <= Object.keys(table.seats).length; i++) {
-      if (
-        table.seats[i] &&
-        table.seats[i].turn &&
-        table.seats[i].player.name === user.username
-      ) {
+    for (let seat of Object.values(table.seats)) {
+      if (seat && seat.turn && seat.player.name === user.username) {
         return true
       }
     }
+
+    // for (let i = 1; i <= Object.keys(table.seats).length; i++) {
+    //   if (
+    //     table.seats[i] &&
+    //     table.seats[i].turn &&
+    //     table.seats[i].player.name === user.username
+    //   ) {
+    //     return true
+    //   }
+    // }
     return false
   }
 
@@ -110,23 +134,8 @@ class Game extends React.Component {
         />
 
         <div>
-          <div className="board">
-            {table.mainPot > 0 &&
-              <div>
-                <ChipPile amount={table.mainPot.toFixed(2)} />
-                <div>Main Pot: ${table.mainPot.toFixed(2)}</div>  
-              </div>
-            }
-
-            <Board table={table} />
-            
-            <div className="pot">
-              Total Pot: ${table.pot.toFixed(2)}
-            </div>
-          </div>
-
+          <Board table={table} />
           <Background />
-
           <Seats
             user={user}
             table={table}
@@ -135,32 +144,34 @@ class Game extends React.Component {
           />
         </div>
 
-        {this.isOwnTurn() &&
-          <Actions
-            user={user}
-            table={table}
-            onRaiseClick={onRaiseClick}
-            onCheckClick={onCheckClick}
-            onCallClick={onCallClick}
-            onFoldClick={onFoldClick}
-          />
-        }
+        <div className={classes.controls}>
+          {this.isOwnTurn() ? (
+            <div className={classes.panel}>
+              <Actions
+                user={user}
+                table={table}
+                onRaiseClick={onRaiseClick}
+                onCheckClick={onCheckClick}
+                onCallClick={onCallClick}
+                onFoldClick={onFoldClick}
+              />
+            </div>
+          ) : (
+            <div className={classes.emptyPanel} />
+          )}
 
-        <GameChat
-          playerName={user.username}
-          tableId={table.id}
-          messages={messages}
-          onTableMessage={e => onTableMessage(e, table.id)}  
-        />
+          <div className={classes.panel}>
+            <GameChat
+              playerName={user.username}
+              tableId={table.id}
+              messages={messages}
+              onTableMessage={e => onTableMessage(e, table.id)}  
+            />
+          </div>
+        </div>
       </div>
     )
   }
 }
 
 export default withStyles(styleSheet)(Game)
-
-
-//  style={{width: '75%', height: '85%',
-//         top: '0px',
-//         left: '0px',
-//         position: 'relative'}}
