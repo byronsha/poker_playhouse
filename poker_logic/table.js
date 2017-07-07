@@ -47,10 +47,6 @@ class Table {
         this.seats[i] = null
       }
     }
-  }
-  removePlayer(socketId) {
-    this.players = this.players.filter(player => player.socketId !== socketId)
-    this.standPlayer(socketId)
 
     if (this.satPlayers().length === 1) {
       this.endWithoutShowdown()
@@ -59,6 +55,10 @@ class Table {
     if (this.satPlayers().length === 0) {
       this.resetEmptyTable()
     }
+  }
+  removePlayer(socketId) {
+    this.players = this.players.filter(player => player.socketId !== socketId)
+    this.standPlayer(socketId)
   }
   findPlayerBySocketId(socketId) {
     for (let i = 1; i <= this.maxPlayers; i++) {

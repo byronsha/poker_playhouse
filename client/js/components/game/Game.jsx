@@ -76,21 +76,25 @@ class Game extends React.Component {
       }
     }
 
-    // for (let i = 1; i <= Object.keys(table.seats).length; i++) {
-    //   if (
-    //     table.seats[i] &&
-    //     table.seats[i].turn &&
-    //     table.seats[i].player.name === user.username
-    //   ) {
-    //     return true
-    //   }
-    // }
     return false
   }
 
   render() {
-    const { classes, user, table, messages, onLeaveClick, onSeatClick, onRaiseClick,
-            onCheckClick, onCallClick, onFoldClick, onTableMessage, gridViewOn } = this.props
+    const {
+      classes,
+      user,
+      table,
+      messages,
+      onLeaveClick,
+      onSeatClick,
+      onStandClick,
+      onRaiseClick,
+      onCheckClick,
+      onCallClick,
+      onFoldClick,
+      onTableMessage,
+      gridViewOn
+    } = this.props
 
     const gameClass = gridViewOn ? 'poker-game poker-game-small' : 'poker-game'
     
@@ -106,6 +110,15 @@ class Game extends React.Component {
               onClick={() => { onLeaveClick(table.id) }}
             >
               <Icon>exit_to_app</Icon>
+            </Button>
+
+            <Button
+              fab
+              color="primary"
+              className={classes.controlButton}
+              onClick={() => { onStandClick(table.id) }}
+            >
+              <Icon>arrow_upward</Icon>
             </Button>
 
             <Button

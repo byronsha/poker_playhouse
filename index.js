@@ -64,6 +64,10 @@ io.on('connection', socket => {
 
     socket.broadcast.emit('tables_updated', tables)    
     socket.emit('table_left', { tables, tableId })
+
+    if (table.satPlayers().length === 1) {
+      clearForOnePlayer(table)
+    }
   })
 
   socket.on('fold', tableId => {
@@ -109,7 +113,21 @@ io.on('connection', socket => {
     table.sitPlayer(players[socket.id], seatId)
 
     broadcastToTable(table, message)
-    if (table.satPlayers().length === 2) initNewHand(table)
+    if (table.satPlayers().length === 2) {
+      initNewHand(table)
+    }
+  })
+
+  socket.on('stand_up', tableId => {
+    let table = tables[tableId]
+    let message = `${players[socket.id].name} left the table`
+    table.standPlayer(socket.id)
+
+    broadcastToTable(table, message)
+
+    if (table.satPlayers().length === 1) {
+      clearForOnePlayer(table)
+    }
   })
 
   socket.on('disconnect', () => {
@@ -150,6 +168,15 @@ io.on('connection', socket => {
     setTimeout(() => {
       table.startHand()
       broadcastToTable(table, '---New hand started---')
+    }, 5000)
+  }
+
+  function clearForOnePlayer(table) {
+    table.clearWinMessages()
+    setTimeout(() => {
+      table.clearSeatHands()
+      table.resetBoardAndPot()
+      broadcastToTable(table, 'Waiting for more players')
     }, 5000)
   }
 

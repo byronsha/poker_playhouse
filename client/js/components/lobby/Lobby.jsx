@@ -20,6 +20,7 @@ class Lobby extends React.Component {
     this.handleTableClick = this.handleTableClick.bind(this)
     this.handleLeaveClick = this.handleLeaveClick.bind(this)
     this.handleSeatClick = this.handleSeatClick.bind(this)
+    this.handleStandClick = this.handleStandClick.bind(this)
     this.handleRaiseClick = this.handleRaiseClick.bind(this)
     this.handleCheckClick = this.handleCheckClick.bind(this)
     this.handleCallClick = this.handleCallClick.bind(this)
@@ -82,6 +83,10 @@ class Lobby extends React.Component {
     this.props.socket.emit('sit_down', { tableId, seatId })
   }
 
+  handleStandClick(tableId) {
+    this.props.socket.emit('stand_up', tableId)
+  }
+
   handleRaiseClick(tableId, amount) {
     this.props.socket.emit('raise', { tableId, amount })
   }
@@ -125,9 +130,18 @@ class Lobby extends React.Component {
 
   render() {
     const {
-      user, tables, players, openTables, messages, leftColumnShowing,
-      rightColumnShowing, gridViewOn, toggleLeftColumn, toggleRightColumn,
-      toggleGridView, logout
+      user,
+      tables,
+      players,
+      openTables,
+      messages,
+      leftColumnShowing,
+      rightColumnShowing,
+      gridViewOn,
+      toggleLeftColumn,
+      toggleRightColumn,
+      toggleGridView,
+      logout
     } = this.props
 
     if (!user) {
@@ -161,6 +175,7 @@ class Lobby extends React.Component {
                 messages={table.messages}
                 onLeaveClick={this.handleLeaveClick}
                 onSeatClick={this.handleSeatClick}
+                onStandClick={this.handleStandClick}
                 onRaiseClick={this.handleRaiseClick}
                 onCheckClick={this.handleCheckClick}
                 onCallClick={this.handleCallClick}

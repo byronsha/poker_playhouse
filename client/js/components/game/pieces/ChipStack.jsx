@@ -14,7 +14,11 @@ const ChipStack = ({
   color,
   classes
 }) => {
-  const chips = Array.from(Array(number).keys()).map(num => (
+  if (number === 0) {
+    return null
+  }
+
+  const chips = Array.from(Array(parseInt(number)).keys()).map(num => (
     <div
       key={num}
       className={classes.chip}
@@ -22,11 +26,7 @@ const ChipStack = ({
     </div>
   ))
 
-  if (number > 0) {
-    return <div>{chips}</div>
-  } else {
-    return <div></div>
-  }
+  return <div>{chips}</div>
 }
 
 export default withStyles(styleSheet)(ChipStack)

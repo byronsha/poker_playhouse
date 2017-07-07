@@ -87,5 +87,27 @@ describe('Table', function() {
     it('sets seat with matching player socket id to null', () => {
       expect(table.seats[3]).to.be.equal(null)
     })
+    it('resets the table properties when the last player leaves', () => {
+      expect(table.players).to.have.lengthOf(0)
+      expect(table.board).to.have.lengthOf(0)
+      expect(table.deck).to.be.equal(null)
+      expect(table.button).to.be.equal(null)
+      expect(table.turn).to.be.equal(null)
+      expect(table.pot).to.be.equal(0)
+      expect(table.mainPot).to.be.equal(0)
+      expect(table.callAmount).to.be.equal(null)
+      expect(table.minBet).to.be.equal(table.limit / 200)
+      expect(table.minRaise).to.be.equal(table.limit / 100)
+      expect(table.smallBlind).to.be.equal(null)
+      expect(table.bigBlind).to.be.equal(null)
+      expect(table.handOver).to.be.true
+      expect(table.winMessages).to.have.lengthOf(0)
+      expect(table.wentToShowdown).to.be.false
+    })
+    it('resets the seats when the last player leaves', () => {
+      for (let seat of Object.values(table.seats)) {
+        expect(seat).to.be.equal(null)
+      }
+    })
   })
 })

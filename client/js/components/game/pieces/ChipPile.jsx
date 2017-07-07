@@ -12,7 +12,9 @@ const styleSheet = createStyleSheet('ChipPile', theme => ({
 }))
 
 const ChipPile = ({ amount, classes }) => {
-  let leftover = amount
+  // deal with floating point numbers
+  let cents = amount * 100
+
   let tenDollarChips,
       oneDollarChips,
       fiftyCentChips,
@@ -20,22 +22,22 @@ const ChipPile = ({ amount, classes }) => {
       fiveCentChips,
       oneCentChips
 
-  tenDollarChips = Math.floor(leftover / 10)
-  leftover = Math.round(leftover % 10 * 100)/100
+  tenDollarChips = Math.floor(cents / 1000)
+  cents -= tenDollarChips * 1000
 
-  oneDollarChips = Math.floor(leftover / 1)
-  leftover = Math.round(leftover % 1 * 100)/100
+  oneDollarChips = Math.floor(cents / 100)
+  cents -= oneDollarChips * 100
 
-  fiftyCentChips = Math.floor(leftover / 0.5)
-  leftover = Math.round(leftover % 0.5 * 100)/100
+  fiftyCentChips = Math.floor(cents / 50)
+  cents -= fiftyCentChips * 50
 
-  tenCentChips = Math.floor(leftover / 0.1)
-  leftover = Math.round(leftover % 0.1 * 100)/100
+  tenCentChips = Math.floor(cents / 10)
+  cents -= tenCentChips * 10
 
-  fiveCentChips = Math.floor(leftover / 0.05)
-  leftover = Math.round(leftover % 0.05 * 100)/100
+  fiveCentChips = Math.floor(cents / 5)
+  cents -= fiveCentChips * 5
 
-  oneCentChips = Math.round(leftover / 0.01)
+  oneCentChips = Math.round(cents)
 
   return (
     <div className={classes.chipPile}>
