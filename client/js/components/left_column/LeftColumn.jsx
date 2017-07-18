@@ -1,7 +1,6 @@
 import React from 'react'
 import TableList from './TableList'
 import PlayerList from './PlayerList'
-import Chat from './Chat'
 import { withStyles, createStyleSheet } from 'material-ui/styles'
 import Drawer from 'material-ui/Drawer'
 import Button from 'material-ui/Button'
@@ -31,8 +30,6 @@ const LeftColumn = ({
   toggle,
   toggleGridView,
   players,
-  messages,
-  sendMessage,
   classes
 }) => (
   <div>
@@ -53,11 +50,6 @@ const LeftColumn = ({
         <PlayerList
           user={user} 
           players={players}
-        />
-
-        <Chat
-          messages={messages}
-          sendMessage={sendMessage}
         />
 
         <Button raised color="primary" onClick={toggleGridView}>

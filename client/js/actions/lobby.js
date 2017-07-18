@@ -4,7 +4,6 @@ export const PLAYERS_UPDATED = 'PLAYERS_UPDATED'
 export const TABLE_JOINED = 'TABLE_JOINED'
 export const TABLE_LEFT = 'TABLE_LEFT'
 export const TABLE_UPDATED = 'TABLE_UPDATED'
-export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE'
 
 export function receiveLobbyInfo(tables, players, socketId) {
   return {
@@ -51,12 +50,5 @@ export function tableUpdated(table, message, from) {
     table,
     message,
     from
-  }
-}
-
-export function receiveMessage(message) {
-  return {
-    type: RECEIVE_MESSAGE,
-    message
   }
 }

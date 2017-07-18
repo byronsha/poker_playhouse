@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { logout } from '../../actions/user'
 import {
   receiveLobbyInfo, tablesUpdated, playersUpdated,
-  tableJoined, tableLeft, tableUpdated, receiveMessage
+  tableJoined, tableLeft, tableUpdated
 } from '../../actions/lobby'
 import {
   toggleLeftColumn, toggleRightColumn, toggleGridView
@@ -30,7 +30,7 @@ class Lobby extends React.Component {
   componentDidMount() {
     const {
       socket, user, receiveLobbyInfo, tablesUpdated, playersUpdated,
-      tableJoined, tableLeft, tableUpdated, receiveMessage
+      tableJoined, tableLeft, tableUpdated
     } = this.props
 
     if (user) {
@@ -56,9 +56,6 @@ class Lobby extends React.Component {
       tableUpdated(table, message, from)
       let gameChat = document.getElementById(`table-${table.id}-game-chat`)
       gameChat.scrollTop = gameChat.scrollHeight
-    })
-    socket.on('message', message => {
-      receiveMessage(message)
     })
   }
 
@@ -109,21 +106,6 @@ class Lobby extends React.Component {
 
     if (e.keyCode === 13 && body) {
       socket.emit('table_message', { message: body, from: user.username, tableId })
-      e.target.value = ''
-    }
-  }
-
-  sendMessage = e => {
-    const { socket, receiveMessage } = this.props
-    const body = e.target.value
-
-    if (e.keyCode === 13 && body) {
-      const message = {
-        body,
-        from: 'Me'
-      }
-      receiveMessage(message)
-      socket.emit('message', body)
       e.target.value = ''
     }
   }
@@ -211,7 +193,6 @@ const mapDispatchToProps = ({
   tableJoined,
   tableLeft,
   tableUpdated,
-  receiveMessage,
   toggleLeftColumn,
   toggleRightColumn,
   toggleGridView

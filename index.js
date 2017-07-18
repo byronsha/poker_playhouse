@@ -40,11 +40,6 @@ tables[9] = new Table(9, 'Table 9', 9, 20)
 tables[10] = new Table(10, 'Table 10', 9, 50)
 
 io.on('connection', socket => {
-  socket.on('message', body => {
-    const sender = players[socket.id]
-    socket.broadcast.emit('message', { body, from: sender.name })
-  })
-
   socket.on('fetch_lobby_info', user => {
     players[socket.id] = new Player(socket.id, user.username, user.bankroll)
 
