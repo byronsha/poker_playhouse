@@ -38,7 +38,7 @@ class Table {
   }
   sitPlayer(player, seatId) {
     if (this.seats[seatId]) { return }
-    this.seats[seatId] = new Seat(seatId, player, player.bankroll)
+    this.seats[seatId] = new Seat(seatId, player, this.limit, this.limit)
     this.button = this.satPlayers().length === 1 ? seatId : this.button
   }
   standPlayer(socketId) {
@@ -163,7 +163,7 @@ class Table {
   }
   endWithoutShowdown() {
     const winner = this.unfoldedPlayers()[0]
-    winner.winHand(this.pot)
+    winner && winner.winHand(this.pot)
     this.winMessages.push(`${winner.player.name} wins $${this.pot.toFixed(2)}`)
     this.endHand()
   }

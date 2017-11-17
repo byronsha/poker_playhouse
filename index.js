@@ -85,9 +85,9 @@ io.on('connection', socket => {
   socket.on('call', tableId => {
     let table = tables[tableId]
     let { seatId, message } = table.handleCall(socket.id)
-    const player = table.seats[seatId].player
+    const seat = table.seats[seatId]
 
-    updatePlayerBankroll(player)
+    updatePlayerBankroll(seat)
     broadcastToTable(table, message)
     changeTurnAndBroadcast(table, seatId)
   })
@@ -95,9 +95,9 @@ io.on('connection', socket => {
   socket.on('raise', ({ tableId, amount }) => {
     let table = tables[tableId]
     let { seatId, message } = table.handleRaise(socket.id, amount)
-    const player = table.seats[seatId].player
+    const seat = table.seats[seatId]
 
-    updatePlayerBankroll(player)
+    updatePlayerBankroll(seat)
     broadcastToTable(table, message)
     changeTurnAndBroadcast(table, seatId)
   })
@@ -138,10 +138,12 @@ io.on('connection', socket => {
     socket.broadcast.emit('players_updated', players)
   })
 
-  function updatePlayerBankroll(player) {
+  function updatePlayerBankroll(seat) {
+    const player = seat.player
+    const amountWon = seat.stack - seat.buyin
     db.User.update(
       {
-        bankroll: player.bankroll.toFixed(2)
+        bankroll: player.bankroll + amountWon
       },
       {
         where: { id: player.id }
@@ -171,7 +173,7 @@ io.on('connection', socket => {
         for (let i of Object.keys(table.seats)) {
           const seat = table.seats[i]
           if (seat && seat.lastAction === 'WINNER') {
-            updatePlayerBankroll(seat.player)
+            updatePlayerBankroll(seat)
           }
         }
         initNewHand(table)
@@ -188,7 +190,7 @@ io.on('connection', socket => {
       for (let i of Object.keys(table.seats)) {
         const seat = table.seats[i]
         if (seat && seat.bet > 0) {
-          updatePlayerBankroll(seat.player)
+          updatePlayerBankroll(seat)
         }
       }
     }, 5000)
