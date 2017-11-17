@@ -8,7 +8,7 @@ const styleSheet = createStyleSheet('RaiseSlider', theme => ({
   button: {
     width: '36px',
     height: '36px',
-    margin: '12px'
+    margin: '0px 10px',
   },
   icon: {
     position: 'relative',
@@ -17,9 +17,9 @@ const styleSheet = createStyleSheet('RaiseSlider', theme => ({
   container: {
     color: '#333',
     display: 'flex',
-    margin: '10px 0px',
     alignItems: 'center',
-    fontFamily: 'Roboto'    
+    fontFamily: 'Roboto',
+    margin: '10px 0px',
   },
   sliderContainer: {
     display: 'flex',
@@ -31,7 +31,8 @@ const styleSheet = createStyleSheet('RaiseSlider', theme => ({
   },
   input: {
     flex: 1,
-    height: '65%'
+    height: '65%',
+    marginRight: '10px',
   }
 }))
 

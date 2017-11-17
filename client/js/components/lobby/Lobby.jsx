@@ -146,7 +146,7 @@ class Lobby extends React.Component {
           sendMessage={this.sendMessage}
         />
 
-        <div className="center-column">
+        <div>
           {Object.keys(openTables).length > 0 &&
             Object.values(openTables).map(table =>
               <Game

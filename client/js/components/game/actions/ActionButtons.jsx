@@ -11,7 +11,8 @@ const styleSheet = createStyleSheet('ActionButtons', theme => ({
     color: '#fff',
     margin: '3px',
     height: '80px',
-    fontSize: '1.5em',
+    padding: '0px 20px',
+    fontSize: '16px',
   }
 }))
 

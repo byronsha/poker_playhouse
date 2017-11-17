@@ -17,7 +17,7 @@ class Board extends React.Component {
     return (
       <div className="board">
         {table.mainPot > 0 &&
-          <div>
+          <div className="main-pot">
             <ChipPile amount={table.mainPot} />
             <div>Main Pot: ${table.mainPot.toFixed(2)}</div>  
           </div>

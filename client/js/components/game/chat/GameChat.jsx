@@ -10,17 +10,16 @@ const styleSheet = createStyleSheet('GameChat', theme => ({
     fontFamily: 'Roboto'
   },
   messages: {
-    height: '78%',
+    height: '146px',
     padding: '3px',
-    margin: '3px',
     color: '#fff',
     background: blueGrey[900],
     overflowY: 'auto',
   },
   input: {
-    width: 'calc(100% - 12px)',
+    display: 'block',
     padding: '0px 3px',
-    margin: '3px',
+    margin: '4px 0px',
     background: blueGrey[900],
     color: '#fff',
     overflow: 'hidden',

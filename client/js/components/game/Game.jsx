@@ -26,7 +26,7 @@ const styleSheet = createStyleSheet('Game', theme => ({
     width: '100%',
     position: 'absolute',
     bottom: '0px',
-    height: '20vh',
+    height: '200px',
     display: 'flex',
     flexDirection: 'row',
   },

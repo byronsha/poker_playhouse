@@ -1,12 +1,12 @@
 .poker-game {
   position: relative;
-  width: 100%;
+  max-width: 1400px;
   height: 100vh;
   box-sizing: border-box;
-  padding: 5px 0px;
   z-index: 0;
   font-family: 'Oswald', sans-serif;
   overflow: hidden;
+  margin: 0px auto;
 
   .player-list {
     color: #333;
@@ -81,12 +81,17 @@
     }
   }
   .board {
-    position: absolute;
+    position: relative;
+    margin-top: 230px;
     width: 100%;
-    top: 35%;
     text-align: center;
     color: white;
     
+    .main-pot {
+      position: absolute;
+      width: 100%;
+      bottom: 145px;
+    }
     .card {
       margin: 8px 3px;
     }
