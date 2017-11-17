@@ -27,12 +27,14 @@ class Seat {
 
     this.stack -= amountToCall
     this.bet = amount
+    this.player.bankroll = this.stack
     this.lastAction = 'RAISE'
     this.turn = false
   }
   placeBlind(amount) {
     this.stack -= (amount - this.bet)
     this.bet = amount
+    this.player.bankroll = this.stack
   }
   callRaise(amount) {
     const stackBefore = this.stack
@@ -40,12 +42,14 @@ class Seat {
     
     this.stack = this.stack < amountToCall ? 0 : this.stack - amountToCall
     this.bet = amount > stackBefore ? stackBefore : amount
+    this.player.bankroll = this.stack
     this.lastAction = 'CALL'
     this.turn = false
   }
   winHand(amount) {
     this.bet = 0
     this.stack += amount
+    this.player.bankroll = this.stack
     this.lastAction = 'WINNER'
     this.turn = false
   }

@@ -38,7 +38,7 @@ class Table {
   }
   sitPlayer(player, seatId) {
     if (this.seats[seatId]) { return }
-    this.seats[seatId] = new Seat(seatId, player, this.limit)
+    this.seats[seatId] = new Seat(seatId, player, player.bankroll)
     this.button = this.satPlayers().length === 1 ? seatId : this.button
   }
   standPlayer(socketId) {
