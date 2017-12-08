@@ -112,6 +112,7 @@ class Lobby extends React.Component {
 
   render() {
     const {
+      socket,
       user,
       tables,
       players,
@@ -134,6 +135,7 @@ class Lobby extends React.Component {
       <div>
         <LeftColumn
           open={leftColumnShowing}
+          socketId={socket.id}
           user={user}
           logout={logout}
           openTables={openTables}

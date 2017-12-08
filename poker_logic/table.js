@@ -220,7 +220,7 @@ class Table {
       const seat = this.seats[i]
       if (seat && !seat.folded && seat.stack > 0) {
         if (
-          (this.callAmount && seat.bet !== this.callAmount) ||
+          (this.callAmount && seat.bet.toFixed(2) !== this.callAmount.toFixed(2)) ||
           (!this.callAmount && !seat.checked)
         ) {
           return false

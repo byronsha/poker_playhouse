@@ -71,7 +71,7 @@ io.on('connection', socket => {
     let { seatId, message } = table.handleFold(socket.id)
 
     broadcastToTable(table, message)
-    changeTurnAndBroadcast(table, seatId)
+    changeTurnAndBroadcast(table, seatId, socket)
   })
 
   socket.on('check', tableId => {
@@ -79,7 +79,7 @@ io.on('connection', socket => {
     let { seatId, message } = table.handleCheck(socket.id)
 
     broadcastToTable(table, message)
-    changeTurnAndBroadcast(table, seatId)
+    changeTurnAndBroadcast(table, seatId, socket)
   })
 
   socket.on('call', tableId => {
@@ -89,7 +89,7 @@ io.on('connection', socket => {
 
     updatePlayerBankroll(seat)
     broadcastToTable(table, message)
-    changeTurnAndBroadcast(table, seatId)
+    changeTurnAndBroadcast(table, seatId, socket)
   })
 
   socket.on('raise', ({ tableId, amount }) => {
@@ -99,7 +99,7 @@ io.on('connection', socket => {
 
     updatePlayerBankroll(seat)
     broadcastToTable(table, message)
-    changeTurnAndBroadcast(table, seatId)
+    changeTurnAndBroadcast(table, seatId, socket)
   })
 
   socket.on('table_message', ({ message, from, tableId }) => {
@@ -140,10 +140,9 @@ io.on('connection', socket => {
 
   function updatePlayerBankroll(seat) {
     const player = seat.player
-    const amountWon = seat.stack - seat.buyin
     db.User.update(
       {
-        bankroll: player.bankroll + amountWon
+        bankroll: player.bankroll
       },
       {
         where: { id: player.id }
@@ -165,10 +164,11 @@ io.on('connection', socket => {
     }
   }
 
-  function changeTurnAndBroadcast(table, seatId) {
+  function changeTurnAndBroadcast(table, seatId, socket) {
     setTimeout(() => {
       table.changeTurn(seatId)
       broadcastToTable(table)
+          
       if (table.handOver) {
         for (let i of Object.keys(table.seats)) {
           const seat = table.seats[i]

@@ -2,10 +2,10 @@ class Seat {
   constructor(id, player, buyin, stack) {
     this.id = id
     this.player = player
-    this.hand = []
-    this.bet = 0
     this.buyin = buyin
     this.stack = stack
+    this.hand = []
+    this.bet = 0
     this.turn = false
     this.checked = true
     this.folded = true
@@ -26,33 +26,40 @@ class Seat {
     const reRaiseAmount = amount - this.bet
     if (reRaiseAmount > this.stack) { return }
 
-    this.stack -= reRaiseAmount
     this.bet = amount
+
+    this.stack -= reRaiseAmount
     this.player.bankroll -= reRaiseAmount
-    this.lastAction = 'RAISE'
+
     this.turn = false
+    this.lastAction = 'RAISE'
   }
   placeBlind(amount) {
-    this.stack -= (amount - this.bet)
     this.bet = amount
-    this.player.bankroll -= (amount - this.bet)
+
+    this.stack -= amount
+    this.player.bankroll -= amount
   }
   callRaise(amount) {
     const amountToCall = amount - this.bet
     const amountCalled = Math.min(this.stack, amountToCall)
 
     this.bet += amountCalled
+
     this.stack -= amountCalled
     this.player.bankroll -= amountCalled
-    this.lastAction = 'CALL'
+    
     this.turn = false
+    this.lastAction = 'CALL'
   }
   winHand(amount) {
     this.bet = 0
+
     this.stack += amount
     this.player.bankroll += amount
-    this.lastAction = 'WINNER'
+
     this.turn = false
+    this.lastAction = 'WINNER'
   }
 }
 

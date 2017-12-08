@@ -21,6 +21,7 @@ const styleSheet = createStyleSheet('LeftColumn', theme => ({
 }))
 
 const LeftColumn = ({
+  socketId,
   open,
   user,
   logout,
@@ -31,43 +32,48 @@ const LeftColumn = ({
   toggleGridView,
   players,
   classes
-}) => (
-  <div>
-    <Drawer docked={true} open={open}>
-      <div className={classes.drawer}>
-        <div>
-          Logged in as {user.username}
-          {' '}
-          <Button raised color="primary" onClick={logout}>Logout</Button>
+}) => {
+  return (
+    <div>
+      <Drawer docked={true} open={open}>
+        <div className={classes.drawer}>
+          <div style={{ display: 'flex' }}>
+            <div>
+              Logged in as {user.username}
+            </div>
+            <div style={{ marginLeft: 'auto' }}>
+              <Button raised color="primary" onClick={logout}>Logout</Button>
+            </div>
+          </div>
+          
+          <TableList
+            openTables={Object.keys(openTables)}
+            tables={tables}
+            onTableClick={handleTableClick}
+          />
+
+          <PlayerList
+            user={user} 
+            players={players}
+          />
+
+          <Button raised color="primary" onClick={toggleGridView}>
+            Grid view
+          </Button>
+
+          <Button onClick={toggle} className={classes.button}>
+            Hide Menu
+          </Button>
         </div>
-        
-        <TableList
-          openTables={Object.keys(openTables)}
-          tables={tables}
-          onTableClick={handleTableClick}
-        />
+      </Drawer>
 
-        <PlayerList
-          user={user} 
-          players={players}
-        />
-
-        <Button raised color="primary" onClick={toggleGridView}>
-          Grid view
-        </Button>
-
+      {!open &&
         <Button onClick={toggle} className={classes.button}>
-          Hide Menu
+          Show Menu
         </Button>
-      </div>
-    </Drawer>
-
-    {!open &&
-      <Button onClick={toggle} className={classes.button}>
-        Show Menu
-      </Button>
-    }
-  </div>
-)
+      }
+    </div>
+  )
+}
 
 export default withStyles(styleSheet)(LeftColumn)
