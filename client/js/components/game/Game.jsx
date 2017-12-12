@@ -1,13 +1,12 @@
 import React from 'react'
-import Spectators from './Spectators'
 import Seats from './seats/Seats'
 import Background from './Background'
 import Board from './Board'
 import Actions from './actions/Actions'
 import ChipPile from './pieces/ChipPile'
-import GameChat from './chat/GameChat'
 import Button from 'material-ui/Button'
 import Icon from 'material-ui/Icon'
+import ChatAndInfo from './ChatAndInfo';
 import { blueGrey } from 'material-ui/styles/colors'
 import { withStyles, createStyleSheet } from 'material-ui/styles'
 
@@ -29,8 +28,10 @@ const styleSheet = createStyleSheet('Game', theme => ({
     height: '200px',
     display: 'flex',
     flexDirection: 'row',
+    fontFamily: 'Roboto',
   },
   panel: {
+    position: 'relative',
     width: '50%',
     padding: '5px',
     backgroundColor: blueGrey[100],
@@ -38,7 +39,7 @@ const styleSheet = createStyleSheet('Game', theme => ({
   },
   emptyPanel: {
     width: '50%'
-  }
+  },
 }))
 
 class Game extends React.Component {
@@ -102,7 +103,6 @@ class Game extends React.Component {
       <div className={gameClass}>
         <div className={classes.tableInfo}>
           <div>
-            {table.name}, ${table.limit.toFixed(2)} NL Holdem, {table.maxPlayers} players
             <Button
               fab
               color="primary"
@@ -141,11 +141,6 @@ class Game extends React.Component {
           </div>
         </div>
         
-        <Spectators
-          user={user}
-          table={table}
-        />
-
         <div>
           <Board table={table} />
           <Background />
@@ -174,9 +169,9 @@ class Game extends React.Component {
           )}
 
           <div className={classes.panel}>
-            <GameChat
-              playerName={user.username}
-              tableId={table.id}
+            <ChatAndInfo
+              user={user}
+              table={table}
               messages={messages}
               onTableMessage={e => onTableMessage(e, table.id)}  
             />

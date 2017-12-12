@@ -10,11 +10,13 @@
 
   .player-list {
     color: #333;
-    padding: 0px 10px;
+    padding: 8px;
+    margin: 0;
+    list-style-type: none;
   }
   .table-info {
     color: #333;
-    padding: 0px 10px;
+    padding: 4px 12px;
 
     button {
       float: right;
@@ -29,11 +31,11 @@
     }
   }
   .table-bg {
-    width: 66%;
-    height: 46%;
+    width: 970px;
+    height: 525px;
     position: absolute;
-    left: 17%;
-    top: 17%;
+    left: 215px;
+    top: 185px;
     box-sizing: border-box;
     z-index: -1;
 
@@ -51,7 +53,7 @@
     }
     .bg-outer:first-child,
     .bg-outer:last-child {
-      width: 50%;
+      width: 485px;
       top: 0px;
       border-radius: 50%;
       z-index: -2;
@@ -67,8 +69,8 @@
       right: 0px;
     }
     .bg-outer:nth-child(2) {
-      width: 48%;
-      left: 26%;
+      width: 466px;
+      left: 252px;
       border-left: none;
       border-right: none;
       z-index: -1;
@@ -82,8 +84,9 @@
   }
   .board {
     position: relative;
-    margin-top: 230px;
-    width: 100%;
+    margin-top: 400px;
+    width: 405px;
+    left: 498px;
     text-align: center;
     color: white;
     

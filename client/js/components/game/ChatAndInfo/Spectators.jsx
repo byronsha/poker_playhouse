@@ -1,5 +1,5 @@
 import React from 'react'
-import Player from '../left_column/Player'
+import Player from '../../left_column/Player'
 
 class Spectators extends React.Component {
   render() {
@@ -10,7 +10,7 @@ class Spectators extends React.Component {
         <div>
           <ul className="player-list">
             {table.players.map(player => {
-              let active = user.userame === player.name ? true : false
+              let active = user.username === player.name ? true : false
 
               return (
                 <Player

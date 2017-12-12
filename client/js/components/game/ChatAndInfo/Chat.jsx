@@ -26,15 +26,15 @@ const styleSheet = createStyleSheet('GameChat', theme => ({
   }
 }))
 
-const GameChat = ({
-  playerName,
-  tableId,
+const Chat = ({
+  user,
+  table,
   messages,
   onTableMessage,
   classes
 }) => (
   <div className={classes.container}>
-    <div id={`table-${tableId}-game-chat`} className={classes.messages}>
+    <div id={`table-${table.id}-game-chat`} className={classes.messages}>
       {messages.map((message, index) =>
         <Message key={message.timestamp + index} message={message} />
       )}
@@ -49,4 +49,4 @@ const GameChat = ({
   </div>
 )
 
-export default withStyles(styleSheet)(GameChat)
+export default withStyles(styleSheet)(Chat)

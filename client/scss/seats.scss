@@ -1,14 +1,14 @@
 .seat1of6 {
-  left: calc(50% - 90px);
-  top: 7%;
+  left: 610px;
+  top: 75px;
   
   .bet {
-    top: 160px;
+    top: 170px;
   }
 }
 .seat2of6 {
-  top: 18%;
-  left: calc(89% - 180px);
+  top: 180px;
+  left: 1065px;
  
   .bet {
     top: 160px;
@@ -16,32 +16,34 @@
   }
 }
 .seat3of6 {
-  top: calc(60% - 150px);
-  left: calc(89% - 180px);
+  top: 555px;
+  left: 1065px;
   
   .bet {
     left: -150px;
+    bottom: 110px;
   }
 }
 .seat4of6 {
-  top: calc(72% - 150px);
-  left: calc(50% - 90px);
+  top: 660px;
+  left: 610px;
   
   .bet {
-    bottom: 140px;
+    bottom: 150px;
   }
 }
 .seat5of6 {
-  top: calc(60% - 150px);
-  left: 11%;
+  top: 555px;
+  left: 155px;
   
   .bet {
     right: -150px;
+    bottom: 110px;
   }
 }
 .seat6of6 {
-  top: 18%;
-  left: 11%;
+  top: 180px;
+  left: 155px;
   
   .bet {
     top: 160px;
@@ -104,11 +106,11 @@
 }
 .hand:hover {
   .card:first-child {
-    top: -50px;
+    top: -60px;
     left: 10px;
   }
   .card:last-child {
-    top: -50px;
+    top: -60px;
     right: 10px;
   }
 }
