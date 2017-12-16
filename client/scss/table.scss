@@ -8,34 +8,12 @@
   overflow: hidden;
   margin: 0px auto;
 
-  .player-list {
-    color: #333;
-    padding: 8px;
-    margin: 0;
-    list-style-type: none;
-  }
-  .table-info {
-    color: #333;
-    padding: 4px 12px;
-
-    button {
-      float: right;
-      border: none;
-      background: $blue-grey-darken-3;
-      color: #ccc;
-      margin: 1px;
-    }
-    button:hover {
-      background: $blue-grey;
-      transition: 0.2s all;
-    }
-  }
   .table-bg {
     width: 970px;
-    height: 525px;
+    height: 460px;
     position: absolute;
     left: 215px;
-    top: 185px;
+    top: 170px;
     box-sizing: border-box;
     z-index: -1;
 
@@ -84,7 +62,7 @@
   }
   .board {
     position: relative;
-    margin-top: 400px;
+    margin-top: 356px;
     width: 405px;
     left: 498px;
     text-align: center;

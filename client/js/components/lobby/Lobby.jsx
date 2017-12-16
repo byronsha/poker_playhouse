@@ -149,7 +149,7 @@ class Lobby extends React.Component {
         />
 
         <div>
-          {Object.keys(openTables).length > 0 &&
+          {Object.keys(openTables).length > 0 ?
             Object.values(openTables).map(table =>
               <Game
                 key={table.table.id}
@@ -166,6 +166,8 @@ class Lobby extends React.Component {
                 onFoldClick={this.handleFoldClick}
                 onTableMessage={this.sendTableMessage}
               />
+            ) : (
+              <h1 style={{ marginLeft: '800px', marginTop: '440px' }}>Join a table to start playing :^)</h1>
             )
           }
         </div>

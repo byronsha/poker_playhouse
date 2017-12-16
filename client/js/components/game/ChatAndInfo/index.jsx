@@ -7,6 +7,16 @@ import Chat from './Chat';
 import Spectators from './Spectators';
 
 const styles = {
+  container: {
+    position: 'absolute',
+    width: '580px',
+    height: '185px',
+    padding: '5px',
+    right: '0',
+    bottom: '0',
+    backgroundColor: blueGrey[100],
+    border: `1px solid ${blueGrey[100]}`
+  },
   tabs: {
     position: 'absolute',
     display: 'flex',
@@ -42,7 +52,7 @@ class ChatAndInfo extends React.Component {
     const { user, table } = this.props;
 
     return (
-      <div>
+      <div style={styles.container}>
         <ul style={styles.tabs}>
           {tabs.map((tab, index) => {
             return (

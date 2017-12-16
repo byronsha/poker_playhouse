@@ -7,17 +7,22 @@ import Button from 'material-ui/Button'
 import { blueGrey } from 'material-ui/styles/colors'
 
 const styleSheet = createStyleSheet('LeftColumn', theme => ({
-  button: {
+  showButton: {
     position: 'absolute',
-    left: '0px',
-    bottom: '0px'
+    bottom: '0',
+    left: '0'
   },
   drawer: {
     background: blueGrey[100],
     padding: '10px',
-    width: '260px',
+    width: '250px',
     height: '100vh'
   },
+  button: {
+    minHeight: '28px',
+    padding: '6px 12px',
+    marginRight: '4px',
+  }
 }))
 
 const LeftColumn = ({
@@ -33,6 +38,7 @@ const LeftColumn = ({
   players,
   classes
 }) => {
+  const hasTableOpen = Object.keys(openTables).length > 0
   return (
     <div>
       <Drawer docked={true} open={open}>
@@ -42,14 +48,22 @@ const LeftColumn = ({
               Logged in as {user.username}
             </div>
             <div style={{ marginLeft: 'auto' }}>
-              <Button raised color="primary" onClick={logout}>Logout</Button>
+              <Button
+                raised
+                color="primary"
+                onClick={logout}
+                className={classes.button}
+              >
+                Logout
+              </Button>
             </div>
           </div>
           
           <TableList
-            openTables={Object.keys(openTables)}
             tables={tables}
             onTableClick={handleTableClick}
+            openTables={Object.keys(openTables)}
+            hasTableOpen={hasTableOpen}
           />
 
           <PlayerList
@@ -57,18 +71,17 @@ const LeftColumn = ({
             players={players}
           />
 
-          <Button raised color="primary" onClick={toggleGridView}>
+          <Button raised className={classes.button} onClick={toggleGridView}>
             Grid view
           </Button>
-
-          <Button onClick={toggle} className={classes.button}>
+          <Button raised onClick={toggle} className={classes.button}>
             Hide Menu
           </Button>
         </div>
       </Drawer>
 
       {!open &&
-        <Button onClick={toggle} className={classes.button}>
+        <Button onClick={toggle} className={classes.showButton}>
           Show Menu
         </Button>
       }

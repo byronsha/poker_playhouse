@@ -3,6 +3,20 @@ import RaiseSlider from './RaiseSlider'
 import PotSizeButton from './PotSizeButton'
 import ActionButtons from './ActionButtons'
 
+import { blueGrey } from 'material-ui/styles/colors'
+
+const styles = {
+  container: {
+    position: 'absolute',
+    width: '580px',
+    padding: '5px',
+    left: '0',
+    bottom: '0',
+    backgroundColor: blueGrey[100],
+    border: `1px solid ${blueGrey[100]}`
+  },
+}
+
 class Actions extends React.Component {
   constructor(props) {
     super(props)
@@ -80,7 +94,7 @@ class Actions extends React.Component {
     ]
 
     return (
-      <div>
+      <div style={styles.container}>
         <ActionButtons
           seat={seat}
           table={table}

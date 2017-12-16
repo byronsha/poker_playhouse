@@ -1,14 +1,22 @@
 import React from 'react'
 import Player from '../../left_column/Player'
 
+const styles = {
+  playerList: {
+    margin: 0,
+    padding: 0,
+    listStyleType: 'none',
+  },
+}
+
 class Spectators extends React.Component {
   render() {
     const { user, table } = this.props
 
     if (table.players.length > 0) {
       return (
-        <div>
-          <ul className="player-list">
+        <div style={{ padding: '8px' }}>
+          <ul style={styles.playerList}>
             {table.players.map(player => {
               let active = user.username === player.name ? true : false
 

@@ -1,15 +1,23 @@
 import React from 'react'
 import Player from './Player'
 
+const styles = {
+  playerList: {
+    margin: 0,
+    padding: 0,
+    listStyleType: 'none',
+  },
+}
+
 class PlayerList extends React.Component {
   render() {
     const { user, players } = this.props
 
     if (Object.keys(players).length > 0) {
       return (
-        <div>
+        <div style={{ marginBottom: '20px' }}>
           <h3>Currently playing</h3>
-          <ul className="player-list">
+          <ul style={styles.playerList}>
             {Object.keys(players).map(id => {
               let active = user.username === players[id].name ? true : false
 
