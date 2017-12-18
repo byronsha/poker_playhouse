@@ -146,6 +146,10 @@ class Lobby extends React.Component {
       logout
     } = this.props
 
+    let table
+    let seat
+    if (Object.values(openTables).length > 0) {
+      table = Object.values(openTables)[0].table
       seat = Object.values(table.seats).find(seat =>
         seat && seat.player.socketId === socket.id
       )
