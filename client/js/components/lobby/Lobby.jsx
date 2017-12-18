@@ -1,7 +1,6 @@
 import React from 'react'
-import LeftColumn from '../left_column/LeftColumn'
-import Game from '../game/Game'
 import { connect } from 'react-redux'
+
 import { logout } from '../../actions/user'
 import {
   receiveLobbyInfo, tablesUpdated, playersUpdated,
@@ -10,8 +9,14 @@ import {
 import {
   toggleLeftColumn, toggleRightColumn, toggleGridView
 } from '../../actions/ui'
+
+import Game from '../game/Game'
+import LeftColumn from '../left_column/LeftColumn'
+import BuyinModal from '../game/BuyinModal'
+
 import { withStyles, createStyleSheet } from 'material-ui/styles'
 import Drawer from 'material-ui/Drawer'
+import Dialog from 'material-ui/Dialog'
 
 class Lobby extends React.Component {
   constructor() {
@@ -25,6 +30,12 @@ class Lobby extends React.Component {
     this.handleCheckClick = this.handleCheckClick.bind(this)
     this.handleCallClick = this.handleCallClick.bind(this)
     this.handleFoldClick = this.handleFoldClick.bind(this)
+
+    this.state = {
+      modalOpen: false,
+      tableId: null,
+      seatId: null,
+    }
   }
 
   componentDidMount() {
@@ -77,7 +88,15 @@ class Lobby extends React.Component {
   }
 
   handleSeatClick(tableId, seatId) {
-    this.props.socket.emit('sit_down', { tableId, seatId })
+    this.setState({ modalOpen: true, tableId: tableId, seatId: seatId })
+  }
+
+  closeModal = () => {
+    this.setState({ modalOpen: false, tableId: null, seatId: null })
+  }
+
+  buyInAndSitDown = (tableId, seatId, amount) => {
+    this.props.socket.emit('sit_down', { tableId, seatId, amount })
   }
 
   handleStandClick(tableId) {
@@ -127,6 +146,11 @@ class Lobby extends React.Component {
       logout
     } = this.props
 
+      seat = Object.values(table.seats).find(seat =>
+        seat && seat.player.socketId === socket.id
+      )
+    }
+
     if (!user) {
       return <div></div>
     }
@@ -165,12 +189,23 @@ class Lobby extends React.Component {
                 onCallClick={this.handleCallClick}
                 onFoldClick={this.handleFoldClick}
                 onTableMessage={this.sendTableMessage}
+                socket={socket}
               />
             ) : (
               <h1 style={{ marginLeft: '800px', marginTop: '440px' }}>Join a table to start playing :^)</h1>
             )
           }
         </div>
+
+        <BuyinModal
+          open={this.state.modalOpen}
+          table={table}
+          seat={seat}
+          tableId={this.state.tableId}
+          seatId={this.state.seatId}
+          closeModal={this.closeModal}
+          buyInAndSitDown={this.buyInAndSitDown}
+        />
       </div>
     )
   }

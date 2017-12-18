@@ -15,47 +15,50 @@ const styles = {
   },
 }
 
-const TableControls = ({
-  onLeaveClick,
-  onStandClick,
-  onRotateClockwise,
-  onRotateCounterClockwise,
-}) => {
-  
-  return (
-    <div style={styles.container}>
-      <Button
-        fab
-        style={styles.button}
-        onClick={onRotateCounterClockwise}
-      >
-        <Icon>loop</Icon>
-      </Button>
-      <Button
-        fab
-        style={styles.button}
-        onClick={onRotateClockwise}
-      >
-        <Icon>autorenew</Icon>
-      </Button>
-      <Button
-        fab
-        color="primary"
-        style={styles.button}
-        onClick={onStandClick}
-      >
-        <Icon>arrow_upward</Icon>
-      </Button>
-      <Button
-        fab
-        color="primary"
-        style={styles.button}
-        onClick={onLeaveClick}
-      >
-        <Icon>exit_to_app</Icon>
-      </Button>
-    </div>
-  )
+class TableControls extends React.Component {
+  render() {
+    const {
+      onLeaveClick,
+      onStandClick,
+      onRotateClockwise,
+      onRotateCounterClockwise,
+    } = this.props
+
+    return (
+      <div style={styles.container}>
+        <Button
+          fab
+          style={styles.button}
+          onClick={onRotateCounterClockwise}
+        >
+          <Icon>loop</Icon>
+        </Button>
+        <Button
+          fab
+          style={styles.button}
+          onClick={onRotateClockwise}
+        >
+          <Icon>autorenew</Icon>
+        </Button>
+        <Button
+          fab
+          color="primary"
+          style={styles.button}
+          onClick={onStandClick}
+        >
+          <Icon>arrow_upward</Icon>
+        </Button>
+        <Button
+          fab
+          color="primary"
+          style={styles.button}
+          onClick={onLeaveClick}
+        >
+          <Icon>exit_to_app</Icon>
+        </Button>
+      </div>
+    )
+  }  
 }
 
 export default TableControls

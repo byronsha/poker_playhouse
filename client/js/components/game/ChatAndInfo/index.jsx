@@ -5,6 +5,7 @@ import { withStyles, createStyleSheet } from 'material-ui/styles'
 
 import Chat from './Chat';
 import Spectators from './Spectators';
+import SitOutCheckbox from './SitOutCheckbox';
 
 const styles = {
   container: {
@@ -81,6 +82,8 @@ class ChatAndInfo extends React.Component {
             {table.name}, ${table.limit.toFixed(2)} NL Holdem, {table.maxPlayers} players                  
           </div>
         }
+
+        <SitOutCheckbox {...this.props} />
       </div>
     )
   }

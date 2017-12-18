@@ -57,11 +57,15 @@ class Game extends React.Component {
       onCallClick,
       onFoldClick,
       onTableMessage,
-      gridViewOn
+      gridViewOn,
+      socket
     } = this.props
 
     const gameClass = gridViewOn ? 'poker-game poker-game-small' : 'poker-game'
-    
+    const seat = Object.values(table.seats).find(seat =>
+      seat && seat.player.socketId === socket.id
+    )
+
     return (
       <div>
         <div className={gameClass}>
@@ -80,20 +84,22 @@ class Game extends React.Component {
           onStandClick={() => onStandClick(table.id)}
           onRotateClockwise={this.rotateClockwiseClick}
           onRotateCounterClockwise={this.rotateCounterClockwiseClick}
-        />
+          />
         {this.isOwnTurn() && (
           <Actions
-          user={user}
-          table={table}
-          onRaiseClick={onRaiseClick}
-          onCheckClick={onCheckClick}
-          onCallClick={onCallClick}
-          onFoldClick={onFoldClick}
+            user={user}
+            table={table}
+            onRaiseClick={onRaiseClick}
+            onCheckClick={onCheckClick}
+            onCallClick={onCallClick}
+            onFoldClick={onFoldClick}
           />
         )}
         <ChatAndInfo
+          socket={socket}
           user={user}
           table={table}
+          seat={seat}
           messages={messages}
           onTableMessage={e => onTableMessage(e, table.id)}  
         />

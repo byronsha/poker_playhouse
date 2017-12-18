@@ -26,46 +26,56 @@ const ActionButtons = ({
   handleCallClick,
   handleRaiseClick,
   classes
-}) => (
-  <div className={classes.container}>
-    <Button
-      raised
-      color="accent"
-      className={classes.button}
-      onClick={handleFoldClick}>
-      Fold
-    </Button>
+}) => {
+  const notAllInPlayers = Object.values(table.seats).filter(tableSeat =>
+    tableSeat && tableSeat.stack > 0
+  )
+  const othersAllIn = notAllInPlayers.length === 1
+    && notAllInPlayers[0].id === seat.id
 
-    {(!table.callAmount || seat.bet === table.callAmount) &&
-      <Button
-        raised
-        color="accent"
-        className={classes.button}
-        onClick={handleCheckClick}>
-        Check
-      </Button>
-    }
+  return (
+    <div className={classes.container}>
+      {table.callAmount &&
+        <Button
+          raised
+          color="accent"
+          className={classes.button}
+          onClick={handleFoldClick}>
+          Fold
+        </Button>
+      }
 
-    {(table.callAmount > 0 && seat.bet !== table.callAmount) &&
-      <Button
-        raised
-        color="accent"
-        className={classes.button}
-        onClick={handleCallClick}>
-        Call ${(totalCallAmount).toFixed(2)}
-      </Button>  
-    }
+      {(!table.callAmount || seat.bet === table.callAmount) &&
+        <Button
+          raised
+          color="accent"
+          className={classes.button}
+          onClick={handleCheckClick}>
+          Check
+        </Button>
+      }
 
-    {seat.stack > table.callAmount &&
-      <Button
-        raised
-        color="accent"
-        className={classes.button}
-        onClick={handleRaiseClick}>
-        Raise to ${parseFloat(raiseAmount).toFixed(2)}
-      </Button>
-    }
-  </div>
-)
+      {(table.callAmount > 0 && seat.bet !== table.callAmount) &&
+        <Button
+          raised
+          color="accent"
+          className={classes.button}
+          onClick={handleCallClick}>
+          Call ${(totalCallAmount).toFixed(2)}
+        </Button>  
+      }
+
+      {((seat.stack > table.callAmount) && !othersAllIn) &&
+        <Button
+          raised
+          color="accent"
+          className={classes.button}
+          onClick={handleRaiseClick}>
+          Raise to ${parseFloat(raiseAmount).toFixed(2)}
+        </Button>
+      }
+    </div>
+  )
+}
 
 export default withStyles(styleSheet)(ActionButtons)

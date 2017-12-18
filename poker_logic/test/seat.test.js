@@ -5,10 +5,9 @@ var Seat = require('../seat')
 describe('Seat', function() {
   const id = '123456'
   const player = { name: 'Byron' }
-  const stack = 100
 
   describe('initialization', () => {
-    const seat = new Seat(id, player, stack)
+    const seat = new Seat(id, player, 100, 100)
 
     it('has correct id', () => {
       expect(seat.id).to.be.equal('123456')
@@ -19,10 +18,13 @@ describe('Seat', function() {
     it('has correct stack', () => {
       expect(seat.stack).to.be.equal(100)
     })
+    it('has correct buyin', () => {
+      expect(seat.buyin).to.be.equal(100)
+    })
   })
 
   describe('#fold()', () => {
-    const seat = new Seat(id, player, stack)
+    const seat = new Seat(id, player, 100, 100)
     seat.fold()
 
     it(`sets seat's bet to 0`, () => {
@@ -40,7 +42,7 @@ describe('Seat', function() {
   })
   
   describe('#check()', () => {
-    const seat = new Seat(id, player, stack)
+    const seat = new Seat(id, player, 100, 100)
     seat.check()
 
     it(`sets seat's checked flag to true`, () => {
@@ -55,7 +57,7 @@ describe('Seat', function() {
   })
 
   describe('#raise(amount)', () => {
-    const seat = new Seat(id, player, stack)
+    const seat = new Seat(id, player, 100, 100)
     seat.raise(20)
 
     it(`subtracts from the stack`, () => {
@@ -78,7 +80,7 @@ describe('Seat', function() {
   })
 
   describe('#placeBlind(amount)', () => {
-    const seat = new Seat(id, player, stack)
+    const seat = new Seat(id, player, 100, 100)
     seat.placeBlind(5)
     
     it(`subtracts from the stack`, () => {
@@ -93,7 +95,7 @@ describe('Seat', function() {
   })
 
   describe('#callRaise(amount) [amount <= stack]', () => {
-    const seat = new Seat(id, player, stack)
+    const seat = new Seat(id, player, 100, 100)
     seat.callRaise(50)
 
     it(`subtracts from the stack`, () => {
@@ -111,7 +113,7 @@ describe('Seat', function() {
   })
 
   describe(`#callRaise(amount) [amount > stack]`, () => {
-    const seat = new Seat(id, player, stack)
+    const seat = new Seat(id, player, 100, 100)
     seat.callRaise(200)
 
     it(`sets seat's stack to 0 - all in`, () => {
@@ -123,7 +125,7 @@ describe('Seat', function() {
   })
 
   describe('#winHand(amount)', () => {
-    const seat = new Seat(id, player, stack)
+    const seat = new Seat(id, player, 100, 100)
     seat.winHand(125)
 
     it(`adds won amount to stack`, () => {

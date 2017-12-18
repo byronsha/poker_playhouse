@@ -61,7 +61,7 @@ io.on('connection', socket => {
     socket.broadcast.emit('tables_updated', tables)    
     socket.emit('table_left', { tables, tableId })
 
-    if (table.satPlayers().length === 1) {
+    if (table.activePlayers().length === 1) {
       clearForOnePlayer(table)
     }
   })
@@ -107,13 +107,13 @@ io.on('connection', socket => {
     broadcastToTable(table, message, from)
   })
 
-  socket.on('sit_down', ({ tableId, seatId }) => {
+  socket.on('sit_down', ({ tableId, seatId, amount }) => {
     let table = tables[tableId]
+    table.sitPlayer(players[socket.id], seatId, amount)
     let message = `${players[socket.id].name} sat down in Seat ${seatId}`
-    table.sitPlayer(players[socket.id], seatId)
 
     broadcastToTable(table, message)
-    if (table.satPlayers().length === 2) {
+    if (table.activePlayers().length === 2) {
       initNewHand(table)
     }
   })
@@ -125,8 +125,27 @@ io.on('connection', socket => {
 
     broadcastToTable(table, message)
 
-    if (table.satPlayers().length === 1) {
+    if (table.activePlayers().length === 1) {
       clearForOnePlayer(table)
+    }
+  })
+
+  socket.on('sitting_out', ({ tableId, seatId }) => {
+    const table = tables[tableId]
+    const seat = table.seats[seatId]
+    seat.sittingOut = true
+
+    broadcastToTable(table)
+  })
+
+  socket.on('sitting_in', ({ tableId, seatId }) => {
+    const table = tables[tableId]
+    const seat = table.seats[seatId]
+    seat.sittingOut = false
+
+    broadcastToTable(table)
+    if (table.handOver && table.activePlayers().length === 2) {
+      initNewHand(table)
     }
   })
 
@@ -183,10 +202,12 @@ io.on('connection', socket => {
 
   function initNewHand(table) {
     table.clearWinMessages()
-    broadcastToTable(table, '---New hand starting in 5 seconds---')
+    if (table.activePlayers().length > 1) {
+      broadcastToTable(table, '---New hand starting in 5 seconds---')
+    }
     setTimeout(() => {
       table.startHand()
-      broadcastToTable(table, '---New hand started---')
+      broadcastToTable(table)      
       for (let i of Object.keys(table.seats)) {
         const seat = table.seats[i]
         if (seat && seat.bet > 0) {
