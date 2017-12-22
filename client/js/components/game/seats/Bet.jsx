@@ -1,5 +1,5 @@
 import React from 'react'
-import ChipPile from '../pieces/ChipPile'
+import ChipPile from '../Pieces/ChipPile'
 
 const Bet = ({ seat }) => (
   <div className="bet">

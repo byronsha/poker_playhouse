@@ -1,7 +1,14 @@
+// @flow
 import React from 'react'
 
-class ShotClock extends React.Component {
-  constructor(props) {
+type Props = {
+  seconds: number
+}
+type State = {
+  seconds: number
+}
+class ShotClock extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props)
 
     this.state = {

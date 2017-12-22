@@ -26,14 +26,17 @@ const styles = {
 
 type Props = {
   open: boolean,
-  tableId: number,
-  seatId: number,
-  table: {
+  tableId: ?number,
+  seatId: ?number,
+  table: ?{
     limit: number,
-    seats: {},
+    seats: {
+      [key: number]: {},
+    },
   },
-  seat: {
+  seat: ?{
     stack: number,
+    player: {},
   },
   closeModal: () => void,
   buyInAndSitDown: (tableId: number, seatId: number, amount: number) => void,
@@ -57,6 +60,8 @@ class BuyinModal extends React.Component<Props, State> {
 
   handleBuyin = () => {
     const { tableId, seatId, table } = this.props
+    if (!tableId || !seatId || !table) return null;
+
     const amount = parseFloat(this.buyinAmount.value)
     const minBuy = table.limit / 2
     const maxBuy = table.limit
@@ -78,7 +83,7 @@ class BuyinModal extends React.Component<Props, State> {
   }
 
   render() {
-    const { open, closeModal, table, seat } = this.props
+    const { open, table, seat } = this.props
     if (!table) return null
     const mustBuyIn = table.handOver && seat && seat.stack == 0
 

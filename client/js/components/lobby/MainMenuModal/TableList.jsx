@@ -18,7 +18,6 @@ class TableList extends React.Component {
     if (Object.keys(tables).length > 0) {
       return (
         <div>
-          <h3 style={{ marginTop: '0' }}>Games</h3>
           <table style={styles.tableList}>
             <thead style={styles.header}>
               <tr>

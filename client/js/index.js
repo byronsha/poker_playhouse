@@ -15,7 +15,6 @@ import NoMatch from './components/NoMatch'
 import Lobby from './components/lobby/Lobby'
 import Login from './components/login/Login'
 import Signup from './components/signup/Signup'
-import Game from './components/game/Game'
 import Playground from './components/Playground'
 
 const history = syncHistoryWithStore(hashHistory, store)

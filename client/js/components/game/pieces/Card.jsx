@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import Paper from 'material-ui/Paper'
 import {
@@ -13,7 +14,6 @@ const suits = {
   'hearts': '♥',
   'clubs': '♣'
 }
-
 const ranks = {
   'ace': 'A',
   'king': 'K',
@@ -21,41 +21,44 @@ const ranks = {
   'jack': 'J',
   '10': 'T'
 }
-
-class Card extends React.Component {
-  getSuitColor = suit => {
-    switch(suit) {
-      case 'spades':
-        return { color: grey[900] }
-      case 'diamonds':
-        return { color: blue[500] }
-      case 'hearts':
-        return { color: red[500] }
-      case 'clubs':
-        return { color: green[500] }
-      default:
-        return { color: 'purple' }
-    }
+const getSuitColor = suit => {
+  switch(suit) {
+    case 'spades':
+      return { color: grey[900] }
+    case 'diamonds':
+      return { color: blue[500] }
+    case 'hearts':
+      return { color: red[500] }
+    case 'clubs':
+      return { color: green[500] }
+    default:
+      return { color: 'purple' }
   }
+}
 
-  render() {
-    const { card } = this.props
+type Props = {
+  card: {
+    rank: string,
+    suit: string,
+  },
+}
+function Card(props: Props) {
+  const { card } = props
 
-    if (card.rank === '0') {
-      return <div className="card-silhouette"></div>
-    } else if (card.rank === 'hidden') {
-      return <Paper className="card"><div className="card-back"></div></Paper>
-    } else {
-      return (
-        <Paper className="card" elevation={4}>
-          <div className="small-picture" style={this.getSuitColor(card.suit)}>
-            <div>{ranks[card.rank] ? ranks[card.rank] : card.rank}</div>
-            <div>{suits[card.suit]}</div>
-          </div>
-          <div className="big-picture" style={this.getSuitColor(card.suit)}>{ranks[card.rank] ? ranks[card.rank] : card.rank}</div>
-        </Paper>
-      )
-    }
+  if (card.rank === '0') {
+    return <div className="card-silhouette"></div>
+  } else if (card.rank === 'hidden') {
+    return <Paper className="card"><div className="card-back"></div></Paper>
+  } else {
+    return (
+      <Paper className="card" elevation={4}>
+        <div className="small-picture" style={getSuitColor(card.suit)}>
+          <div>{ranks[card.rank] ? ranks[card.rank] : card.rank}</div>
+          <div>{suits[card.suit]}</div>
+        </div>
+        <div className="big-picture" style={getSuitColor(card.suit)}>{ranks[card.rank] ? ranks[card.rank] : card.rank}</div>
+      </Paper>
+    )
   }
 }
 

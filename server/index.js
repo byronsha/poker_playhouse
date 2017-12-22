@@ -5,12 +5,12 @@ const socketIo = require('socket.io')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
-const webpackConfig = require('./webpack.config.js')
+const webpackConfig = require('../webpack.config.js')
 const routes = require('./routes/index')
 const db = require('./models')
 
-const Player = require('./poker_logic/player.js')
-const Table = require('./poker_logic/table.js')
+const Player = require('./poker_game/player.js')
+const Table = require('./poker_game/table.js')
 
 const app = express()
 const server = http.createServer(app)
@@ -63,12 +63,10 @@ io.on('connection', socket => {
     if (seat) {
       updatePlayerBankroll(player, seat.stack)
     }
-
     table.removePlayer(socket.id)
 
     socket.broadcast.emit('tables_updated', tables)    
     socket.emit('table_left', { tables, tableId })
-
 
     if (table.activePlayers().length === 1) {
       clearForOnePlayer(table)
@@ -78,35 +76,29 @@ io.on('connection', socket => {
   socket.on('fold', tableId => {
     let table = tables[tableId]
     let { seatId, message } = table.handleFold(socket.id)
-
     broadcastToTable(table, message)
-    changeTurnAndBroadcast(table, seatId, socket)
+    changeTurnAndBroadcast(table, seatId)
   })
 
   socket.on('check', tableId => {
     let table = tables[tableId]
     let { seatId, message } = table.handleCheck(socket.id)
-
     broadcastToTable(table, message)
-    changeTurnAndBroadcast(table, seatId, socket)
+    changeTurnAndBroadcast(table, seatId)
   })
 
   socket.on('call', tableId => {
     let table = tables[tableId]
     let { seatId, message } = table.handleCall(socket.id)
-    const seat = table.seats[seatId]
-
     broadcastToTable(table, message)
-    changeTurnAndBroadcast(table, seatId, socket)
+    changeTurnAndBroadcast(table, seatId)
   })
 
   socket.on('raise', ({ tableId, amount }) => {
     let table = tables[tableId]
     let { seatId, message } = table.handleRaise(socket.id, amount)
-    const seat = table.seats[seatId]
-
     broadcastToTable(table, message)
-    changeTurnAndBroadcast(table, seatId, socket)
+    changeTurnAndBroadcast(table, seatId)
   })
 
   socket.on('table_message', ({ message, from, tableId }) => {
@@ -192,7 +184,7 @@ io.on('connection', socket => {
 
   async function updatePlayerBankroll(player, amount) {
     const user = await db.User.findById(player.id)
-    const updatedUser = await db.User.update(
+    await db.User.update(
       { bankroll: user.bankroll + amount },
       { where: { id: player.id } }
     )
@@ -226,7 +218,7 @@ io.on('connection', socket => {
     }
   }
 
-  function changeTurnAndBroadcast(table, seatId, socket) {
+  function changeTurnAndBroadcast(table, seatId) {
     setTimeout(() => {
       table.changeTurn(seatId)
       broadcastToTable(table)

@@ -2,9 +2,9 @@
   "name": "poker_friends",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
-    "test": "mocha ./poker_logic/test/*.js --watch"
+    "test": "mocha ./server/poker_game/test/*.js --watch"
   },
   "keywords": [],
   "author": "",
@@ -50,7 +50,13 @@
     "webpack": "^2.2.0-rc.4"
   },
   "devDependencies": {
+    "babel-eslint": "^8.0.3",
     "chai": "^3.5.0",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
     "mocha": "^3.3.0",
     "react-hot-loader": "^1.3.1",
     "webpack-dev-middleware": "^1.10.2",

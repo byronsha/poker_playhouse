@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -10,28 +11,73 @@ import {
   toggleLeftColumn, toggleRightColumn, toggleGridView
 } from '../../actions/ui'
 
-import Game from '../game/Game'
 import MainMenuModal from './MainMenuModal'
-import BuyinModal from '../game/BuyinModal'
-
-import { withStyles, createStyleSheet } from 'material-ui/styles'
-import Drawer from 'material-ui/Drawer'
-import Dialog from 'material-ui/Dialog'
+import Game from '../Game/Game'
+import BuyinModal from '../Game/BuyinModal'
 import Button from 'material-ui/Button'
 
-class Lobby extends React.Component {
+type Props = {
+  socket: any,
+  user: {
+    username: string,
+  },
+  tables: {
+    [key: number]: {},
+  },
+  players: {
+    [key: string]: {},
+  },
+  openTables: {
+    [key: number]: {
+      table: {
+        table: {
+          id: number,
+          seats: {
+            [key: number]: {
+              seat: {
+                stack: number,
+                player: {
+                  socketId: string
+                }
+              }
+            }
+          },
+          messages: Array<{
+            body: string,
+            from: string,
+            tableId: number,
+          }>,
+        }
+      }
+    }
+  },
+  messages: Array<{
+    message: string,
+    from: string,
+    tableId: number,
+  }>,
+  leftColumnShowing: boolean,
+  rightColumnShowing: boolean,
+  gridViewOn: boolean,
+  toggleLeftColumn: () => void,
+  toggleRightColumn: () => void,
+  toggleGridView: () => void,
+  logout: () => void,
+  receiveLobbyInfo: (tables: {}, players: {}, socketId: string) => void,
+  tablesUpdated: (tables: {}) => void,
+  playersUpdated: (players: {}) => void,
+  tableJoined: (tables: {}, tableId: number) => void,
+  tableLeft: (tables: {}, tableId: number) => void,
+  tableUpdated: (table: {}, message: ?string, from: string) => void,
+}
+type State = {
+  modalOpen: boolean,
+  tableId: ?number,
+  seatId: ?number,
+}
+class Lobby extends React.Component<Props, State> {
   constructor() {
     super()
-
-    this.handleTableClick = this.handleTableClick.bind(this)
-    this.handleLeaveClick = this.handleLeaveClick.bind(this)
-    this.handleSeatClick = this.handleSeatClick.bind(this)
-    this.handleStandClick = this.handleStandClick.bind(this)
-    this.handleRaiseClick = this.handleRaiseClick.bind(this)
-    this.handleCheckClick = this.handleCheckClick.bind(this)
-    this.handleCallClick = this.handleCallClick.bind(this)
-    this.handleFoldClick = this.handleFoldClick.bind(this)
-
     this.state = {
       modalOpen: false,
       tableId: null,
@@ -67,7 +113,9 @@ class Lobby extends React.Component {
     socket.on('table_updated', ({ table, message, from }) => {
       tableUpdated(table, message, from)
       let gameChat = document.getElementById(`table-${table.id}-game-chat`)
-      gameChat.scrollTop = gameChat.scrollHeight
+      if (gameChat) {
+        gameChat.scrollTop = gameChat.scrollHeight
+      }
     })
   }
 
@@ -78,18 +126,18 @@ class Lobby extends React.Component {
     }
   }
 
-  handleTableClick(tableId) {
+  handleTableClick = tableId => {
     if (Object.keys(this.props.openTables).length < 4) {
       this.props.socket.emit('join_table', tableId)
     }
     this.props.toggleLeftColumn()
   }
 
-  handleLeaveClick(tableId) {
+  handleLeaveClick = tableId => {
     this.props.socket.emit('leave_table', tableId) 
   }
 
-  handleSeatClick(tableId, seatId) {
+  handleSeatClick = (tableId, seatId) => {
     this.setState({ modalOpen: true, tableId: tableId, seatId: seatId })
   }
 
@@ -105,23 +153,23 @@ class Lobby extends React.Component {
     this.props.socket.emit('rebuy', { tableId, seatId, amount })
   }
 
-  handleStandClick(tableId) {
+  handleStandClick = tableId => {
     this.props.socket.emit('stand_up', tableId)
   }
 
-  handleRaiseClick(tableId, amount) {
+  handleRaiseClick = (tableId, amount) => {
     this.props.socket.emit('raise', { tableId, amount })
   }
 
-  handleCheckClick(tableId) {
+  handleCheckClick = tableId => {
     this.props.socket.emit('check', tableId)
   }
 
-  handleCallClick(tableId) {
+  handleCallClick = tableId => {
     this.props.socket.emit('call', tableId)
   }
 
-  handleFoldClick(tableId) {
+  handleFoldClick = tableId => {
     this.props.socket.emit('fold', tableId)
   }
 
@@ -144,10 +192,8 @@ class Lobby extends React.Component {
       openTables,
       messages,
       leftColumnShowing,
-      rightColumnShowing,
       gridViewOn,
       toggleLeftColumn,
-      toggleRightColumn,
       toggleGridView,
       logout
     } = this.props
@@ -178,11 +224,10 @@ class Lobby extends React.Component {
           openTables={openTables}
           tables={tables}
           handleTableClick={this.handleTableClick}
-          toggle={toggleLeftColumn}
+          toggleModal={toggleLeftColumn}
           toggleGridView={toggleGridView}
           players={players}
           messages={messages}
-          sendMessage={this.sendMessage}
         />
 
         <div>
@@ -216,8 +261,8 @@ class Lobby extends React.Component {
           open={this.state.modalOpen}
           table={table}
           seat={seat}
-          tableId={this.state.tableId || table && table.id}
-          seatId={this.state.seatId || seat && seat.id}
+          tableId={table ? table.id : this.state.tableId}
+          seatId={seat ? seat.id : this.state.seatId}
           closeModal={this.closeModal}
           buyInAndSitDown={this.buyInAndSitDown}
           handleRebuy={this.handleRebuy}

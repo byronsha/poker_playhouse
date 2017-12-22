@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import Hand from './Hand'
 import ShotClock from './ShotClock'
@@ -5,7 +6,23 @@ import Bet from './Bet'
 import Paper from 'material-ui/Paper'
 import { blueGrey, cyan } from 'material-ui/styles/colors'
 
-class SeatedPlayer extends React.Component {
+type Props = {
+  user: {},
+  seat: {
+    id: number,
+    hand: Array<{
+      rank: string,
+      suit: string,
+    }>,
+    bet: number,
+    stack: number,
+    player: {
+      name: string,
+    },
+  },
+  isButton: boolean,
+}
+class SeatedPlayer extends React.Component<Props> {
   render() {
     const { user, seat, isButton } = this.props
 

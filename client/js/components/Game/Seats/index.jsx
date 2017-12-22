@@ -1,8 +1,27 @@
+// @flow
 import React from 'react'
 import SeatedPlayer from './SeatedPlayer'
 import EmptySeat from './EmptySeat'
 
-class Seats extends React.Component {
+type Props = {
+  user: {
+    username: string,
+  },
+  table: {
+    id: number,
+    seats: {
+      [seatId: any]: {
+        player: {
+          name: string,
+        },
+      },
+    },
+    maxPlayers: number,
+  },
+  onSeatClick: (tableId: number, seatId: number) => void,
+  displayOffset: number,
+}
+class Seats extends React.Component<Props> {
   render() {
     const { user, table, onSeatClick, displayOffset } = this.props
     let seats = Object.keys(table.seats)
@@ -17,7 +36,7 @@ class Seats extends React.Component {
 
     return (
       <div>
-        {seats.map((seatId) => {
+        {seats.map(seatId => {
           const seat = table.seats[seatId]
           const isButton = parseInt(seatId) === table.button ? true : false
 

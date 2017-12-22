@@ -1,6 +1,6 @@
 import React from 'react'
-import Card from './pieces/Card'
-import ChipPile from './pieces/ChipPile'
+import Card from './Card'
+import ChipPile from './ChipPile'
 
 class Board extends React.Component {
   render() {

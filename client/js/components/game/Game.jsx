@@ -1,13 +1,10 @@
 import React from 'react'
-import Seats from './seats/Seats'
-import Background from './Background'
-import Board from './Board'
-import Actions from './actions/Actions'
-import ChipPile from './pieces/ChipPile'
+import Seats from './Seats'
+import Background from './Pieces/Background'
+import Board from './Pieces/Board'
+import Actions from './Actions'
 import ChatAndInfo from './ChatAndInfo';
 import TableControls from './TableControls';
-import { blueGrey } from 'material-ui/styles/colors'
-import { withStyles, createStyleSheet } from 'material-ui/styles'
 
 class Game extends React.Component {
   constructor() {

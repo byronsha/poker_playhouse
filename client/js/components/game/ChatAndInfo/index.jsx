@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { blueGrey } from 'material-ui/styles/colors'
-import { withStyles, createStyleSheet } from 'material-ui/styles'
 
 import Chat from './Chat';
 import Spectators from './Spectators';
