@@ -28,37 +28,26 @@ class Seat {
     if (reRaiseAmount > this.stack) { return }
 
     this.bet = amount
-
     this.stack -= reRaiseAmount
-    this.player.bankroll -= reRaiseAmount
-
     this.turn = false
     this.lastAction = 'RAISE'
   }
   placeBlind(amount) {
     this.bet = amount
-
     this.stack -= amount
-    this.player.bankroll -= amount
   }
   callRaise(amount) {
     const amountToCall = amount - this.bet
     const amountCalled = Math.min(this.stack, amountToCall)
 
     this.bet += amountCalled
-
     this.stack -= amountCalled
-    this.player.bankroll -= amountCalled
-    
     this.turn = false
     this.lastAction = 'CALL'
   }
   winHand(amount) {
     this.bet = 0
-
     this.stack += amount
-    this.player.bankroll += amount
-
     this.turn = false
     this.lastAction = 'WINNER'
   }

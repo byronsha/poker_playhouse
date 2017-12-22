@@ -16,6 +16,7 @@ import Lobby from './components/lobby/Lobby'
 import Login from './components/login/Login'
 import Signup from './components/signup/Signup'
 import Game from './components/game/Game'
+import Playground from './components/Playground'
 
 const history = syncHistoryWithStore(hashHistory, store)
 
@@ -34,6 +35,7 @@ const Root = () => (
         <Route path="login" component={Login} />
         <Route path="signup" component={Signup} />
         <Route path="lobby" component={Lobby} onEnter={requireLogin} />
+        <Route path="playground" component={Playground} />
         <Route path="*" component={NoMatch} />
       </Route>
     </Router>

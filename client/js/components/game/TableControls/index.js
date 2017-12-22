@@ -5,13 +5,13 @@ import Icon from 'material-ui/Icon'
 const styles = {
   container: {
     position: 'absolute',
-    top: '0',
+    top: '4px',
     right: '0',
   },
   button: {
-    margin: '4px',
-    width: '36px',
-    height: '36px'
+    marginRight: '4px',
+    minWidth: '20px',
+    padding: '4px 6px',
   },
 }
 
@@ -27,21 +27,18 @@ class TableControls extends React.Component {
     return (
       <div style={styles.container}>
         <Button
-          fab
           style={styles.button}
           onClick={onRotateCounterClockwise}
         >
           <Icon>loop</Icon>
         </Button>
         <Button
-          fab
           style={styles.button}
           onClick={onRotateClockwise}
         >
           <Icon>autorenew</Icon>
         </Button>
         <Button
-          fab
           color="primary"
           style={styles.button}
           onClick={onStandClick}
@@ -49,7 +46,6 @@ class TableControls extends React.Component {
           <Icon>arrow_upward</Icon>
         </Button>
         <Button
-          fab
           color="primary"
           style={styles.button}
           onClick={onLeaveClick}

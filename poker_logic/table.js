@@ -45,6 +45,12 @@ class Table {
 
     this.button = firstPlayer ? seatId : this.button
   }
+  rebuyPlayer(seatId, amount) {
+    if (!this.seats[seatId]) {
+      throw new Error('No seated player to rebuy')
+    }
+    this.seats[seatId].stack += amount;
+  }
   standPlayer(socketId) {
     for (let i of Object.keys(this.seats)) {
       if (this.seats[i] && this.seats[i].player.socketId === socketId) {

@@ -11,12 +11,13 @@ import {
 } from '../../actions/ui'
 
 import Game from '../game/Game'
-import LeftColumn from '../left_column/LeftColumn'
+import MainMenuModal from './MainMenuModal'
 import BuyinModal from '../game/BuyinModal'
 
 import { withStyles, createStyleSheet } from 'material-ui/styles'
 import Drawer from 'material-ui/Drawer'
 import Dialog from 'material-ui/Dialog'
+import Button from 'material-ui/Button'
 
 class Lobby extends React.Component {
   constructor() {
@@ -81,6 +82,7 @@ class Lobby extends React.Component {
     if (Object.keys(this.props.openTables).length < 4) {
       this.props.socket.emit('join_table', tableId)
     }
+    this.props.toggleLeftColumn()
   }
 
   handleLeaveClick(tableId) {
@@ -97,6 +99,10 @@ class Lobby extends React.Component {
 
   buyInAndSitDown = (tableId, seatId, amount) => {
     this.props.socket.emit('sit_down', { tableId, seatId, amount })
+  }
+
+  handleRebuy = (tableId, seatId, amount) => {
+    this.props.socket.emit('rebuy', { tableId, seatId, amount })
   }
 
   handleStandClick(tableId) {
@@ -161,7 +167,10 @@ class Lobby extends React.Component {
 
     return (
       <div>
-        <LeftColumn
+        <Button onClick={toggleLeftColumn} style={{ position: 'absolute', top: 0, left: 0, zIndex: 100 }}>
+          View games
+        </Button>                        
+        <MainMenuModal
           open={leftColumnShowing}
           socketId={socket.id}
           user={user}
@@ -196,7 +205,9 @@ class Lobby extends React.Component {
                 socket={socket}
               />
             ) : (
-              <h1 style={{ marginLeft: '800px', marginTop: '440px' }}>Join a table to start playing :^)</h1>
+              <h1 style={{ textAlign: 'center', marginTop: '440px' }}>
+                Join a table to start playing :^)
+              </h1>
             )
           }
         </div>
@@ -205,10 +216,11 @@ class Lobby extends React.Component {
           open={this.state.modalOpen}
           table={table}
           seat={seat}
-          tableId={this.state.tableId}
-          seatId={this.state.seatId}
+          tableId={this.state.tableId || table && table.id}
+          seatId={this.state.seatId || seat && seat.id}
           closeModal={this.closeModal}
           buyInAndSitDown={this.buyInAndSitDown}
+          handleRebuy={this.handleRebuy}
         />
       </div>
     )

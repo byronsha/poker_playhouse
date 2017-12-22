@@ -4,6 +4,8 @@ import Table from './Table'
 const styles = {
   tableList: {
     fontSize: '14px',
+    width: '100%',
+    borderSpacing: '0px 4px',
   },
   header: {
     textAlign: 'left',
@@ -16,7 +18,7 @@ class TableList extends React.Component {
     if (Object.keys(tables).length > 0) {
       return (
         <div>
-          <h3>Games</h3>
+          <h3 style={{ marginTop: '0' }}>Games</h3>
           <table style={styles.tableList}>
             <thead style={styles.header}>
               <tr>

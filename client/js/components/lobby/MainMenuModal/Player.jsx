@@ -10,7 +10,7 @@ class Player extends React.Component {
     return (
       <li style={style}>
         <span>{player.name}</span>
-        {active && <span> (me)</span>}
+        {active && <span> (you)</span>}
       </li>
     )
   }

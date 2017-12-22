@@ -1,3 +1,4 @@
+/* @flow */
 import React from 'react';
 import Button from 'material-ui/Button';
 import Dialog from 'material-ui/Dialog';
@@ -23,7 +24,28 @@ const styles = {
   }
 }
 
-class BuyinModal extends React.Component {
+type Props = {
+  open: boolean,
+  tableId: number,
+  seatId: number,
+  table: {
+    limit: number,
+    seats: {},
+  },
+  seat: {
+    stack: number,
+  },
+  closeModal: () => void,
+  buyInAndSitDown: (tableId: number, seatId: number, amount: number) => void,
+  handleRebuy: (tableId: number, seatId: number, amount: number) => void,
+}
+type State = {
+  errorMessage: ?string,
+}
+class BuyinModal extends React.Component<Props, State> {
+  buyinAmount: {
+    value: null
+  };
   state = {
     errorMessage: null,
   }
@@ -44,7 +66,13 @@ class BuyinModal extends React.Component {
       return 
     };
 
-    this.props.buyInAndSitDown(tableId, seatId, amount)
+    const alreadySeated = table.seats[seatId]
+    if (alreadySeated) {
+      this.props.handleRebuy(tableId, seatId, amount)
+    } else {
+      this.props.buyInAndSitDown(tableId, seatId, amount)
+    }
+
     this.props.closeModal()
     this.setState({ errorMessage: null })
   }
@@ -52,7 +80,7 @@ class BuyinModal extends React.Component {
   render() {
     const { open, closeModal, table, seat } = this.props
     if (!table) return null
-    const mustBuyIn = seat && seat.stack == 0
+    const mustBuyIn = table.handOver && seat && seat.stack == 0
 
     return (
       <Dialog open={open || mustBuyIn}>

@@ -21,6 +21,7 @@
     "body-parser": "^1.16.0",
     "cookie-parser": "^1.4.3",
     "css-loader": "^0.28.0",
+    "emotion": "^8.0.12",
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "jsonwebtoken": "^7.4.0",

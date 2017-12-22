@@ -56,10 +56,19 @@ io.on('connection', socket => {
 
   socket.on('leave_table', tableId => {
     const table = tables[tableId]
+    const player = players[socket.id]
+    const seat = Object.values(table.seats).find(seat =>
+      seat && seat.player.socketId === socket.id
+    )
+    if (seat) {
+      updatePlayerBankroll(player, seat.stack)
+    }
+
     table.removePlayer(socket.id)
 
     socket.broadcast.emit('tables_updated', tables)    
     socket.emit('table_left', { tables, tableId })
+
 
     if (table.activePlayers().length === 1) {
       clearForOnePlayer(table)
@@ -87,7 +96,6 @@ io.on('connection', socket => {
     let { seatId, message } = table.handleCall(socket.id)
     const seat = table.seats[seatId]
 
-    updatePlayerBankroll(seat)
     broadcastToTable(table, message)
     changeTurnAndBroadcast(table, seatId, socket)
   })
@@ -97,7 +105,6 @@ io.on('connection', socket => {
     let { seatId, message } = table.handleRaise(socket.id, amount)
     const seat = table.seats[seatId]
 
-    updatePlayerBankroll(seat)
     broadcastToTable(table, message)
     changeTurnAndBroadcast(table, seatId, socket)
   })
@@ -108,9 +115,13 @@ io.on('connection', socket => {
   })
 
   socket.on('sit_down', ({ tableId, seatId, amount }) => {
-    let table = tables[tableId]
-    table.sitPlayer(players[socket.id], seatId, amount)
-    let message = `${players[socket.id].name} sat down in Seat ${seatId}`
+    const table = tables[tableId]
+    const player = players[socket.id]
+
+    table.sitPlayer(player, seatId, amount)
+    let message = `${player.name} sat down in Seat ${seatId}`
+
+    updatePlayerBankroll(player, -(amount))
 
     broadcastToTable(table, message)
     if (table.activePlayers().length === 2) {
@@ -118,13 +129,30 @@ io.on('connection', socket => {
     }
   })
 
+  socket.on('rebuy', ({ tableId, seatId, amount }) => {
+    const table = tables[tableId]
+    const player = players[socket.id]
+    
+    table.rebuyPlayer(seatId, amount)
+    updatePlayerBankroll(player, -(amount))
+
+    broadcastToTable(table)
+  })
+
   socket.on('stand_up', tableId => {
-    let table = tables[tableId]
-    let message = `${players[socket.id].name} left the table`
+    const table = tables[tableId]
+    const player = players[socket.id]
+    const seat = Object.values(table.seats).find(seat =>
+      seat && seat.player.socketId === socket.id
+    )
+    if (seat) {
+      updatePlayerBankroll(player, seat.stack)
+    }
+
+    const message = `${player.name} left the table`
     table.standPlayer(socket.id)
 
     broadcastToTable(table, message)
-
     if (table.activePlayers().length === 1) {
       clearForOnePlayer(table)
     }
@@ -150,6 +178,11 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
+    const seat = findSeatBySocketId(socket.id)
+    if (seat) {
+      updatePlayerBankroll(seat.player, seat.stack)
+    }
+
     delete players[socket.id]
     removeFromTables(socket.id)
 
@@ -157,16 +190,26 @@ io.on('connection', socket => {
     socket.broadcast.emit('players_updated', players)
   })
 
-  function updatePlayerBankroll(seat) {
-    const player = seat.player
-    db.User.update(
-      {
-        bankroll: player.bankroll
-      },
-      {
-        where: { id: player.id }
-      }
+  async function updatePlayerBankroll(player, amount) {
+    const user = await db.User.findById(player.id)
+    const updatedUser = await db.User.update(
+      { bankroll: user.bankroll + amount },
+      { where: { id: player.id } }
     )
+    players[socket.id].bankroll = user.bankroll + amount
+    io.to(socket.id).emit('players_updated', players)
+  }
+
+  function findSeatBySocketId(socketId) {
+    let foundSeat = null
+    Object.values(tables).forEach(table => {
+      Object.values(table.seats).forEach(seat => {
+        if(seat && seat.player.socketId === socketId) {
+          foundSeat = seat
+        }
+      })
+    })
+    return foundSeat
   }
 
   function removeFromTables(socketId) {
@@ -189,12 +232,6 @@ io.on('connection', socket => {
       broadcastToTable(table)
           
       if (table.handOver) {
-        for (let i of Object.keys(table.seats)) {
-          const seat = table.seats[i]
-          if (seat && seat.lastAction === 'WINNER') {
-            updatePlayerBankroll(seat)
-          }
-        }
         initNewHand(table)
       }
     }, 1000)
@@ -208,12 +245,6 @@ io.on('connection', socket => {
     setTimeout(() => {
       table.startHand()
       broadcastToTable(table)      
-      for (let i of Object.keys(table.seats)) {
-        const seat = table.seats[i]
-        if (seat && seat.bet > 0) {
-          updatePlayerBankroll(seat)
-        }
-      }
     }, 5000)
   }
 

@@ -16,7 +16,7 @@ class PlayerList extends React.Component {
     if (Object.keys(players).length > 0) {
       return (
         <div style={{ marginBottom: '20px' }}>
-          <h3>Currently playing</h3>
+          <h3>Currently online</h3>
           <ul style={styles.playerList}>
             {Object.keys(players).map(id => {
               let active = user.username === players[id].name ? true : false
