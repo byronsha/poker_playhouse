@@ -1,5 +1,4 @@
 var expect = require('chai').expect
-var should = require('chai').should()
 var Deck = require('../deck')
 
 describe('Deck', () => {

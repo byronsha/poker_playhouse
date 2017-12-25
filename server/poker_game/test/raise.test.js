@@ -1,8 +1,6 @@
 var expect = require('chai').expect
-var should = require('chai').should()
 
 var Table = require('../table')
-var Seat = require('../seat')
 var Player = require('../player')
 
 describe('Table.handleRaise', () => {
