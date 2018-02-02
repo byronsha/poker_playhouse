@@ -10,8 +10,8 @@ describe('Table.handleRaise', () => {
   
   beforeEach(() => {
     table = new Table(1, 'Test table', 6, 10)
-    player1 = new Player(1, 1, 'Byron', 100)
-    player2 = new Player(1, 2, 'Alice', 100)
+    player1 = new Player('123abc', 1, 'Byron', 100)
+    player2 = new Player('234bcd', 2, 'Alice', 100)
 
     table.sitPlayer(player1, 1, 10)
     table.sitPlayer(player2, 2, 10)
@@ -27,7 +27,7 @@ describe('Table.handleRaise', () => {
     const raiseAmount = 3
 
     beforeEach(() => {
-      table.handleRaise(1, raiseAmount)
+      table.handleRaise('123abc', raiseAmount)
     })
     it('their stack loses the amount', () => {
       expect(table.seats[1]).to.have.property('stack', 10 - raiseAmount)
@@ -42,4 +42,20 @@ describe('Table.handleRaise', () => {
       expect(table.callAmount).to.be.equal(raiseAmount)
     })
   })
+
+  // TODO ***
+  //
+  // describe('when a player is all in', () => {
+  //   beforeEach(() => {
+  //     const raiseAmount = 10
+  //     table.seats[1].stack = 5
+  //     table.handleRaise(2, raiseAmount)
+  //     table.changeTurn(2)
+  //     table.handleCall('123abc')
+  //     table.changeTurn(1)
+  //   })
+  //   it('the shortstack player can only win the main pot', () => {
+  //     expect
+  //   })
+  // })
 })

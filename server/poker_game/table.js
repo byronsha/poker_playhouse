@@ -219,8 +219,8 @@ class Table {
       return
     }
     
-    if (this.allAllIn()) {
-      while (this.board.length < 5 && !this.handOver) {
+    if (this.actionIsComplete()) {
+      while (this.board.length <= 5 && !this.handOver) {
         this.dealNextStreet()
       }
     }
@@ -260,14 +260,13 @@ class Table {
     }
     return true
   }
-  allAllIn() {
-    for (let i of Object.keys(this.seats)) {
-      const seat = this.seats[i]
-      if (seat && !seat.folded && seat.stack > 0) {
-        return false
-      }
-    }
-    return true
+  actionIsComplete() {
+    const seats = Object.values(this.seats)
+
+    // everyone but one person is all in and the last person called:
+    const seatsToAct = seats.filter(seat => seat && !seat.folded && seat.stack > 0)
+    if (seatsToAct.length === 0) return true;
+    return seatsToAct.length === 1 && seatsToAct[0].lastAction === 'CALL';
   }
   dealNextStreet() {
     const length = this.board.length

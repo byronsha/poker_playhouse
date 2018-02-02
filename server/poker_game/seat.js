@@ -37,8 +37,10 @@ class Seat {
     this.stack -= amount
   }
   callRaise(amount) {
-    const amountToCall = amount - this.bet
-    const amountCalled = Math.min(this.stack, amountToCall)
+    let amountCalled = amount - this.bet
+    if (amountCalled >= this.stack) {
+      amountCalled = this.stack
+    }
 
     this.bet += amountCalled
     this.stack -= amountCalled

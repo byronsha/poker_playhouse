@@ -11,7 +11,7 @@ const sequelize = new Sequelize('poker_friends', 'postgres', 'cheese', {
 
 fs.readdirSync(__dirname)
   .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== 'index.js')
+    return (file.indexOf('.') !== 0) && (file !== 'index.js') && (file !== '__test__')
   })
   .forEach(file => {
     var model = sequelize.import(path.join(__dirname, file))

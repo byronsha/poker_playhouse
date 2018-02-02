@@ -77,6 +77,8 @@ class Actions extends React.Component {
     } = this.props
 
     const seat = this.findOwnSeat()
+    if (seat.sittingOut || table.handOver) return null;
+
     const totalCallAmount = table.callAmount - seat.bet > seat.stack ? seat.stack : table.callAmount - seat.bet
 
     let pot = table.pot

@@ -4,7 +4,9 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "test": "mocha ./server/poker_game/test/*.js --watch"
+    "start": "JWT_SECRET=xxx node ./server/index",
+    "test-poker": "mocha ./server/poker_game/__test__/*.js",
+    "test-models": "mocha ./server/models/__test__/*.js"
   },
   "keywords": [],
   "author": "",

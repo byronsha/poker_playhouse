@@ -2,7 +2,7 @@ import React from 'react'
 import Button from 'material-ui/Button'
 import { withStyles, createStyleSheet } from 'material-ui/styles'
 
-const styleSheet = createStyleSheet('ActionButtons', theme => ({
+const styleSheet = createStyleSheet('ActionButtons', () => ({
   container: {
     display: 'flex'
   },
@@ -45,7 +45,7 @@ const ActionButtons = ({
         </Button>
       }
 
-      {(!table.callAmount || seat.bet === table.callAmount) &&
+      {((!table.callAmount || seat.bet === table.callAmount) && seat.stack > 0) &&
         <Button
           raised
           color="accent"
