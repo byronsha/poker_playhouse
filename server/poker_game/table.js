@@ -355,8 +355,8 @@ class Table {
   }
   handleCall(socketId) {
     let seat = this.findPlayerBySocketId(socketId)
-    let addedToPot = this.callAmount > seat.stack
-      ? seat.stack - seat.bet
+    let addedToPot = this.callAmount > seat.stack + seat.bet
+      ? seat.stack
       : this.callAmount - seat.bet
 
     seat.callRaise(this.callAmount)

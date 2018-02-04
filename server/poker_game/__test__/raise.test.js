@@ -3,6 +3,29 @@ var expect = require('chai').expect
 var Table = require('../table')
 var Player = require('../player')
 
+function getHighCards() {
+  const suits = ['spades', 'diamonds', 'hearts', 'clubs']
+  const kings = suits.map(suit => ({
+    rank: 'king', suit: suit
+  }))
+  const aces = suits.map(suit => ({
+    rank: 'ace', suit: suit
+  }))
+  return aces.concat(kings)
+}
+function getAceKing() {
+  return [
+    { rank: 'ace', suit: 'spades' },
+    { rank: 'king', suit: 'spades' }
+  ]
+}
+function getSevenDeuce() {
+  return [
+    { rank: 'seven', suit: 'spades' },
+    { rank: 'deuce', suit: 'spades' }
+  ]
+}
+
 describe('Table.handleRaise', () => {
   let table
   let player1
@@ -10,8 +33,8 @@ describe('Table.handleRaise', () => {
   
   beforeEach(() => {
     table = new Table(1, 'Test table', 6, 10)
-    player1 = new Player('123abc', 1, 'Byron', 100)
-    player2 = new Player('234bcd', 2, 'Alice', 100)
+    player1 = new Player('1', 1, 'Byron', 100)
+    player2 = new Player('2', 2, 'Alice', 100)
 
     table.sitPlayer(player1, 1, 10)
     table.sitPlayer(player2, 2, 10)
@@ -27,7 +50,7 @@ describe('Table.handleRaise', () => {
     const raiseAmount = 3
 
     beforeEach(() => {
-      table.handleRaise('123abc', raiseAmount)
+      table.handleRaise('1', raiseAmount)
     })
     it('their stack loses the amount', () => {
       expect(table.seats[1]).to.have.property('stack', 10 - raiseAmount)
@@ -43,19 +66,86 @@ describe('Table.handleRaise', () => {
     })
   })
 
-  // TODO ***
-  //
-  // describe('when a player is all in', () => {
-  //   beforeEach(() => {
-  //     const raiseAmount = 10
-  //     table.seats[1].stack = 5
-  //     table.handleRaise(2, raiseAmount)
-  //     table.changeTurn(2)
-  //     table.handleCall('123abc')
-  //     table.changeTurn(1)
-  //   })
-  //   it('the shortstack player can only win the main pot', () => {
-  //     expect
-  //   })
-  // })
+  describe('when a player is all in', () => {
+    beforeEach(() => {
+      const raiseAmount = 10
+      table.handleRaise('2', raiseAmount)
+      table.changeTurn(2)
+    })
+    
+    it('the big blind has not acted yet', () => {
+      expect(table.seats[1].bet).to.be.equal(0.1)
+      expect(table.seats[1].stack).to.be.equal(9.9)
+    })
+    
+    it("all of the player's chips are bet", () => {
+      expect(table.seats[2].bet).to.be.equal(10)
+      expect(table.seats[2].stack).to.be.equal(0)
+    })
+
+    describe('and the other player folds', () => {
+      beforeEach(() => {
+        table.seats[1].stack = 4.9
+        table.handleFold('1')
+        table.changeTurn(1)
+      })
+
+      it('the all in player wins the pot', () => {
+        expect(table.seats[1].stack).to.be.equal(4.9)
+        expect(table.seats[2].stack).to.be.equal(10.1)
+      })
+    })
+    
+    describe('and the other player calls with more chips and loses', () => {
+      beforeEach(() => {
+        table.seats[1].hand = getSevenDeuce()
+        table.seats[2].hand = getAceKing()
+        getHighCards().concat[table.deck]        
+
+        table.seats[1].stack = 19.9
+        table.handleCall('1')
+        table.changeTurn(1)
+      })
+
+      it('the all in player only wins as much as they started with', () => {
+        expect(+(table.seats[1].stack).toFixed(2)).to.be.equal(10)
+        expect(+(table.seats[2].stack).toFixed(2)).to.be.equal(20)
+      })
+    })
+    
+    describe('and the other player calls with less chips and loses', () => {
+      beforeEach(() => {
+        table.seats[1].hand = getSevenDeuce()
+        table.seats[2].hand = getAceKing()
+        getHighCards().concat[table.deck]
+
+        table.seats[1].stack = 4.9
+        table.handleCall('1')
+        table.changeTurn(1)
+      })
+
+      it('the all in player wins the entire pot', () => {
+        expect(table.seats[1].stack).to.be.equal(0)
+        expect(table.seats[2].stack).to.be.equal(15)
+      })
+    })
+
+    describe('and the other player calls with less chips and wins', () => {
+      beforeEach(() => {
+        table.seats[1].hand = getAceKing()
+        table.seats[2].hand = getSevenDeuce()
+        getHighCards().concat[table.deck]
+
+        table.seats[1].stack = 4.9
+        table.handleCall('1')
+        table.changeTurn(1)
+      })
+
+      // TODO: make this go green
+      it('the other player only wins as much as they started with', () => {
+        expect(table.seats[1].stack).to.be.equal(10)
+        expect(table.seats[2].stack).to.be.equal(5)
+      })
+    })
+  })
 })
