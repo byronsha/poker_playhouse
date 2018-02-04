@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import Checkbox from 'material-ui/Checkbox';
 
@@ -11,7 +12,18 @@ const styles = {
   }
 }
 
-class SitOutCheckbox extends React.Component {
+type Props = {
+  socket: string,
+  table: {
+    id: string,
+  },
+  seat: {
+    id: string,
+    sittingOut: boolean,
+  },
+};
+
+class SitOutCheckbox extends React.Component<Props> {
   handleClick = () => {
     const { socket, table, seat } = this.props
     const socketMessage = seat.sittingOut ? 'sitting_in' : 'sitting_out'

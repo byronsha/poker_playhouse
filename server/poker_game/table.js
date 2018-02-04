@@ -1,8 +1,8 @@
-// @flow
 const _ = require('underscore')
 const Seat = require('./seat.js')
 const Deck = require('./deck.js')
 const PokerHand = require('./pokerhand.js')
+const SidePot = require('./sidePot.js')
 
 class Table {
   constructor(id, name, maxPlayers, limit) {
@@ -26,6 +26,7 @@ class Table {
     this.handOver = true
     this.winMessages = []
     this.wentToShowdown = false
+    this.sidePots = []
   }
   initSeats(maxPlayers) {
     const seats = {}

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 
 const styles = {
@@ -6,7 +7,7 @@ const styles = {
   },
 }
 
-const Message = ({ message }) => (
+const Message = ({ message }: { message: string }) => (
   <div>
     <span style={styles.timeStamp}>{message.timestamp}</span>
     {message.from &&
