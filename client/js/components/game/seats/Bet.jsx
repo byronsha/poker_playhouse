@@ -1,7 +1,14 @@
 import React from 'react'
 import ChipPile from '../Pieces/ChipPile'
 
-const Bet = ({ seat }) => (
+type Props = {
+  seat: {
+    bet: number,
+    turn: boolean,
+    lastAction: ?string,
+  }
+}
+const Bet = ({ seat }: Props) => (
   <div className="bet">
     <ChipPile amount={seat.bet} />
     <span>

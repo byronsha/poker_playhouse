@@ -1,8 +1,17 @@
+// @flow
 import React from 'react'
 import Card from './Card'
 import ChipPile from './ChipPile'
 
-class Board extends React.Component {
+type Props = {
+  table: {
+    board: Array<{
+      rank: string,
+      suit: string,
+    }>,
+  }
+}
+class Board extends React.Component<Props> {
   render() {
     let renderedCards = this.props.table.board.slice(0)
     let { table } = this.props

@@ -1,7 +1,7 @@
 import React from 'react'
 import { withStyles, createStyleSheet } from 'material-ui/styles'
 
-const styleSheet = createStyleSheet('ChipStack', theme => ({
+const styleSheet = createStyleSheet('ChipStack', () => ({
   chip: {
     width: '20px',
     height: '3px',
@@ -9,11 +9,16 @@ const styleSheet = createStyleSheet('ChipStack', theme => ({
   }
 }))
 
+type Props = {
+  number: number,
+  color: string,
+  classes: Object,
+}
 const ChipStack = ({
   number,
   color,
   classes
-}) => {
+}: Props) => {
   if (number === 0) {
     return null
   }

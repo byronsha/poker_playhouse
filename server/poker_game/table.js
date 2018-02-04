@@ -1,3 +1,4 @@
+// @flow
 const _ = require('underscore')
 const Seat = require('./seat.js')
 const Deck = require('./deck.js')

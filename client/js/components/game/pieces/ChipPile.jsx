@@ -1,9 +1,10 @@
+// @flow
 import React from 'react'
 import ChipStack from './ChipStack'
 import { withStyles, createStyleSheet } from 'material-ui/styles'
 import { red, green, purple, orange } from 'material-ui/styles/colors'
 
-const styleSheet = createStyleSheet('ChipPile', theme => ({
+const styleSheet = createStyleSheet('ChipPile', () => ({
   chipPile: {
     display: 'flex',
     alignItems: 'flex-end',
@@ -11,7 +12,11 @@ const styleSheet = createStyleSheet('ChipPile', theme => ({
   }
 }))
 
-const ChipPile = ({ amount, classes }) => {
+type Props = {
+  amount: number,
+  classes: Object,
+}
+const ChipPile = ({ amount, classes }: Props) => {
   // deal with floating point numbers
   let cents = amount * 100
 
