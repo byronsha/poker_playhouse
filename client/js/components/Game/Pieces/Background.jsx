@@ -7,19 +7,14 @@ const styles = {
     background: blue[700]
   }
 }
-
 function Background() {
   return (
     <div className="table-bg">
-      <div className="bg-outer" style={styles.outer}>
-        <div className="bg-inner"></div>
-      </div>
-      <div className="bg-outer" style={styles.outer}>
-        <div className="bg-inner"></div>
-      </div>
-      <div className="bg-outer" style={styles.outer}>
-        <div className="bg-inner"></div>
-      </div>
+      {[1, 2, 3].map(num => (
+        <div key={num} className="bg-outer" style={styles.outer}>
+          <div className="bg-inner"></div>
+        </div>
+      ))}
     </div>
   )
 }

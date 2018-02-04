@@ -1,6 +1,10 @@
 [ignore]
+./.gitignore
+./.gitattributes
+./node_modules/
 
 [include]
+./client/js/components/*.js
 
 [libs]
 

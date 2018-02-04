@@ -1,10 +1,16 @@
+// @flow
 import React from 'react'
-import axios from 'axios'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { signUp } from '../../actions/user'
 
-class Signup extends React.Component {
+type Props = {
+  isFetching: boolean,
+  errorMessage: string,
+  signUp: ({ username: string, password: string }) => void,
+}
+
+class Signup extends React.Component<Props> {
   handleSubmit = e => {
     e.preventDefault()
     const username = this.username.value
@@ -35,13 +41,8 @@ class Signup extends React.Component {
         </form>
         <Link to="/login">Already have an account?</Link>
 
-        {isFetching &&
-          <div>Attemping signup...</div>
-        }
-
-        {errorMessage &&
-          <div>{errorMessage}</div>
-        }
+        {isFetching && <div>Attemping signup...</div>}
+        {errorMessage && <div>{errorMessage}</div>}
       </div>
     )
   }
@@ -54,9 +55,7 @@ function mapStateToProps(state) {
   }
 }
 
-const mapDispatchToProps = ({
-  signUp
-})
+const mapDispatchToProps = ({ signUp })
 
 export default connect(
   mapStateToProps,

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import Button from 'material-ui/Button'
 import { withStyles, createStyleSheet } from 'material-ui/styles'
@@ -16,6 +17,30 @@ const styleSheet = createStyleSheet('ActionButtons', () => ({
   }
 }))
 
+type Seat = {
+  id: number,
+  bet: number,
+  stack: number,
+}
+type Table = {
+  id: number,
+  seats: {
+    [id: number]: Seat,
+  },
+  pot: number,
+  callAmount: number,
+}
+type Props = {
+  seat: Seat,
+  table: Table,
+  raiseAmount: number,
+  totalCallAmount: number,
+  handleFoldClick: () => void,
+  handleCheckClick: () => void,
+  handleCallClick: () => void,
+  handleRaiseClick: () => void,
+  classes: Object,
+}
 const ActionButtons = ({
   seat,
   table,
@@ -26,7 +51,7 @@ const ActionButtons = ({
   handleCallClick,
   handleRaiseClick,
   classes
-}) => {
+}: Props) => {
   const notAllInPlayers = Object.values(table.seats).filter(tableSeat =>
     tableSeat && tableSeat.stack > 0
   )
