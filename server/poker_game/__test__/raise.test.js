@@ -21,8 +21,8 @@ function getAceKing() {
 }
 function getSevenDeuce() {
   return [
-    { rank: 'seven', suit: 'spades' },
-    { rank: 'deuce', suit: 'spades' }
+    { rank: '7', suit: 'spades' },
+    { rank: '2', suit: 'spades' }
   ]
 }
 
@@ -133,7 +133,7 @@ describe('Table.handleRaise', () => {
       beforeEach(() => {
         table.seats[1].hand = getSevenDeuce()
         table.seats[2].hand = getAceKing()
-        getHighCards().concat[table.deck]
+        table.deck.cards = getHighCards()
 
         table.seats[1].stack = 4.9
         table.handleCall('1')
@@ -159,7 +159,7 @@ describe('Table.handleRaise', () => {
       beforeEach(() => {
         table.seats[1].hand = getAceKing()
         table.seats[2].hand = getSevenDeuce()
-        getHighCards().concat[table.deck]
+        table.deck.cards = getHighCards()
 
         table.seats[1].stack = 4.9
         table.handleCall('1')

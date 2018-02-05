@@ -4,7 +4,7 @@ var Table = require('../table')
 var Player = require('../player')
 
 function getHighCards() {
-  const suits = ['spades', 'diamonds', 'hearts', 'clubs']
+  const suits = ['diamonds', 'hearts', 'clubs']
   const kings = suits.map(suit => ({
     rank: 'king', suit: suit
   }))
@@ -21,8 +21,8 @@ function getAceKing() {
 }
 function getSevenDeuce() {
   return [
-    { rank: 'seven', suit: 'spades' },
-    { rank: 'deuce', suit: 'spades' }
+    { rank: '7', suit: 'spades' },
+    { rank: '2', suit: 'spades' }
   ]
 }
 
@@ -37,12 +37,12 @@ describe('A 3 handed game', () => {
   table.sitPlayer(player3, 3, 10)
   table.startHand()
 
-  describe('everyone is all in, shortstack wins, 2 others chop', () => {
+  describe('everyone is all in', () => {
     beforeEach(() => {
       table.seats[1].hand = getAceKing()
       table.seats[2].hand = getSevenDeuce()
       table.seats[3].hand = getSevenDeuce()
-      getHighCards().concat[table.deck]  
+      table.deck.cards = getHighCards()
       
       table.handleRaise('2', 8)
       table.changeTurn(2)
@@ -51,6 +51,7 @@ describe('A 3 handed game', () => {
       table.handleCall('1')
       table.changeTurn(1)
     })
+
     it('the short stack wins the main pot', () => {
       expect(table.pot).to.be.equal(15)
       expect(table.seats[1].stack).to.be.equal(15)
