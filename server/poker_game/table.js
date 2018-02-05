@@ -297,14 +297,19 @@ class Table {
           const seat = this.seats[i]
           if (seat && !seat.folded && i !== seatId) {
             const amountOver = seat.bet - allInSeat.bet
-            this.pot -= amountOver
-            seat.bet -= allInSeat.bet
-            sidePot.amount += amountOver
             if (amountOver > 0) {
+              if (this.sidePots.length > 0) {
+                this.sidePots[this.sidePots.length - 1].amount -= amountOver
+              } else {
+                this.pot -= amountOver
+              }
+              seat.bet -= allInSeat.bet
+              sidePot.amount += amountOver
               sidePot.players.push(seat.id)
             }
           }
         }
+        allInSeat.bet = 0
         this.sidePots.push(sidePot)
       }
     }

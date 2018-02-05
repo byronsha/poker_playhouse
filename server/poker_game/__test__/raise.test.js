@@ -111,6 +111,22 @@ describe('Table.handleRaise', () => {
         expect(+(table.seats[1].stack).toFixed(2)).to.be.equal(10)
         expect(+(table.seats[2].stack).toFixed(2)).to.be.equal(20)
       })
+
+      describe('starting a new hand afterwards', () => {
+        beforeEach(() => {
+          table.startHand()
+        })
+
+        it('the sidepots are reset', () => {
+          expect(table.sidePots).to.have.lengthOf(0)
+        })
+
+        it('the blinds rotate and are places', () => {
+          expect(+(table.seats[1].stack).toFixed(2)).to.be.equal(9.95)
+          expect(+(table.seats[2].stack).toFixed(2)).to.be.equal(19.9)
+          expect(+(table.pot).toFixed(2)).to.be.equal(0.15)
+        })
+      })
     })
     
     describe('and the other player calls with less chips and loses', () => {
