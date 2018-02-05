@@ -214,6 +214,7 @@ class Table {
     this.board = []
     this.pot = 0
     this.mainPot = 0
+    this.sidePots = []
   }
   changeTurn(lastTurn) {
     if (this.unfoldedPlayers().length === 1) {
@@ -222,12 +223,14 @@ class Table {
     }
     
     if (this.actionIsComplete()) {
+      this.calculateSidePots()
       while (this.board.length <= 5 && !this.handOver) {
         this.dealNextStreet()
       }
     }
     
     if (this.allCheckedOrCalled()) {
+      this.calculateSidePots()      
       this.dealNextStreet()
       this.turn = this.handOver ? null : this.nextUnfoldedPlayer(this.button, 1)
     } else {
@@ -270,6 +273,42 @@ class Table {
     if (seatsToAct.length === 0) return true;
     return seatsToAct.length === 1 && seatsToAct[0].lastAction === 'CALL';
   }
+  playersAllInThisTurn() {
+    const seats = Object.values(this.seats)
+    return seats.filter(seat => seat && !seat.folded && seat.bet > 0 && seat.stack === 0)
+  }
+  calculateSidePots() {
+    const allInPlayers = this.playersAllInThisTurn()
+    const unfoldedPlayers = this.unfoldedPlayers()
+    if (allInPlayers.length < 1) return
+    
+    let sortedAllInPlayers = allInPlayers.sort((a, b) => a.bet - b.bet)
+    if (sortedAllInPlayers.length > 1 && sortedAllInPlayers.length === unfoldedPlayers.length) {
+      sortedAllInPlayers.pop()
+    }
+
+    const allInSeatIds = sortedAllInPlayers.map(seat => seat.id)
+
+    for (const seatId of allInSeatIds) {
+      const allInSeat = this.seats[seatId]
+      const sidePot = new SidePot()
+      if (allInSeat.bet > 0) {
+        for (let i = 1; i <= this.maxPlayers; i++) {
+          const seat = this.seats[i]
+          if (seat && !seat.folded && i !== seatId) {
+            const amountOver = seat.bet - allInSeat.bet
+            this.pot -= amountOver
+            seat.bet -= allInSeat.bet
+            sidePot.amount += amountOver
+            if (amountOver > 0) {
+              sidePot.players.push(seat.id)
+            }
+          }
+        }
+        this.sidePots.push(sidePot)
+      }
+    }
+  }
   dealNextStreet() {
     const length = this.board.length
     this.resetBetsAndActions()
@@ -279,23 +318,36 @@ class Table {
     } else if (length === 3 || length === 4) {
       this.dealTurnOrRiver()
     } else if (length === 5) {
-      this.determineWinner()
+      this.determineSidePotWinners()
+      this.determineMainPotWinner()
     }
   }
-  determineWinner() {
+  determineSidePotWinners() {
+    if (this.sidePots.length < 1) return
+
+    this.sidePots.forEach(sidePot => {
+      const seats = sidePot.players.map(id => this.seats[id])
+      this.determineWinner(sidePot.amount, seats)
+    })
+  }
+  determineMainPotWinner() {
+    this.determineWinner(this.pot, Object.values(this.seats))
+    this.wentToShowdown = true
+    this.endHand()
+  }
+  determineWinner(amount, seats) {
     let winners = []
     let highScore = 0
 
-    for (let i = 1; i <= this.maxPlayers; i++) {
-      const seat = this.seats[i]
+    for (const seat of seats) {
       if (seat && !seat.folded) {
         const hand = PokerHand.score(seat.hand, this.board)
-
+  
         if (hand.value > highScore) {
-          winners = [[i, hand]]
+          winners = [[seat.id, hand]]
           highScore = hand.value
         } else if (hand.value === highScore) {
-          winners.push([i, hand])
+          winners.push([seat.id, hand])
         }
       }
     }
@@ -303,14 +355,11 @@ class Table {
     for (let i = 0; i < winners.length; i++) {
       const seat = this.seats[winners[i][0]]
       const hand = winners[i][1]
-      const winAmount = this.pot / winners.length
+      const winAmount = amount / winners.length
 
       seat.winHand(winAmount)
       this.winMessages.push(`${seat.player.name} wins $${winAmount.toFixed(2)} with ${hand.name}`)
     }
-
-    this.wentToShowdown = true
-    this.endHand()
   }
   resetBetsAndActions() {
     for (let i = 1; i <= this.maxPlayers; i++) {
@@ -362,7 +411,12 @@ class Table {
       : this.callAmount - seat.bet
 
     seat.callRaise(this.callAmount)
-    this.pot += addedToPot
+
+    if (this.sidePots.length > 0) {
+      this.sidePots[this.sidePots.length - 1].amount += addedToPot
+    } else {
+      this.pot += addedToPot
+    }
 
     return {
       seatId: seat.id,
@@ -383,7 +437,12 @@ class Table {
     let addedToPot = amount - seat.bet
     
     seat.raise(amount)
-    this.pot += addedToPot
+
+    if (this.sidePots.length > 0) {
+      this.sidePots[this.sidePots.length - 1].amount += addedToPot
+    } else {
+      this.pot += addedToPot
+    }
 
     this.minRaise = this.callAmount ?
       (this.callAmount + (seat.bet - this.callAmount) * 2) : seat.bet * 2

@@ -124,6 +124,15 @@ describe('Table.handleRaise', () => {
         table.changeTurn(1)
       })
 
+      it('the pot is the sum of their starting stacks', () => {
+        expect(table.pot).to.be.equal(10)
+      })
+
+      it('there is a sidepot', () => {
+        expect(table.sidePots).to.have.lengthOf(1)
+        expect(table.sidePots[0]).to.have.property('amount', 5)
+      })
+
       it('the all in player wins the entire pot', () => {
         expect(table.seats[1].stack).to.be.equal(0)
         expect(table.seats[2].stack).to.be.equal(15)
@@ -141,7 +150,6 @@ describe('Table.handleRaise', () => {
         table.changeTurn(1)
       })
 
-      // TODO: make this go green
       it('the other player only wins as much as they started with', () => {
         expect(table.seats[1].stack).to.be.equal(10)
         expect(table.seats[2].stack).to.be.equal(5)

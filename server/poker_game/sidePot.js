@@ -1,9 +1,7 @@
-// @flow
-
 class SidePot {
-  constructor(amount: number, seatNumbers: Array<number>) {
-    this.amount = amount
-    this.seatNumbers = seatNumbers
+  constructor() {
+    this.amount = 0
+    this.players = []
   }
 }
 
