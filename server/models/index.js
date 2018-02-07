@@ -4,15 +4,21 @@ const Sequelize = require('sequelize')
 const lodash = require('lodash')
 const db = {}
 
-const sequelize = new Sequelize(
-  process.env.DATABASE_NAME,
-  process.env.DATABASE_USERNAME,
-  process.env.DATABASE_PASSWORD,
-  {
-    host: process.env.DATABASE_URL,
-    dialect: 'postgres'
-  }
-)
+let sequelize
+
+if (process.env.NODE_ENV === 'production') {
+  sequelize = new Sequelize(process.env.DATABASE_URL)
+} else {
+  sequelize = new Sequelize(
+    process.env.DATABASE_NAME,
+    process.env.DATABASE_USERNAME,
+    process.env.DATABASE_PASSWORD,
+    {
+      host: 'localhost',
+      dialect: 'postgres'
+    }
+  )
+}
 
 fs.readdirSync(__dirname)
   .filter(file => {
