@@ -3,8 +3,6 @@ const http = require('http')
 const bodyParser = require('body-parser')
 const socketIo = require('socket.io')
 const webpack = require('webpack')
-const webpackDevMiddleware = require('webpack-dev-middleware')
-const webpackHotMiddleware = require('webpack-hot-middleware')
 const webpackConfig = require('../webpack.config.js')
 const routes = require('./routes/index')
 const db = require('./models')
@@ -22,6 +20,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 if (process.env.NODE_ENV === "development") {
+  const webpackDevMiddleware = require('webpack-dev-middleware')
+  const webpackHotMiddleware = require('webpack-hot-middleware')
   app.use(webpackDevMiddleware(compiler, { publicPath: webpackConfig.output.publicPath }))
   app.use(webpackHotMiddleware(compiler))
 } 
