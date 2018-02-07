@@ -218,6 +218,7 @@ class Lobby extends React.Component<Props, State> {
         </Button>                        
         <MainMenuModal
           open={leftColumnShowing}
+          onClose={toggleLeftColumn}
           socketId={socket.id}
           user={user}
           logout={logout}

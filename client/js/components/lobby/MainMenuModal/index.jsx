@@ -1,29 +1,37 @@
 // @flow
-import React from 'react'
+import * as React from 'react'
 import { css } from 'emotion'
 
 import TableList from './TableList'
 import PlayerList from './PlayerList'
-import Dialog from 'material-ui/Dialog'
 import Button from 'material-ui/Button'
 
 const styles = {
   container: {
-    position: 'relative',
-    background: '#fff',
-    padding: '24px',
-    width: '600px',
-    height: '500px',
-    borderRadius: '4px',
+    position: 'absolute',
+    top: '200px',
+    background: '#eee',
+    width: '300px',
+    height: '450px',
+    borderTopRightRadius: '4px',
+    borderBottomRightRadius: '4px',
+    border: '1px solid #ccc',
+    zIndex: '2',
+    boxShadow: '0 1px 2px 0px #ccc',
+    transition: 'left 0.5s',
+  },
+  innerContainer: {
+    padding: '12px 6px',
   },
   logoutContainer: {
     position: 'absolute',
-    bottom: '0px',
-    width: '600px',
+    bottom: '0',
+    width: '100%',
     lineHeight: '1.5em',
     display: 'flex',
+    borderTop: '1px solid #ddd',
+    padding: '0',
     alignItems: 'center',
-    paddingBottom: '8px',
     justifyContent: 'space-between',
   },
   tab: css`
@@ -46,6 +54,17 @@ const styles = {
   `,
 }
 
+const closeButton = css`
+  color: black;
+  margin-right: 4px;
+  margin-bottom: 5px;
+  transform: scaleX(1.5);
+  &:hover {
+    cursor: pointer;
+    color: #333;
+  }
+`
+
 type Props = {
   open: boolean,
   user: {
@@ -63,6 +82,7 @@ type Props = {
       bankroll: number,
     },
   },
+  onClose: () => void,
 }
 type State = {
   activeTab: 'games' | 'players',
@@ -75,17 +95,25 @@ class MainMenuModal extends React.Component<Props, State> {
   renderTabs() {
     const { activeTab } = this.state
     return (
-      <div style={{ display: 'flex', marginBottom: '16px' }}>
-        <span
-          className={activeTab === 'games' ? styles.activeTab : styles.tab}
-          onClick={() => this.setState({ activeTab: 'games' })}>
-          Games
-        </span>
-        <span
-          className={activeTab === 'players' ? styles.activeTab : styles.tab}        
-          onClick={() => this.setState({ activeTab: 'players' })}>
-          Players
-        </span>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: '16px'
+      }}>
+        <div>
+          <span
+            className={activeTab === 'games' ? styles.activeTab : styles.tab}
+            onClick={() => this.setState({ activeTab: 'games' })}>
+            Games
+          </span>
+          <span
+            className={activeTab === 'players' ? styles.activeTab : styles.tab}        
+            onClick={() => this.setState({ activeTab: 'players' })}>
+            Players
+          </span>
+        </div>
+        <div onClick={this.props.onClose} className={closeButton}>X</div>
       </div>
     )
   }
@@ -98,7 +126,6 @@ class MainMenuModal extends React.Component<Props, State> {
       openTables,
       tables,
       handleTableClick,
-      toggleModal,
       players,
     } = this.props
 
@@ -106,9 +133,9 @@ class MainMenuModal extends React.Component<Props, State> {
     const hasTableOpen = Object.keys(openTables).length > 0
     const userPlayer = Object.values(players).find(player => player.id === user.id)
     
-    return (    
-      <Dialog open={open} onBackdropClick={toggleModal}>
-        <div style={styles.container}>
+    return (
+      <div style={{ ...styles.container, left: open ? '0' : '-300px' }}>
+        <div style={styles.innerContainer}>
           {this.renderTabs()}
           {this.state.activeTab === 'games' &&
             <TableList
@@ -124,13 +151,16 @@ class MainMenuModal extends React.Component<Props, State> {
               players={players}
             />
           }
-          <div style={styles.logoutContainer}>
-            <div>Logged in as {userPlayer && userPlayer.name}</div>
-            <div>Balance: ${userPlayer && userPlayer.bankroll.toFixed(2)}</div>
-            <Button onClick={logout}>Logout</Button>
-          </div>
         </div>
-      </Dialog>
+        <div style={styles.logoutContainer}>
+          <div style={styles.innerContainer}>
+            <span>Balance: ${userPlayer && userPlayer.bankroll.toFixed(2)}</span>
+            <br/>
+            <span>Logged in as {userPlayer && userPlayer.name}</span>
+          </div>
+          <Button onClick={logout}>Logout</Button>
+        </div>
+      </div>
     )
   }
 }

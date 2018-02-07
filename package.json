@@ -26,6 +26,7 @@
     "emotion": "^8.0.12",
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^2.1.0",
+    "foreman": "^2.0.0",
     "jsonwebtoken": "^7.4.0",
     "lodash": "^4.17.4",
     "material-ui": "^1.0.0-alpha.20",

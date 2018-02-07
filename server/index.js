@@ -20,14 +20,16 @@ const compiler = webpack(webpackConfig)
 app.use(express.static(__dirname))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(webpackDevMiddleware(compiler, { publicPath: webpackConfig.output.publicPath }))
-app.use(webpackHotMiddleware(compiler))
+
+if (process.env.NODE_ENV === "development") {
+  app.use(webpackDevMiddleware(compiler, { publicPath: webpackConfig.output.publicPath }))
+  app.use(webpackHotMiddleware(compiler))
+} 
 
 app.use('/api', routes)
 
 const tables = {}
 const players = {}
-
 tables[1] = new Table(1, 'Table 1', 6, 10)
 tables[2] = new Table(2, 'Table 2', 6, 10)
 tables[3] = new Table(3, 'Table 3', 6, 20)

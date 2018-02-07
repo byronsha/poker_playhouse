@@ -1,13 +1,25 @@
 // @flow
 import React from 'react'
 import Button from 'material-ui/Button'
+import { css } from 'emotion'
 
-const styles = {
-  button: {
-    padding: '4px 6px',
-    minHeight: '24px',
+const buttonStyle = css`
+  color: white;
+  padding: 4px 10px;
+  background: blue;
+  border: none;
+  border-radius: 2px;
+  transition: all 0.3s;
+  font-size: 12px;
+
+  &:disabled {
+    pointer-events: none;
+    background: #ddd;
   }
-}
+  &:hover {
+    background: green;
+  }
+`
 
 type Props = {
   table: {
@@ -33,15 +45,13 @@ class Table extends React.Component<Props> {
         <td>${table.minBet.toFixed(2)}/${(table.minBet * 2).toFixed(2)}</td>
         <td>{table.players.length}/{table.maxPlayers}</td>
         <td style={{ textAlign: 'right' }}>
-          <Button
-            style={styles.button}
-            raised
-            color="primary"
+          <button
+            className={buttonStyle}
             disabled={hasTableOpen}
             onClick={() => { onTableClick(table.id) }}
           >
             Join
-          </Button>
+          </button>
         </td>
       </tr>
     )
