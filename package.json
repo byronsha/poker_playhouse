@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "start": "JWT_SECRET=xxx node ./server/index",
+    "start": "node ./server/index",
     "test-poker": "mocha ./server/poker_game/__test__/*.js",
     "test-models": "mocha ./server/models/__test__/*.js"
   },
