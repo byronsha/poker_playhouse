@@ -4,8 +4,8 @@ const Sequelize = require('sequelize')
 const lodash = require('lodash')
 const db = {}
 
-const sequelize = new Sequelize('poker_friends', 'postgres', 'cheese', {
-  host: 'localhost',
+const sequelize = new Sequelize('pokerfriends', 'postgres', 'cheese', {
+  host: process.env.DATABASE_URL,
   dialect: 'postgres'
 })
 
