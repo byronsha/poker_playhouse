@@ -19,12 +19,10 @@ app.use(express.static(__dirname))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-if (process.env.NODE_ENV === "development") {
-  const webpackDevMiddleware = require('webpack-dev-middleware')
-  const webpackHotMiddleware = require('webpack-hot-middleware')
-  app.use(webpackDevMiddleware(compiler, { publicPath: webpackConfig.output.publicPath }))
-  app.use(webpackHotMiddleware(compiler))
-} 
+const webpackDevMiddleware = require('webpack-dev-middleware')
+const webpackHotMiddleware = require('webpack-hot-middleware')
+app.use(webpackDevMiddleware(compiler, { publicPath: webpackConfig.output.publicPath }))
+app.use(webpackHotMiddleware(compiler))
 
 app.use('/api', routes)
 
