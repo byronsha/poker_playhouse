@@ -1,6 +1,6 @@
-// if (process.env.NODE_ENV === 'development') {
-//   require('!style-loader!css-loader!sass-loader!../scss/main.scss')
-// }
+if (process.env.NODE_ENV === 'development') {
+  require('!style-loader!css-loader!sass-loader!../scss/main.scss')
+}
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
