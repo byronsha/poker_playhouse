@@ -277,4 +277,4 @@ io.on('connection', socket => {
 })
 
 db.sequelize.sync()
-server.listen(9000)
+server.listen(process.env.PORT)
