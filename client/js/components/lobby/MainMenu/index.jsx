@@ -4,36 +4,10 @@ import { css } from 'emotion'
 
 import TableList from './TableList'
 import PlayerList from './PlayerList'
+import Navigation from './Navigation';
 import Button from 'material-ui/Button'
 
 const styles = {
-  container: {
-    position: 'absolute',
-    top: '200px',
-    background: '#eee',
-    width: '300px',
-    height: '450px',
-    borderTopRightRadius: '4px',
-    borderBottomRightRadius: '4px',
-    border: '1px solid #ccc',
-    zIndex: '2',
-    boxShadow: '0 1px 2px 0px #ccc',
-    transition: 'left 0.5s',
-  },
-  innerContainer: {
-    padding: '12px 6px',
-  },
-  logoutContainer: {
-    position: 'absolute',
-    bottom: '0',
-    width: '100%',
-    lineHeight: '1.5em',
-    display: 'flex',
-    borderTop: '1px solid #ddd',
-    padding: '0',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
   tab: css`
     font-size: 20px;
     margin-right: 30px;
@@ -54,17 +28,6 @@ const styles = {
   `,
 }
 
-const closeButton = css`
-  color: black;
-  margin-right: 4px;
-  margin-bottom: 5px;
-  transform: scaleX(1.5);
-  &:hover {
-    cursor: pointer;
-    color: #333;
-  }
-`
-
 type Props = {
   open: boolean,
   user: {
@@ -76,18 +39,19 @@ type Props = {
   handleTableClick: (tableId: number) => void,
   toggleModal: () => void,
   players: {
-    [socketId: string]: {
+    [socketId: string]: ?{
       id: number,
       name: string,
       bankroll: number,
     },
   },
   onClose: () => void,
+  backToGame: () => void,
 }
 type State = {
   activeTab: 'games' | 'players',
 }
-class MainMenuModal extends React.Component<Props, State> {
+class MainMenu extends React.Component<Props, State> {
   state = {
     activeTab: 'games'
   }
@@ -113,14 +77,12 @@ class MainMenuModal extends React.Component<Props, State> {
             Players
           </span>
         </div>
-        <div onClick={this.props.onClose} className={closeButton}>X</div>
       </div>
     )
   }
 
   render() {
     const {
-      open,
       user,
       logout,
       openTables,
@@ -132,10 +94,12 @@ class MainMenuModal extends React.Component<Props, State> {
     if (!user) return null;
     const hasTableOpen = Object.keys(openTables).length > 0
     const userPlayer = Object.values(players).find(player => player.id === user.id)
-    
+    if (!userPlayer) return null;
+
     return (
-      <div style={{ ...styles.container, left: open ? '0' : '-300px' }}>
-        <div style={styles.innerContainer}>
+      <div>
+        <Navigation name={userPlayer.name} bankroll={userPlayer.bankroll} logout={logout} />
+        <div style={{ padding: '20px' }}>
           {this.renderTabs()}
           {this.state.activeTab === 'games' &&
             <TableList
@@ -152,17 +116,14 @@ class MainMenuModal extends React.Component<Props, State> {
             />
           }
         </div>
-        <div style={styles.logoutContainer}>
-          <div style={styles.innerContainer}>
-            <span>Balance: ${userPlayer && userPlayer.bankroll.toFixed(2)}</span>
-            <br/>
-            <span>Logged in as {userPlayer && userPlayer.name}</span>
-          </div>
-          <Button onClick={logout}>Logout</Button>
-        </div>
+        {hasTableOpen &&
+          <Button onClick={this.props.backToGame} style={{ position: 'absolute', bottom: 0, right: 0, zIndex: 100 }}>
+            Back to game
+          </Button>
+        }
       </div>
     )
   }
 }
 
-export default MainMenuModal;
+export default MainMenu;

@@ -11,13 +11,21 @@ describe('PokerHand', () => {
     { rank: 'queen', suit: 'diamonds' },
   ]
 
+  const pairedBoard = [
+    { rank: '3', suit: 'clubs' },
+    { rank: '5', suit: 'hearts' },
+    { rank: 'jack', suit: 'hearts' },
+    { rank: 'ace', suit: 'spades' },
+    { rank: 'ace', suit: 'diamonds' },
+  ]
+
   describe('when comparing hands', () => {
     let handA;
     let handB;
     let handAScore;
     let handBScore;
 
-    describe('a straight versus two pair', () => {
+    describe('straight vs two pair', () => {
       beforeEach(() => {
         handA = [
           { rank: 'ace', suit: 'hearts' },
@@ -31,12 +39,31 @@ describe('PokerHand', () => {
         handBScore = PokerHand.score(handB, board)
       })
 
-      it('the straight has a higher score', () => {
+      it('straight wins', () => {
         expect(handAScore.value).to.be.above(handBScore.value)
       })
     })
 
-    describe('a flush versus a straight', () => {
+    describe('two pair vs higher two pair', () => {
+      beforeEach(() => {
+        handA = [
+          { rank: 'queen', suit: 'hearts' },
+          { rank: '5', suit: 'clubs' },
+        ];
+        handB = [
+          { rank: 'jack', suit: 'clubs' },
+          { rank: '5', suit: 'spades' },
+        ];
+        handAScore = PokerHand.score(handA, pairedBoard)
+        handBScore = PokerHand.score(handB, pairedBoard)
+      })
+
+      it('higher 2 pair wins', () => {
+        expect(handBScore.value).to.be.above(handAScore.value)
+      })
+    })
+
+    describe('flush vs straight', () => {
       beforeEach(() => {
         handA = [
           { rank: 'ace', suit: 'spades' },
@@ -50,7 +77,7 @@ describe('PokerHand', () => {
         handBScore = PokerHand.score(handB, board)
       })
 
-      it('the flush has a higher score', () => {
+      it('flush wins', () => {
         expect(handAScore.value).to.be.above(handBScore.value)
       })
     })

@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import Button from 'material-ui/Button'
 import { css } from 'emotion'
 
 const buttonStyle = css`

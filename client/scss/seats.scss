@@ -1,53 +1,109 @@
-.seat1of6 {
-  left: 610px;
-  top: 65px;
+@media screen and (min-height: 1050px) {
+  .seat1of6 {
+    left: 475px;
+    top: 100px;
+    
+    .bet {
+      top: 170px;
+    }
+  }
+  .seat2of6 {
+    top: 200px;
+    left: 895px;
   
-  .bet {
-    top: 170px;
+    .bet {
+      top: 160px;
+      left: -150px;
+    }
+  }
+  .seat3of6 {
+    top: 475px;
+    left: 895px;
+    
+    .bet {
+      left: -150px;
+      bottom: 110px;
+    }
+  }
+  .seat4of6 {
+    top: 575px;
+    left: 475px;
+    
+    .bet {
+      bottom: 150px;
+    }
+  }
+  .seat5of6 {
+    top: 475px;
+    left: 55px;
+    
+    .bet {
+      right: -150px;
+      bottom: 110px;
+    }
+  }
+  .seat6of6 {
+    top: 200px;
+    left: 55px;
+    
+    .bet {
+      top: 160px;
+      right: -150px;
+    }
   }
 }
-.seat2of6 {
-  top: 168px;
-  left: 1065px;
- 
-  .bet {
-    top: 160px;
-    left: -150px;
+@media screen and (max-height: 1049px) {
+  .seat1of6 {
+    left: 475px;
+    top: 25px;
+    
+    .bet {
+      top: 170px;
+    }
   }
-}
-.seat3of6 {
-  top: 475px;
-  left: 1065px;
-  
-  .bet {
-    left: -150px;
-    bottom: 110px;
+  .seat2of6 {
+    top: 125px;
+    left: 895px;
+   
+    .bet {
+      top: 160px;
+      left: -150px;
+    }
   }
-}
-.seat4of6 {
-  top: 580px;
-  left: 610px;
-  
-  .bet {
-    bottom: 150px;
+  .seat3of6 {
+    top: 400px;
+    left: 895px;
+    
+    .bet {
+      left: -150px;
+      bottom: 110px;
+    }
   }
-}
-.seat5of6 {
-  top: 475px;
-  left: 155px;
-  
-  .bet {
-    right: -150px;
-    bottom: 110px;
+  .seat4of6 {
+    top: 500px;
+    left: 475px;
+    
+    .bet {
+      bottom: 150px;
+    }
   }
-}
-.seat6of6 {
-  top: 168px;
-  left: 155px;
-  
-  .bet {
-    top: 160px;
-    right: -150px;
+  .seat5of6 {
+    top: 400px;
+    left: 55px;
+    
+    .bet {
+      right: -150px;
+      bottom: 110px;
+    }
+  }
+  .seat6of6 {
+    top: 125px;
+    left: 55px;
+    
+    .bet {
+      top: 160px;
+      right: -150px;
+    }
   }
 }
 .seat-container {

@@ -1,5 +1,5 @@
 import React from 'react'
-import Player from '../../lobby/MainMenuModal/Player'
+import Player from '../../lobby/MainMenu/Player'
 
 const styles = {
   playerList: {

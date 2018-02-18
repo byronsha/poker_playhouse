@@ -1,6 +1,6 @@
 .poker-game {
   position: relative;
-  max-width: 1400px;
+  max-width: 1200px;
   height: 100vh;
   box-sizing: border-box;
   z-index: 0;
@@ -9,13 +9,17 @@
   margin: 0px auto;
 
   .table-bg {
-    width: 970px;
-    height: 460px;
+    width: 900px;
+    height: 420px;
     position: absolute;
-    left: 215px;
-    top: 170px;
+    left: 115px;
+    top: 135px;
     box-sizing: border-box;
     z-index: -1;
+
+    @media screen and (min-height: 1050px) {
+      top: 205px;
+    }
 
     .bg-outer {
       // background: $teal;
@@ -31,7 +35,7 @@
     }
     .bg-outer:first-child,
     .bg-outer:last-child {
-      width: 485px;
+      width: 400px;
       top: 0px;
       border-radius: 50%;
       z-index: -2;
@@ -47,8 +51,8 @@
       right: 0px;
     }
     .bg-outer:nth-child(2) {
-      width: 466px;
-      left: 252px;
+      width: 450px;
+      left: 225px;
       border-left: none;
       border-right: none;
       z-index: -1;
@@ -62,12 +66,16 @@
   }
   .board {
     position: relative;
-    margin-top: 356px;
+    margin-top: 296px;
     width: 405px;
-    left: 498px;
+    left: 363px;
     text-align: center;
     color: white;
     
+    @media screen and (min-height: 1050px) {
+      margin-top: 371px;
+    }
+
     .main-pot {
       position: absolute;
       width: 100%;

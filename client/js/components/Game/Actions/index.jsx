@@ -8,7 +8,8 @@ import { blueGrey } from 'material-ui/styles/colors'
 const styles = {
   container: {
     position: 'absolute',
-    width: '580px',
+    width: 'calc(50vw - 10px)',
+    height: '184px',
     padding: '5px',
     left: '0',
     bottom: '0',

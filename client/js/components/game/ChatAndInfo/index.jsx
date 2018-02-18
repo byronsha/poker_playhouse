@@ -9,8 +9,8 @@ import SitOutCheckbox from './SitOutCheckbox';
 const styles = {
   container: {
     position: 'absolute',
-    width: '580px',
-    height: '185px',
+    width: 'calc(50vw - 10px)',
+    height: '184x',
     padding: '5px',
     right: '0',
     bottom: '0',
@@ -34,7 +34,12 @@ const styles = {
   },
 }
 
-class ChatAndInfo extends React.Component {
+type Props = {
+  user: Object,
+  table: Object,
+}
+
+class ChatAndInfo extends React.Component<Props> {
   constructor() {
     super()
 

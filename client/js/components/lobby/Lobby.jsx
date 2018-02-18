@@ -1,20 +1,31 @@
 // @flow
 import React from 'react'
 import { connect } from 'react-redux'
+import { css } from 'emotion';
 
 import { logout } from '../../actions/user'
 import {
   receiveLobbyInfo, tablesUpdated, playersUpdated,
   tableJoined, tableLeft, tableUpdated
 } from '../../actions/lobby'
-import {
-  toggleLeftColumn, toggleRightColumn, toggleGridView
-} from '../../actions/ui'
 
-import MainMenuModal from './MainMenuModal'
+import MainMenu from './MainMenu'
 import Game from '../Game/Game'
 import BuyinModal from '../Game/BuyinModal'
 import Button from 'material-ui/Button'
+
+const outerContainer = css`
+  display: flex;
+  width: 200vw;
+  overflow-x: auto;
+  transition: transform 0.3s;
+`
+const innerContainer = css`
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+`
 
 type Props = {
   socket: any,
@@ -29,39 +40,15 @@ type Props = {
   },
   openTables: {
     [key: number]: {
-      table: {
-        table: {
-          id: number,
-          seats: {
-            [key: number]: {
-              seat: {
-                stack: number,
-                player: {
-                  socketId: string
-                }
-              }
-            }
-          },
-          messages: Array<{
-            body: string,
-            from: string,
-            tableId: number,
-          }>,
-        }
-      }
-    }
+      table: Object,
+    },
   },
   messages: Array<{
     message: string,
     from: string,
     tableId: number,
   }>,
-  leftColumnShowing: boolean,
-  rightColumnShowing: boolean,
   gridViewOn: boolean,
-  toggleLeftColumn: () => void,
-  toggleRightColumn: () => void,
-  toggleGridView: () => void,
   logout: () => void,
   receiveLobbyInfo: (tables: {}, players: {}, socketId: string) => void,
   tablesUpdated: (tables: {}) => void,
@@ -74,6 +61,7 @@ type State = {
   modalOpen: boolean,
   tableId: ?number,
   seatId: ?number,
+  onMenu: boolean,
 }
 class Lobby extends React.Component<Props, State> {
   constructor() {
@@ -82,6 +70,7 @@ class Lobby extends React.Component<Props, State> {
       modalOpen: false,
       tableId: null,
       seatId: null,
+      onMenu: true,
     }
   }
 
@@ -130,15 +119,20 @@ class Lobby extends React.Component<Props, State> {
     if (Object.keys(this.props.openTables).length < 4) {
       this.props.socket.emit('join_table', tableId)
     }
-    this.props.toggleLeftColumn()
+    this.setState({ onMenu: false })
   }
 
   handleLeaveClick = tableId => {
-    this.props.socket.emit('leave_table', tableId) 
+    this.props.socket.emit('leave_table', tableId)
+    this.setState({ onMenu: true })    
   }
 
   handleSeatClick = (tableId, seatId) => {
     this.setState({ modalOpen: true, tableId: tableId, seatId: seatId })
+  }
+
+  toggleMenu = () => {
+    this.setState({ onMenu: !this.state.onMenu })
   }
 
   closeModal = () => {
@@ -191,10 +185,6 @@ class Lobby extends React.Component<Props, State> {
       players,
       openTables,
       messages,
-      leftColumnShowing,
-      gridViewOn,
-      toggleLeftColumn,
-      toggleGridView,
       logout
     } = this.props
 
@@ -212,33 +202,31 @@ class Lobby extends React.Component<Props, State> {
     }
 
     return (
-      <div>
-        <Button onClick={toggleLeftColumn} style={{ position: 'absolute', top: 0, left: 0, zIndex: 100 }}>
-          View games
-        </Button>                        
-        <MainMenuModal
-          open={leftColumnShowing}
-          onClose={toggleLeftColumn}
-          socketId={socket.id}
-          user={user}
-          logout={logout}
-          openTables={openTables}
-          tables={tables}
-          handleTableClick={this.handleTableClick}
-          toggleModal={toggleLeftColumn}
-          toggleGridView={toggleGridView}
-          players={players}
-          messages={messages}
-        />
+      <div className={outerContainer} style={{ transform: `translateX(${this.state.onMenu ? '0' : '-100vw'})`}}>
+        <div className={innerContainer}>
+          <MainMenu
+            socketId={socket.id}
+            user={user}
+            logout={logout}
+            openTables={openTables}
+            tables={tables}
+            handleTableClick={this.handleTableClick}
+            players={players}
+            messages={messages}
+            backToGame={() => this.toggleMenu()}
+          />
+        </div>
 
-        <div>
+        <div className={innerContainer}>
+          <Button onClick={this.toggleMenu} style={{ position: 'absolute', top: 0, left: 0, zIndex: 100 }}>
+            Main menu
+          </Button>                        
           {Object.keys(openTables).length > 0 ?
             Object.values(openTables).map(table =>
               <Game
                 key={table.table.id}
                 user={user}
                 table={table.table}
-                gridViewOn={gridViewOn}
                 messages={table.messages}
                 onLeaveClick={this.handleLeaveClick}
                 onSeatClick={this.handleSeatClick}
@@ -256,18 +244,17 @@ class Lobby extends React.Component<Props, State> {
               </h1>
             )
           }
+          <BuyinModal
+            open={this.state.modalOpen}
+            table={table}
+            seat={seat}
+            tableId={table ? table.id : this.state.tableId}
+            seatId={seat ? seat.id : this.state.seatId}
+            closeModal={this.closeModal}
+            buyInAndSitDown={this.buyInAndSitDown}
+            handleRebuy={this.handleRebuy}
+          />
         </div>
-
-        <BuyinModal
-          open={this.state.modalOpen}
-          table={table}
-          seat={seat}
-          tableId={table ? table.id : this.state.tableId}
-          seatId={seat ? seat.id : this.state.seatId}
-          closeModal={this.closeModal}
-          buyInAndSitDown={this.buyInAndSitDown}
-          handleRebuy={this.handleRebuy}
-        />
       </div>
     )
   }
@@ -280,9 +267,6 @@ function mapStateToProps(state) {
     players: state.lobby.players,
     openTables: state.lobby.openTables,
     messages: state.lobby.messages,
-    leftColumnShowing: state.ui.leftColumnShowing,
-    rightColumnShowing: state.ui.rightColumnShowing,
-    gridViewOn: state.ui.gridViewOn
   }
 }
 
@@ -294,9 +278,6 @@ const mapDispatchToProps = ({
   tableJoined,
   tableLeft,
   tableUpdated,
-  toggleLeftColumn,
-  toggleRightColumn,
-  toggleGridView
 })
 
 export default connect(
