@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import { css } from 'emotion'
+import { Button } from 'app/components';
 
 const buttonStyle = css`
   color: white;
@@ -43,14 +44,14 @@ class Table extends React.Component<Props> {
         <td>{table.name}</td>
         <td>${table.minBet.toFixed(2)}/${(table.minBet * 2).toFixed(2)}</td>
         <td>{table.players.length}/{table.maxPlayers}</td>
-        <td style={{ textAlign: 'right' }}>
-          <button
+        <td>
+          <Button
             className={buttonStyle}
             disabled={hasTableOpen}
             onClick={() => { onTableClick(table.id) }}
           >
             Join
-          </button>
+          </Button>
         </td>
       </tr>
     )

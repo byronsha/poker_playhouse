@@ -10,7 +10,7 @@ const styles = {
   container: {
     position: 'absolute',
     width: 'calc(50vw - 10px)',
-    height: '184x',
+    height: '184px',
     padding: '5px',
     right: '0',
     bottom: '0',

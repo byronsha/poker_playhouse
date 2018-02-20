@@ -1,30 +1,32 @@
 import React from 'react'
-import Table from './Table'
+import { css } from 'emotion';
 
-const styles = {
-  tableList: {
-    fontSize: '14px',
-    width: '100%',
-    borderSpacing: '0px 4px',
-  },
-  header: {
-    textAlign: 'left',
-  },
-}
+import Table from './Table'
+import { Panel } from 'app/components';
+
+const tableList = css`
+  text-align: center;
+  font-size: 16px;
+  border-spacing: 10px 5px;
+`
+const tableHeader = css`
+  padding-bottom: 10px;
+  font-weight: 600;
+`
 
 class TableList extends React.Component {
   render() {
     const { tables, openTables, onTableClick, hasTableOpen } = this.props
     if (Object.keys(tables).length > 0) {
       return (
-        <div>
-          <table style={styles.tableList}>
-            <thead style={styles.header}>
+        <Panel>
+          <table className={tableList}>
+            <thead>
               <tr>
-                <th>Name</th>
-                <th>Stakes</th>
-                <th>Players</th>
-                <th></th>
+                <th className={tableHeader}>Name</th>
+                <th className={tableHeader}>Stakes</th>
+                <th className={tableHeader}>Players</th>
+                <th className={tableHeader}></th>
               </tr>
             </thead>
             <tbody>
@@ -42,10 +44,10 @@ class TableList extends React.Component {
               })}
             </tbody>
           </table>
-        </div>
+        </Panel>
       )
     } else {
-      return <div><h1>Games</h1></div>
+      return <div>loading...</div>
     }
   }
 }

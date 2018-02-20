@@ -26,6 +26,11 @@ const styles = {
     border-bottom: 2px solid #2196f3;
     font-weight: 600;
   `,
+  container: css`
+    padding: 20px;
+    max-width: 1020px;
+    margin: 0 auto;
+  `,
 }
 
 type Props = {
@@ -98,29 +103,30 @@ class MainMenu extends React.Component<Props, State> {
 
     return (
       <div>
-        <Navigation name={userPlayer.name} bankroll={userPlayer.bankroll} logout={logout} />
-        <div style={{ padding: '20px' }}>
+        <div className={styles.container}>
+          <h1>Poker Playhouse</h1>
           {this.renderTabs()}
           {this.state.activeTab === 'games' &&
             <TableList
-              tables={tables}
-              onTableClick={handleTableClick}
-              openTables={Object.keys(openTables)}
-              hasTableOpen={hasTableOpen}
+            tables={tables}
+            onTableClick={handleTableClick}
+            openTables={Object.keys(openTables)}
+            hasTableOpen={hasTableOpen}
             />
           }
           {this.state.activeTab === 'players' &&
             <PlayerList
-              user={user} 
-              players={players}
+            user={user} 
+            players={players}
             />
           }
         </div>
         {hasTableOpen &&
-          <Button onClick={this.props.backToGame} style={{ position: 'absolute', bottom: 0, right: 0, zIndex: 100 }}>
+          <Button onClick={this.props.backToGame} style={{ position: 'absolute', top: 0, right: 0, zIndex: 100 }}>
             Back to game
           </Button>
         }
+        <Navigation name={userPlayer.name} bankroll={userPlayer.bankroll} logout={logout} />
       </div>
     )
   }
