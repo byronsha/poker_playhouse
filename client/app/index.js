@@ -14,10 +14,11 @@ import store from './store/store'
 
 import App from './components/App'
 import NoMatch from './components/NoMatch'
-import Lobby from './components/lobby/Lobby'
-import Login from './components/login/Login'
-import Signup from './components/signup/Signup'
+import Lobby from './components/Lobby'
+import Login from './components/Login'
+import Signup from './components/Signup'
 import Playground from './components/Playground'
+import HandHistory from './components/HandHistory'
 
 const history = syncHistoryWithStore(hashHistory, store)
 
@@ -35,7 +36,9 @@ const Root = () => (
         <IndexRedirect to="/login" />
         <Route path="login" component={Login} />
         <Route path="signup" component={Signup} />
-        <Route path="lobby" component={Lobby} onEnter={requireLogin} />
+        <Route path="lobby" component={Lobby} onEnter={requireLogin}>
+          <Route path="hand-history" component={HandHistory} />
+        </Route>
         <Route path="playground" component={Playground} />
         <Route path="*" component={NoMatch} />
       </Route>

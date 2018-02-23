@@ -1,5 +1,6 @@
+// @flow
 import React from 'react'
-import Player from '../../lobby/MainMenu/Player'
+import Player from '../../Lobby/MainMenu/Player'
 
 const styles = {
   playerList: {
@@ -9,7 +10,18 @@ const styles = {
   },
 }
 
-class Spectators extends React.Component {
+type Props = {
+  user: {
+    username: string,
+  },
+  table: {
+    players: Array<{
+      name: string,
+      socketId: string,
+    }>,
+  },
+}
+class Spectators extends React.Component<Props> {
   render() {
     const { user, table } = this.props
 

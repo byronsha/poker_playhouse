@@ -5,10 +5,10 @@ import { css } from 'emotion';
 import Button from 'material-ui/Button'
 
 const outer = css`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
-  border-top: 1px solid #ddd;
+  background: #fff;
 `
 const inner = css`
   display: flex;
@@ -23,7 +23,7 @@ type Props = {
   logout: () => void,
 }
 
-const Navigation = ({ name, bankroll, logout }: Props) => (
+const BottomNav = ({ name, bankroll, logout }: Props) => (
   <div className={outer}>
     <div className={inner}>
       <div>
@@ -35,4 +35,4 @@ const Navigation = ({ name, bankroll, logout }: Props) => (
   </div>
 )
 
-export default Navigation;
+export default BottomNav;

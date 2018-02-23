@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import * as React from 'react'
 import { connect } from 'react-redux'
 import { css } from 'emotion';
 
@@ -10,6 +10,8 @@ import {
 } from '../../actions/lobby'
 
 import MainMenu from './MainMenu'
+import TopNav from './TopNav';
+import BottomNav from './BottomNav';
 import Game from '../Game/Game'
 import BuyinModal from '../Game/BuyinModal'
 import Button from 'material-ui/Button'
@@ -23,11 +25,18 @@ const outerContainer = css`
 const innerContainer = css`
   width: 100vw;
   height: 100vh;
+  max-height: 100vh;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+`
+const lobbyContainer = css`
+  ${innerContainer}
+  background-image: linear-gradient(to bottom,#0e3877,#2b71b1);
 `
 
 type Props = {
+  children?: React.Node,
   socket: any,
   user: {
     username: string,
@@ -190,6 +199,9 @@ class Lobby extends React.Component<Props, State> {
 
     let table
     let seat
+
+    const isInGame = Object.keys(openTables).length > 0
+
     if (Object.values(openTables).length > 0) {
       table = Object.values(openTables)[0].table
       seat = Object.values(table.seats).find(seat =>
@@ -203,25 +215,33 @@ class Lobby extends React.Component<Props, State> {
 
     return (
       <div className={outerContainer} style={{ transform: `translateX(${this.state.onMenu ? '0' : '-100vw'})`}}>
-        <div className={innerContainer}>
-          <MainMenu
-            socketId={socket.id}
-            user={user}
-            logout={logout}
-            openTables={openTables}
-            tables={tables}
-            handleTableClick={this.handleTableClick}
-            players={players}
-            messages={messages}
-            backToGame={() => this.toggleMenu()}
-          />
+        <div className={lobbyContainer}>
+          <TopNav />
+          {this.props.children ? this.props.children : (
+            <MainMenu
+              socketId={socket.id}
+              user={user}
+              logout={logout}
+              openTables={openTables}
+              tables={tables}
+              handleTableClick={this.handleTableClick}
+              players={players}
+              messages={messages}
+            />
+          )}
+          <BottomNav name={user.name} bankroll={user.bankroll} logout={logout} />
+          {isInGame && (
+            <Button onClick={() => this.toggleMenu()} style={{ position: 'absolute', top: 0, right: 0, zIndex: 100 }}>
+              Back to game
+            </Button>
+          )}
         </div>
 
         <div className={innerContainer}>
           <Button onClick={this.toggleMenu} style={{ position: 'absolute', top: 0, left: 0, zIndex: 100 }}>
             Main menu
           </Button>                        
-          {Object.keys(openTables).length > 0 ?
+          {Object.keys(openTables).length > 0 &&
             Object.values(openTables).map(table =>
               <Game
                 key={table.table.id}
@@ -238,10 +258,6 @@ class Lobby extends React.Component<Props, State> {
                 onTableMessage={this.sendTableMessage}
                 socket={socket}
               />
-            ) : (
-              <h1 style={{ textAlign: 'center', marginTop: '440px' }}>
-                Join a table to start playing :^)
-              </h1>
             )
           }
           <BuyinModal

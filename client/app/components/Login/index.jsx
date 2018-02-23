@@ -1,10 +1,15 @@
+// @flow
 import React from 'react'
-import axios from 'axios'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { login } from '../../actions/user'
 
-class Login extends React.Component {
+type Props = {
+  login: () => void,
+  isFetching: boolean,
+  errorMessage: ?string,
+}
+class Login extends React.Component<Props> {
   handleSubmit = e => {
     e.preventDefault()
     const username = this.username.value

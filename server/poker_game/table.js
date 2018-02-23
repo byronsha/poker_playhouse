@@ -27,6 +27,7 @@ class Table {
     this.winMessages = []
     this.wentToShowdown = false
     this.sidePots = []
+    this.history = []
   }
   initSeats(maxPlayers) {
     const seats = {}
@@ -71,7 +72,7 @@ class Table {
     }
   }
   removePlayer(socketId) {
-    this.players = this.players.filter(player => player.socketId !== socketId)
+    this.players = this.players.filter(player => player && player.socketId !== socketId)
     this.standPlayer(socketId)
   }
   findPlayerBySocketId(socketId) {
@@ -123,6 +124,7 @@ class Table {
     this.clearSeatHands()
     this.resetBetsAndActions()
     this.unfoldPlayers()
+    this.history = [];
     
     if (this.activePlayers().length > 1) {
       this.button = this.nextActivePlayer(this.button, 1)
@@ -131,6 +133,8 @@ class Table {
       this.setBlinds()
       this.handOver = false
     }
+
+    this.updateHistory()
   }
   unfoldPlayers() {
     for (let i = 1; i <= this.maxPlayers; i++) {
@@ -216,7 +220,31 @@ class Table {
     this.mainPot = 0
     this.sidePots = []
   }
+  updateHistory() {
+    this.history.push({
+      pot: +(this.pot).toFixed(2),
+      mainPot: +(this.mainPot).toFixed(2),
+      board: this.board.slice(),
+      seats: this.cleanSeatsForHistory(),
+    })
+  }
+  cleanSeatsForHistory() {
+    const cleanSeats = JSON.parse(JSON.stringify(this.seats))
+    for (let i = 0; i < this.maxPlayers; i++) {
+      const seat = cleanSeats[i]
+      if (seat) {
+        seat.player = {
+          id: seat.player.id,
+        }
+        seat.bet = +(seat.bet).toFixed(2)
+        seat.stack = +(seat.stack).toFixed(2)
+      }
+    }
+    return cleanSeats
+  }
   changeTurn(lastTurn) {
+    this.updateHistory()
+
     if (this.unfoldedPlayers().length === 1) {
       this.endWithoutShowdown()
       return

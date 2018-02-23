@@ -29,6 +29,11 @@ fs.readdirSync(__dirname)
     db[model.name] = model
   })
 
+db.UserHand.belongsTo(db.User, { foreignKey: 'user_id' })
+db.UserHand.belongsTo(db.Hand, { foreignKey: 'hand_id' })
+db.User.hasMany(db.UserHand, { foreignKey: 'user_id' })
+db.Hand.hasMany(db.UserHand, { foreignKey: 'hand_id' })
+
 module.exports = lodash.extend({
   sequelize: sequelize, 
   Sequelize: Sequelize

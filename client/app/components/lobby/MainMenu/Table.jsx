@@ -1,25 +1,6 @@
 // @flow
 import React from 'react'
-import { css } from 'emotion'
 import { Button } from 'app/components';
-
-const buttonStyle = css`
-  color: white;
-  padding: 4px 10px;
-  background: blue;
-  border: none;
-  border-radius: 2px;
-  transition: all 0.3s;
-  font-size: 12px;
-
-  &:disabled {
-    pointer-events: none;
-    background: #ddd;
-  }
-  &:hover {
-    background: green;
-  }
-`
 
 type Props = {
   table: {
@@ -46,7 +27,6 @@ class Table extends React.Component<Props> {
         <td>{table.players.length}/{table.maxPlayers}</td>
         <td>
           <Button
-            className={buttonStyle}
             disabled={hasTableOpen}
             onClick={() => { onTableClick(table.id) }}
           >

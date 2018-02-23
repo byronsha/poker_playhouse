@@ -31,7 +31,7 @@ type Props = {
   table: ?{
     limit: number,
     seats: {
-      [key: number]: {},
+      [key: number]: ?{},
     },
   },
   seat: ?{

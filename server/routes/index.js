@@ -93,4 +93,65 @@ router.post('/verify_jwt', (req, res, next) => {
   })
 })
 
+router.post('/hand-history/:page', (req, res, next) => {
+  jwt.verify(req.body.token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(404).json({
+        error: true,
+        message: 'JWT invalid'
+      })
+    }
+
+    db.User
+      .find({ where: { id: decoded.id } })
+      .then(user => {
+        if (!user) {
+          return res.status(404).json({
+            error: true,
+            message: 'JWT invalid'
+          })
+        }
+
+        const limit = 10;
+        let offset = 0;
+      
+
+        db.Hand.findAndCountAll({
+          include: [{
+            model: db.UserHand,
+            where: { user_id: user.id },
+          }]
+        })
+          .then(data => {
+            const page = req.params.page;
+            const pages = Math.ceil(data.count / limit);
+            offset = limit * (page - 1);
+      
+            db.Hand.findAll({
+              include: [{
+                model: db.UserHand,
+                where: { user_id: user.id },
+              }],
+              limit,
+              offset,
+              $sort: { id: 1 }
+            })
+            .then(hands => {
+              res.send({
+                hands: hands,
+                count: data.count,
+                pages: pages,
+              })
+            })
+            .catch(err => {
+              res.status(500).send('Internal Server Error')
+            })
+          })
+          .catch(err => {
+            res.status(500).send('Internal Server Error')
+          })
+      })
+  })
+})
+
 module.exports = router

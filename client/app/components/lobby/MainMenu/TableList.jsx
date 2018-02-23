@@ -7,26 +7,36 @@ import { Panel } from 'app/components';
 const tableList = css`
   text-align: center;
   font-size: 16px;
-  border-spacing: 10px 5px;
+  border-spacing: 0 5px;
 `
 const tableHeader = css`
   padding-bottom: 10px;
   font-weight: 600;
+  font-size: 20px;
 `
 
-class TableList extends React.Component {
+type Props = {
+  tables: {
+    [id: string]: Object,
+  },
+  openTables: Array<{}>,
+  onTableClick: () => void,
+  hasTableOpen: boolean,
+}
+
+class TableList extends React.Component<Props> {
   render() {
     const { tables, openTables, onTableClick, hasTableOpen } = this.props
     if (Object.keys(tables).length > 0) {
       return (
-        <Panel>
+        <Panel header={`Games`}>
           <table className={tableList}>
             <thead>
               <tr>
                 <th className={tableHeader}>Name</th>
-                <th className={tableHeader}>Stakes</th>
-                <th className={tableHeader}>Players</th>
-                <th className={tableHeader}></th>
+                <th className={css`${tableHeader} min-width: 200px;`}>Stakes</th>
+                <th className={css`${tableHeader} min-width: 100px;`}>Players</th>
+                <th className={css`${tableHeader} min-width: 100px;`}></th>
               </tr>
             </thead>
             <tbody>
@@ -47,7 +57,7 @@ class TableList extends React.Component {
         </Panel>
       )
     } else {
-      return <div>loading...</div>
+      return <div>Loading...</div>
     }
   }
 }

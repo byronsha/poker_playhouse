@@ -4,8 +4,6 @@ import { css } from 'emotion'
 
 import TableList from './TableList'
 import PlayerList from './PlayerList'
-import Navigation from './Navigation';
-import Button from 'material-ui/Button'
 
 const styles = {
   tab: css`
@@ -29,7 +27,7 @@ const styles = {
   container: css`
     padding: 20px;
     max-width: 1020px;
-    margin: 0 auto;
+    margin: 150px auto 0;
   `,
 }
 
@@ -51,7 +49,6 @@ type Props = {
     },
   },
   onClose: () => void,
-  backToGame: () => void,
 }
 type State = {
   activeTab: 'games' | 'players',
@@ -89,7 +86,6 @@ class MainMenu extends React.Component<Props, State> {
   render() {
     const {
       user,
-      logout,
       openTables,
       tables,
       handleTableClick,
@@ -104,7 +100,6 @@ class MainMenu extends React.Component<Props, State> {
     return (
       <div>
         <div className={styles.container}>
-          <h1>Poker Playhouse</h1>
           {this.renderTabs()}
           {this.state.activeTab === 'games' &&
             <TableList
@@ -121,12 +116,6 @@ class MainMenu extends React.Component<Props, State> {
             />
           }
         </div>
-        {hasTableOpen &&
-          <Button onClick={this.props.backToGame} style={{ position: 'absolute', top: 0, right: 0, zIndex: 100 }}>
-            Back to game
-          </Button>
-        }
-        <Navigation name={userPlayer.name} bankroll={userPlayer.bankroll} logout={logout} />
       </div>
     )
   }
