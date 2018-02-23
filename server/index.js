@@ -70,6 +70,7 @@ io.on('connection', socket => {
     if (seat) {
       updatePlayerBankroll(player, seat.stack)
     }
+    
     table.removePlayer(socket.id)
 
     socket.broadcast.emit('tables_updated', tables)    

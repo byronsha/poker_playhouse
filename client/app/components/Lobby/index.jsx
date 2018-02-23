@@ -40,6 +40,7 @@ type Props = {
   socket: any,
   user: {
     username: string,
+    bankroll: number,
   },
   tables: {
     [key: number]: {},
@@ -229,7 +230,7 @@ class Lobby extends React.Component<Props, State> {
               messages={messages}
             />
           )}
-          <BottomNav name={user.name} bankroll={user.bankroll} logout={logout} />
+          <BottomNav name={user.username} bankroll={user.bankroll} logout={logout} />
           {isInGame && (
             <Button onClick={() => this.toggleMenu()} style={{ position: 'absolute', top: 0, right: 0, zIndex: 100 }}>
               Back to game

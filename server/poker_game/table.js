@@ -130,6 +130,8 @@ class Table {
       this.button = this.nextActivePlayer(this.button, 1)
       this.setTurn()
       this.dealPreflop()
+      // get the preflop stacks
+      this.updateHistory()
       this.setBlinds()
       this.handOver = false
     }
@@ -193,7 +195,7 @@ class Table {
   sitOutFeltedPlayers() {
     for (let i of Object.keys(this.seats)) {
       const seat = this.seats[i]
-      if (seat && seat.stack === 0) {
+      if (seat && seat.stack == 0) {
         seat.sittingOut = true
       }
     }
@@ -224,8 +226,12 @@ class Table {
     this.history.push({
       pot: +(this.pot).toFixed(2),
       mainPot: +(this.mainPot).toFixed(2),
+      sidePots: this.sidePots.slice(),
       board: this.board.slice(),
       seats: this.cleanSeatsForHistory(),
+      button: this.button,
+      turn: this.turn,
+      winMessages: this.winMessages.slice(),
     })
   }
   cleanSeatsForHistory() {
@@ -393,6 +399,8 @@ class Table {
       seat.winHand(winAmount)
       this.winMessages.push(`${seat.player.name} wins $${winAmount.toFixed(2)} with ${hand.name}`)
     }
+
+    this.updateHistory()
   }
   resetBetsAndActions() {
     for (let i = 1; i <= this.maxPlayers; i++) {
