@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { css } from 'emotion'
 import Paper from 'material-ui/Paper'
 import {
   red,
@@ -21,6 +22,9 @@ const ranks = {
   'jack': 'J',
   '10': 'T'
 }
+const smallCard = css`padding: 2px; margin: 0 4px; display: inline-block; font-size: 32px;`
+const smallCardInner = css`display: flex`
+
 const getSuitColor = suit => {
   switch(suit) {
     case 'spades':
@@ -41,6 +45,7 @@ type Props = {
     rank: string,
     suit: string,
   },
+  small?: boolean,
 }
 function Card(props: Props) {
   const { card } = props
@@ -51,12 +56,16 @@ function Card(props: Props) {
     return <Paper className="card"><div className="card-back"></div></Paper>
   } else {
     return (
-      <Paper className="card" elevation={4}>
-        <div className="small-picture" style={getSuitColor(card.suit)}>
+      <Paper className={props.small ? smallCard : "card"} elevation={4}>
+        <div className={props.small ? smallCardInner : "small-picture"} style={getSuitColor(card.suit)}>
           <div>{ranks[card.rank] ? ranks[card.rank] : card.rank}</div>
           <div>{suits[card.suit]}</div>
         </div>
-        <div className="big-picture" style={getSuitColor(card.suit)}>{ranks[card.rank] ? ranks[card.rank] : card.rank}</div>
+        {!props.small &&
+          <div className="big-picture" style={getSuitColor(card.suit)}>
+            {ranks[card.rank] ? ranks[card.rank] : card.rank}
+          </div>
+        }
       </Paper>
     )
   }
