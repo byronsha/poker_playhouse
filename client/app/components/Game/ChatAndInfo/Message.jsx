@@ -7,7 +7,14 @@ const styles = {
   },
 }
 
-const Message = ({ message }: { message: string }) => (
+type Props = {
+  message: {
+    message: string,
+    timestamp: string,
+    from: string,
+  },
+}
+const Message = ({ message }: Props) => (
   <div>
     <span style={styles.timeStamp}>{message.timestamp}</span>
     {message.from &&

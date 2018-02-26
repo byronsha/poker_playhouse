@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { login } from '../../actions/user'
 
 type Props = {
-  login: () => void,
+  login: ({ username: string, password: string }) => void,
   isFetching: boolean,
   errorMessage: ?string,
 }

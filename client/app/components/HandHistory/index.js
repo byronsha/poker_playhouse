@@ -7,6 +7,14 @@ import { fetchHandHistory } from '../../actions/hands'
 import Hand from './Hand'
 
 const container = css`margin-top: 80px; margin-bottom: 160px;`
+const link = css`
+  color: white;
+  padding: 0 8px;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`
 
 type Props = {
   hands: Array<Object>,
@@ -45,11 +53,7 @@ class HandHistory extends React.Component<Props, State> {
     return (
       <div className={container}>
         {hands.length > 0 && hands.map(hand => (
-          <p
-            key={hand.id}
-            className={css`color: white; padding-left: 10px;`}
-            onClick={() => this.setState({ hand })}
-          >
+          <p key={hand.id} className={link} onClick={() => this.setState({ hand })}>
             Hand #{hand.id} - {new Date(hand.createdAt).toUTCString()}
           </p>
         ))}

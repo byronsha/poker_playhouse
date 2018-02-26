@@ -252,7 +252,7 @@ describe('Table.handleRaise', () => {
         table.changeTurn(1)
       })
 
-      it('higher full house', () => {
+      it('higher full house wins', () => {
         expect(table.seats[1].stack).to.be.equal(0)
         expect(table.seats[2].stack).to.be.equal(15)
       })

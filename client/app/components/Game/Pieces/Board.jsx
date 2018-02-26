@@ -9,7 +9,9 @@ type Props = {
       rank: string,
       suit: string,
     }>,
-  }
+    mainPot: number,
+    pot: number,
+  },
 }
 class Board extends React.Component<Props> {
   render() {

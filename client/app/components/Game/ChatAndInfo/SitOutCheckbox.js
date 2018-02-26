@@ -13,7 +13,7 @@ const styles = {
 }
 
 type Props = {
-  socket: string,
+  socket: Object,
   table: {
     id: string,
   },

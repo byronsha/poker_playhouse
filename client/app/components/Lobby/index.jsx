@@ -49,7 +49,7 @@ type Props = {
     [key: string]: {},
   },
   openTables: {
-    [key: number]: {
+    [key: string]: {
       table: Object,
     },
   },
@@ -201,11 +201,13 @@ class Lobby extends React.Component<Props, State> {
     let table
     let seat
 
-    const isInGame = Object.keys(openTables).length > 0
+    const keys = Object.keys(openTables)
+    const isInGame = keys.length > 0
 
-    if (Object.values(openTables).length > 0) {
-      table = Object.values(openTables)[0].table
-      seat = Object.values(table.seats).find(seat =>
+    if (isInGame) {
+      table = keys[0] && openTables[keys[0]].table
+      const seatKeys = table && Object.keys(table.seats)
+      seat = seatKeys && seatKeys.map(id => table && table.seats[id]).find(seat =>
         seat && seat.player.socketId === socket.id
       )
     }

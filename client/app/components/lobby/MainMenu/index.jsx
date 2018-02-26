@@ -27,7 +27,7 @@ const styles = {
   container: css`
     padding: 20px;
     max-width: 1020px;
-    margin: 150px auto 0;
+    margin: 100px auto 0;
   `,
 }
 

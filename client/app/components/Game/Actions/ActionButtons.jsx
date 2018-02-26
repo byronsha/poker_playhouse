@@ -25,7 +25,7 @@ type Seat = {
 type Table = {
   id: number,
   seats: {
-    [id: number]: Seat,
+    [id: string]: Seat,
   },
   pot: number,
   callAmount: number,
@@ -52,7 +52,8 @@ const ActionButtons = ({
   handleRaiseClick,
   classes
 }: Props) => {
-  const notAllInPlayers = Object.values(table.seats).filter(tableSeat =>
+  const players = Object.keys(table.seats).map(id => table.seats[id])
+  const notAllInPlayers = players.filter(tableSeat =>
     tableSeat && tableSeat.stack > 0
   )
   const othersAllIn = notAllInPlayers.length === 1
