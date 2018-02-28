@@ -13,16 +13,16 @@ function getAcesAndKings() {
   }))
   return aces.concat(kings)
 }
-function getAceKing() {
+function getAceKing(suit) {
   return [
-    { rank: 'ace', suit: 'spades' },
-    { rank: 'king', suit: 'spades' }
+    { rank: 'ace', suit: suit },
+    { rank: 'king', suit: suit }
   ]
 }
-function getSevenDeuce() {
+function getSevenDeuce(suit) {
   return [
-    { rank: '7', suit: 'spades' },
-    { rank: '2', suit: 'spades' }
+    { rank: '7', suit: suit },
+    { rank: '2', suit: suit }
   ]
 }
 
@@ -39,9 +39,9 @@ describe('A 3 handed game', () => {
 
   describe('everyone is all in', () => {
     beforeEach(() => {
-      table.seats[1].hand = getAceKing()
-      table.seats[2].hand = getSevenDeuce()
-      table.seats[3].hand = getSevenDeuce()
+      table.seats[1].hand = getAceKing('spades')
+      table.seats[2].hand = getSevenDeuce('spades')
+      table.seats[3].hand = getSevenDeuce('hearts')
       table.deck.cards = getAcesAndKings()
       
       table.handleRaise('2', 8)
@@ -97,10 +97,10 @@ describe('A 4 handed game', () => {
 
   describe('everyone is all in', () => {
     beforeEach(() => {
-      table.seats[1].hand = getAceKing()
-      table.seats[2].hand = getSevenDeuce()
-      table.seats[3].hand = getSevenDeuce()
-      table.seats[4].hand = getAceKing()
+      table.seats[1].hand = getAceKing('spades')
+      table.seats[2].hand = getSevenDeuce('spades')
+      table.seats[3].hand = getSevenDeuce('hearts')
+      table.seats[4].hand = getAceKing('hearts')
       table.deck.cards = getAcesAndKings()
 
       table.handleRaise('2', 8)

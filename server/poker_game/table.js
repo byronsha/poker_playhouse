@@ -1,8 +1,9 @@
 const _ = require('underscore')
 const Seat = require('./seat.js')
 const Deck = require('./deck.js')
-const PokerHand = require('./pokerhand.js')
+const Hand = require('pokersolver').Hand
 const SidePot = require('./sidePot.js')
+const lodash = require('lodash')
 
 class Table {
   constructor(id, name, maxPlayers, limit) {
@@ -370,37 +371,56 @@ class Table {
     })
   }
   determineMainPotWinner() {
-    this.determineWinner(this.pot, Object.values(this.seats))
+    this.determineWinner(this.pot, Object.values(this.seats).slice())
     this.wentToShowdown = true
     this.endHand()
   }
   determineWinner(amount, seats) {
-    let winners = []
-    let highScore = 0
-
-    for (const seat of seats) {
-      if (seat && !seat.folded) {
-        const hand = PokerHand.score(seat.hand, this.board)
-  
-        if (hand.value > highScore) {
-          winners = [[seat.id, hand]]
-          highScore = hand.value
-        } else if (hand.value === highScore) {
-          winners.push([seat.id, hand])
-        }
+    const participants = seats.filter(seat => seat && !seat.folded).map(seat => {
+      const cards = seat.hand.slice().concat(this.board.slice())
+      const solverCards = this.mapCardsForPokerSolver(cards)
+      return {
+        seatId: seat.id,
+        solverCards,
       }
+    })
+    
+    const findHandOwner = cards => {
+      const participant = participants.find(participant => lodash.isEqual(participant.solverCards.sort(), cards))
+      return participant.seatId
     }
+
+    const solverWinners = Hand.winners(participants.map(p => Hand.solve(p.solverCards)))
+
+    const winners = solverWinners.map(winner => {
+      const winningCards = winner.cardPool.map(card => card.value + card.suit).sort()
+      const seatId = findHandOwner(winningCards)
+      return [seatId, winner.descr]
+    })
 
     for (let i = 0; i < winners.length; i++) {
       const seat = this.seats[winners[i][0]]
-      const hand = winners[i][1]
+      const handDesc = winners[i][1]
       const winAmount = amount / winners.length
 
       seat.winHand(winAmount)
-      this.winMessages.push(`${seat.player.name} wins $${winAmount.toFixed(2)} with ${hand.name}`)
+      this.winMessages.push(`${seat.player.name} wins $${winAmount.toFixed(2)} with ${handDesc}`)
     }
 
     this.updateHistory()
+  }
+  mapCardsForPokerSolver(cards) {
+    const newCards = cards.map(card => {
+      const suit = card.suit.slice(0, 1)
+      let rank
+      if (card.rank === '10') {
+        rank = 'T'
+      } else {
+        rank = card.rank.length > 1 ? card.rank.slice(0, 1).toUpperCase() : card.rank
+      }
+      return rank + suit
+    })
+    return newCards
   }
   resetBetsAndActions() {
     for (let i = 1; i <= this.maxPlayers; i++) {

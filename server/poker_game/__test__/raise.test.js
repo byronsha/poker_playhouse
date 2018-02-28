@@ -4,14 +4,13 @@ var Table = require('../table')
 var Player = require('../player')
 
 function getHighCards() {
-  const suits = ['spades', 'diamonds', 'hearts', 'clubs']
-  const kings = suits.map(suit => ({
-    rank: 'king', suit: suit
-  }))
-  const aces = suits.map(suit => ({
-    rank: 'ace', suit: suit
-  }))
-  return aces.concat(kings)
+  return [
+    { rank: 'ace', suit: 'diamonds' },
+    { rank: 'ace', suit: 'hearts' },
+    { rank: 'ace', suit: 'clubs' },
+    { rank: 'king', suit: 'diamonds' },
+    { rank: 'king', suit: 'hearts' },
+  ]
 }
 function getAceKing() {
   return [
