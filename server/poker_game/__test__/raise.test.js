@@ -194,6 +194,10 @@ describe('Table.handleRaise', () => {
           expect(table.sidePots[0]).to.have.property('amount', 5)
         })
   
+        it('the felted player is sitting out', () => {
+          expect(table.seats[1].sittingOut).to.be.true
+        })
+
         it('the all in player wins the entire pot', () => {
           expect(table.seats[1].stack).to.be.equal(0)
           expect(table.seats[2].stack).to.be.equal(15)

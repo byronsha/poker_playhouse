@@ -9,12 +9,14 @@ import {
   tableJoined, tableLeft, tableUpdated
 } from '../../actions/lobby'
 
+import theme from 'app/utils/theme'
+
 import MainMenu from './MainMenu'
 import TopNav from './TopNav';
 import BottomNav from './BottomNav';
 import Game from '../Game/Game'
 import BuyinModal from '../Game/BuyinModal'
-import Button from 'material-ui/Button'
+import { Button } from 'app/components'
 
 const outerContainer = css`
   display: flex;
@@ -32,7 +34,7 @@ const innerContainer = css`
 `
 const lobbyContainer = css`
   ${innerContainer}
-  background-image: linear-gradient(to bottom,#0e3877,#2b71b1);
+  background: #fafafa;
 `
 
 type Props = {
@@ -234,16 +236,20 @@ class Lobby extends React.Component<Props, State> {
           )}
           <BottomNav name={user.username} bankroll={user.bankroll} logout={logout} />
           {isInGame && (
-            <Button onClick={() => this.toggleMenu()} style={{ position: 'absolute', top: 0, right: 0, zIndex: 100 }}>
-              Back to game
-            </Button>
+            <div style={{ position: 'absolute', top: 14, right: 14, zIndex: 100 }}>
+              <Button onClick={() => this.toggleMenu()}>
+                Back to game
+              </Button>
+            </div>
           )}
         </div>
 
         <div className={innerContainer}>
-          <Button onClick={this.toggleMenu} style={{ position: 'absolute', top: 0, left: 0, zIndex: 100 }}>
+          <div style={{ position: 'absolute', top: 14, left: 14, zIndex: 100 }}>
+          <Button onClick={this.toggleMenu}>
             Main menu
           </Button>                        
+        </div>
           {Object.keys(openTables).length > 0 &&
             Object.values(openTables).map(table =>
               <Game

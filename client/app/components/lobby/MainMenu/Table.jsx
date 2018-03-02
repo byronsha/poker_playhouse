@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { css } from 'emotion'
 import { Button } from 'app/components';
 
 type Props = {
@@ -23,9 +24,9 @@ class Table extends React.Component<Props> {
     return (
       <tr style={style}>
         <td>{table.name}</td>
-        <td>${table.minBet.toFixed(2)}/${(table.minBet * 2).toFixed(2)}</td>
-        <td>{table.players.length}/{table.maxPlayers}</td>
-        <td>
+        <td>${table.minBet.toFixed(2)} / ${(table.minBet * 2).toFixed(2)}</td>
+        <td>{table.players.length} / {table.maxPlayers}</td>
+        <td className={css`text-align: right;`}>
           <Button
             disabled={hasTableOpen}
             onClick={() => { onTableClick(table.id) }}

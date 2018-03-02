@@ -22,7 +22,7 @@ const ranks = {
   'jack': 'J',
   '10': 'T'
 }
-const smallCard = css`padding: 2px; margin: 0 4px; display: inline-block; font-size: 32px;`
+const smallCard = css`padding: 4px 2px; margin: 0 4px; display: inline-block; font-size: 32px;`
 const smallCardInner = css`display: flex`
 
 const getSuitColor = suit => {

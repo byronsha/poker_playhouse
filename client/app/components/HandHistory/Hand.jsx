@@ -8,17 +8,15 @@ const flex = css`
   align-items: center;
 `
 const cell = css`min-width: 150px;`
-const seatNumber = css`color: white;`
 const stepContainer = css`
-  display: flex;
-  margin: 8px 0;
-  padding: 4px;
+  display: inline-flex;
+  margin: 4px 0;
+  padding: 6px;
   background: #eee;
   border-radius: 4px;
 `
 const handNumber = css`
   text-transform: uppercase;
-  color: white;
   font-size: 20px;
 `
 
@@ -37,12 +35,12 @@ class Hand extends React.Component<Props> {
     const step = history[0]
 
     return (
-      <div className={flex}>
+      <div className={css`${flex} margin-bottom: 20px;`}>
         {seats.map(seat => (
           <div key={seat.id} className={css`display: flex; padding: 4px 24px 4px 0px;`}>
-            <div className={seatNumber}>
-              <span>Seat {seat.id} {step.button === seat.id ? '(D)' : ''}</span><br/>
-              <span>${seat.stack}</span>
+            <div>
+              <span><strong>Seat {seat.id} {step.button === seat.id ? '(D)' : ''}</strong></span><br/>
+              <span>${seat.stack.toFixed(2)}</span>
             </div>
             <Card card={seat.hand[0]} small />
             <Card card={seat.hand[1]} small />
@@ -52,33 +50,37 @@ class Hand extends React.Component<Props> {
     )
   }
 
-  renderStep(step: any) {
+  renderStep(step: any, renderBoard: boolean) {
+    const realSidePots = step.sidePots.filter(pot => pot.amount > 0)
+
     return (
       <div>
+        {renderBoard &&
+          <div className={css`margin: 8px 0;`}>{step.board.map((card, index) => <Card key={index} card={card} small />)}</div>
+        }
         <div className={stepContainer}>
           <div className={flex}>
             {Object.keys(step.seats).map(id => step.seats[id]).filter(seat => seat != null).map(seat => (
               <div key={seat.id} className={cell}>
-                <div>Seat {seat.id} {seat.lastAction ? `(${seat.lastAction})` : ''}</div>
-                <div>Bet: ${seat.bet}</div>
-                <div>Stack: ${seat.stack}</div>
+                <div className={css`margin-bottom: 2px;`}><strong>Seat {seat.id}</strong> {seat.lastAction ? `(${seat.lastAction})` : ''}</div>
+                <div>Bet: ${seat.bet.toFixed(2)}</div>
+                <div>Stack: ${seat.stack.toFixed(2)}</div>
               </div>
             ))}
           </div>
           <div className={flex}>
-            <div className={cell}>
-              Main pot: ${step.mainPot}<br />
-              Total pot: ${step.pot}
-              {step.sidePots.length > 0 &&
-                <div>Side pots: [{step.sidePots.map(p => `$${p.amount}`).join(', ')}]</div>
+            <div className={css`min-width: 140px;`}>
+              Main pot: ${step.mainPot.toFixed(2)}<br />
+              Total pot: ${step.pot.toFixed(2)}
+              {realSidePots.length > 0 &&
+                <div>Side pots: [{realSidePots.map(p => `$${p.amount.toFixed(2)}`).join(', ')}]</div>
               }
             </div>
-            <div>{step.board.map((card, index) => <Card key={index} card={card} small />)}</div>
           </div>
         </div>
         {step.winMessages.length > 0 && (
-          <div className={css`color: white;`}>
-            Winners:
+          <div className={css`margin-top: 20px;`}>
+            Winner:
             {step.winMessages.map((message, index) => (
               <div key={index}>{message}</div>
             ))}
@@ -92,14 +94,33 @@ class Hand extends React.Component<Props> {
     const { hand } = this.props
     const history = JSON.parse(hand.history)
 
+    let lastDealt = -1;
+    let dealt = -1;
+
     return (
       <div key={hand.id} style={{ margin: '24px' }}>
-        <p className={css`color: #ccc;`} onClick={this.props.onBackClick}>{`<- Back to hand history`}</p>
+        <p onClick={this.props.onBackClick}>{`<- Back to hand history`}</p>
         <p className={handNumber}>Hand #{hand.id} - {new Date(hand.createdAt).toDateString()}</p>
         {this.renderHands(hand)}
-        {history.slice(1).map((step, index) => (
-          <div key={index}>{this.renderStep(step)}</div>
-        ))}
+        {history.slice(1).map((step, index) => {
+          lastDealt = dealt;
+          dealt = step.board.length;
+          const showStreetName = lastDealt !== dealt;
+
+          return (
+            <div key={index}>
+              {showStreetName && (
+                <div className={css`margin-top: 20px; text-decoration: underline;`}>
+                  {(dealt === 0) && 'Preflop'}
+                  {(dealt === 3) && 'Flop'}
+                  {(dealt === 4) && 'Turn'}
+                  {(dealt === 5) && 'River'}
+                </div>
+              )}
+              {this.renderStep(step, showStreetName)}
+            </div>
+          )
+        })}
       </div>
     )
   }

@@ -10,6 +10,7 @@ const styleSheet = createStyleSheet('GameChat', theme => ({
     fontFamily: 'Roboto'
   },
   messages: {
+    fontFamily: 'Montserrat, sans-serif',    
     height: '144px',
     padding: '3px',
     color: '#fff',
@@ -17,6 +18,7 @@ const styleSheet = createStyleSheet('GameChat', theme => ({
     overflowY: 'auto',
   },
   input: {
+    fontFamily: 'Montserrat, sans-serif',
     display: 'block',
     padding: '0px 3px',
     margin: '4px 0px',

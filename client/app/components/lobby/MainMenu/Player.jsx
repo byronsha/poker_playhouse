@@ -1,6 +1,13 @@
+// @flow
 import React from 'react'
 
-class Player extends React.Component {
+type Props = {
+  player: {
+    name?: ?string,
+  },
+  active: boolean,
+}
+class Player extends React.Component<Props> {
   render() {
     const { player, active } = this.props
     const style = {

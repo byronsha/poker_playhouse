@@ -196,7 +196,7 @@ class Table {
   sitOutFeltedPlayers() {
     for (let i of Object.keys(this.seats)) {
       const seat = this.seats[i]
-      if (seat && seat.stack == 0) {
+      if (seat && seat.stack == 0 || seat && seat.stack < 0) {
         seat.sittingOut = true
       }
     }
@@ -404,7 +404,9 @@ class Table {
       const winAmount = amount / winners.length
 
       seat.winHand(winAmount)
-      this.winMessages.push(`${seat.player.name} wins $${winAmount.toFixed(2)} with ${handDesc}`)
+      if (winAmount > 0) {
+        this.winMessages.push(`${seat.player.name} wins $${winAmount.toFixed(2)} with ${handDesc}`)
+      }
     }
 
     this.updateHistory()

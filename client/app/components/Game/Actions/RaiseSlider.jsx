@@ -18,7 +18,6 @@ const styleSheet = createStyleSheet('RaiseSlider', theme => ({
     color: '#333',
     display: 'flex',
     alignItems: 'center',
-    fontFamily: 'Roboto',
     margin: '10px 0px',
   },
   sliderContainer: {
@@ -33,6 +32,7 @@ const styleSheet = createStyleSheet('RaiseSlider', theme => ({
     flex: 1,
     height: '65%',
     marginRight: '10px',
+    fontFamily: 'Montserrat, sans-serif',    
   }
 }))
 

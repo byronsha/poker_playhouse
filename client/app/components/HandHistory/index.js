@@ -6,15 +6,19 @@ import { css } from 'emotion'
 import { fetchHandHistory } from '../../actions/hands'
 import Hand from './Hand'
 
-const container = css`margin-top: 80px; margin-bottom: 160px;`
+const container = css`
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+  padding-top: 60px;
+  padding-bottom: 90px;
+`;
 const link = css`
-  color: white;
-  padding: 0 8px;
+  padding: 0 20px;
   &:hover {
     cursor: pointer;
     text-decoration: underline;
   }
-`
+`;
 
 type Props = {
   hands: Array<Object>,

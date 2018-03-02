@@ -1,34 +1,30 @@
 // @flow
 import * as React from 'react'
-import { css } from 'emotion'
+import Button from 'material-ui/Button'
 
-const style = css`
-  padding: 6px 18px;
-  color: #fff;
-  background: #666;
-  border-radius: 4px;
-  transition: all 0.3s;
-  border: none;
-  
-  &:hover {
-    background: #ccc;
-    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2);
-  }
-`
+const buttonStyle = {
+  fontFamily: `'Montserrat', sans-serif`,
+  color: '#fff',
+  fontSize: '16px',
+  padding: '6px 18px',
+  minWidth: '0',
+  minHeight: '0',
+}
 
 type Props = {
   onClick: () => void,
   className: any,
   disabled: boolean,
   children: React.Node,
+  style?: Object,
 }
 
-const Button = ({ onClick, disabled, children }: Props) => {
+const MyButton = ({ onClick, disabled, children, style }: Props) => {
   return (
-    <button onClick={onClick} className={style} disabled={disabled}>
+    <Button raised color="primary" onClick={onClick} style={{ ...buttonStyle, ...style }} disabled={disabled}>
       {children}
-    </button>
+    </Button>
   )
 }
 
-export default Button
+export default MyButton

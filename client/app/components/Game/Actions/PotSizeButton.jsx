@@ -9,6 +9,7 @@ const styleSheet = createStyleSheet('Actions', theme => ({
     padding: '0px',
     minWidth: '0px',
     fontSize: '12px',
+    fontFamily: 'Montserrat, sans-serif',    
   }
 }))
 

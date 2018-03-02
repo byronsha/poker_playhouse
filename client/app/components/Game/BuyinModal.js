@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import Button from 'material-ui/Button';
+import { Button } from 'app/components';
 import Dialog from 'material-ui/Dialog';
 import Input from 'material-ui/Input';
 
@@ -97,27 +97,20 @@ class BuyinModal extends React.Component<Props, State> {
               inputRef={ref => { this.buyinAmount = ref }}
               type="number"
               defaultValue={table.limit}
-              style={{ width: '100px' }}
+              style={{ fontFamily: 'Montserrat, sans-serif', width: '100px' }}
             />
           </div>
 
           <div style={styles.buttons}>
             {!mustBuyIn &&
               <Button
-                raised
-                dense
                 onClick={() => this.handleClose()}
                 style={{ marginRight: '8px' }}
               >
                 Cancel
               </Button>
             }
-            <Button
-              raised
-              dense
-              color="primary"
-              onClick={() => this.handleBuyin()}
-            >
+            <Button onClick={() => this.handleBuyin()}>
               Buy in
             </Button>
           </div>

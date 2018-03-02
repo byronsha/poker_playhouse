@@ -26,8 +26,8 @@ const styles = {
   `,
   container: css`
     padding: 20px;
-    max-width: 1020px;
-    margin: 100px auto 0;
+    max-width: 525px;
+    margin: 12% auto 0;
   `,
 }
 
@@ -100,7 +100,7 @@ class MainMenu extends React.Component<Props, State> {
     return (
       <div>
         <div className={styles.container}>
-          {this.renderTabs()}
+          {false && this.renderTabs()}
           {this.state.activeTab === 'games' &&
             <TableList
             tables={tables}

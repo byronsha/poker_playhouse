@@ -3,17 +3,17 @@ import * as React from 'react'
 import { css } from 'emotion'
 
 const container = css`
-  border: 1px solid #ccc;
+  border: 1px solid #eee;
   background: #fff;
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
   border-radius: 4px;
 `
 const headerStyle = css`
-  padding: 12px;
-  border-bottom: 1px solid #ccc;
+  padding: 16px 24px;
+  border-bottom: 1px solid #eee;
 `
 const body = css`
-  padding: 12px;
+  padding: 16px 24px;
 `
 
 type Props = {
