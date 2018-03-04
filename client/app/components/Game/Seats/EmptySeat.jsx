@@ -1,9 +1,14 @@
+// @flow
 import React from 'react'
 import Paper from 'material-ui/Paper'
 import { blueGrey, cyan } from 'material-ui/styles/colors'
 
-const EmptySeat = ({ seatId, onSeatClick }) => (
-  <Paper onClick={onSeatClick} className="seat-info">
+type Props = {
+  seatId: string,
+  onSeatClick: () => void
+}
+const EmptySeat = ({ seatId, onSeatClick }: Props) => (
+  <Paper onClick={onSeatClick} className="seat-info" style={{ borderRadius: '4px' }}>
     <div className="seat-stack" style={{ background: blueGrey[900] }}>
       SIT HERE
     </div>

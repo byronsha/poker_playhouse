@@ -23,7 +23,6 @@ type Props = {
   bankroll: number,
   logout: () => void,
 }
-
 const BottomNav = ({ name, bankroll, logout }: Props) => (
   <div className={outer}>
     <div className={inner}>

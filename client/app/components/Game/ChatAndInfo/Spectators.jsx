@@ -16,7 +16,7 @@ type Props = {
   },
   table: {
     players: Array<{
-      name: string,
+      name?: ?string,
       socketId: string,
     }>,
   },

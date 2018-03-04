@@ -8,6 +8,8 @@ type State = {
   seconds: number
 }
 class ShotClock extends React.Component<Props, State> {
+  interval: any
+
   constructor(props: Props) {
     super(props)
 

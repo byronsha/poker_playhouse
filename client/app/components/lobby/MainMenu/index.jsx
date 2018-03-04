@@ -25,9 +25,8 @@ const styles = {
     font-weight: 600;
   `,
   container: css`
-    padding: 20px;
     max-width: 525px;
-    margin: 12% auto 0;
+    margin: 200px auto 0;
   `,
 }
 
@@ -94,7 +93,9 @@ class MainMenu extends React.Component<Props, State> {
 
     if (!user) return null;
     const hasTableOpen = Object.keys(openTables).length > 0
-    const userPlayer = Object.values(players).find(player => player.id === user.id)
+    const userPlayer = Object.values(players).find(player =>
+      player && player.id && player.id === user.id
+    )
     if (!userPlayer) return null;
 
     return (

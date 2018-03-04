@@ -5,8 +5,8 @@ import Checkbox from 'material-ui/Checkbox';
 const styles = {
   container: {
     position: 'absolute',
-    top: '-45px',
-    right: '0',
+    top: '-42px',
+    right: '-8px',
     display: 'flex',
     alignItems: 'center',
   }

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { blueGrey } from 'material-ui/styles/colors'
 
+import TableControls from '../TableControls';
 import Chat from './Chat';
 import Spectators from './Spectators';
 import SitOutCheckbox from './SitOutCheckbox';
@@ -37,8 +38,11 @@ const styles = {
 type Props = {
   user: Object,
   table: Object,
+  onLeaveClick: () => void,
+  onStandClick: () => void,
+  onRotateClockwise: () => void,
+  onRotateCounterClockwise: () => void,
 }
-
 class ChatAndInfo extends React.Component<Props> {
   constructor() {
     super()
@@ -72,6 +76,13 @@ class ChatAndInfo extends React.Component<Props> {
           })}
         </ul>
 
+        <TableControls
+          onLeaveClick={this.props.onLeaveClick}
+          onStandClick={this.props.onStandClick}
+          onRotateClockwise={this.props.onRotateClockwise}
+          onRotateCounterClockwise={this.props.onRotateCounterClockwise}
+        />
+
         {this.state.activeTab === 'Chat' &&
           <Chat {...this.props} />
         }
@@ -81,6 +92,7 @@ class ChatAndInfo extends React.Component<Props> {
             table={table}
           />
         }
+
         {this.state.activeTab === 'Table Info' &&
           <div style={{ padding: '8px' }}>
             {table.name}, ${table.limit.toFixed(2)} NL Holdem, {table.maxPlayers} players                  

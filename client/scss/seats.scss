@@ -128,12 +128,14 @@
   padding: 4px 0px;
   display: inline-block;
   width: 20%;
+  border-radius: 0 0 0 4px;
 }
 .seat-player {
   position: relative;
   display: inline-block;
   padding: 4px 0px;
   width: 80%;
+  border-radius: 0 0 4px 0;
 }
 .seat-container.active .seat-info .seat-player {
   color: #ffeb3b;
@@ -141,6 +143,7 @@
 .seat-stack {
   font-size: 24px;
   padding: 8px 0px;
+  border-radius: 4px 4px 0 0;
 }
 .hand {
   position: absolute;

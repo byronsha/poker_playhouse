@@ -9,8 +9,6 @@ import {
   tableJoined, tableLeft, tableUpdated
 } from '../../actions/lobby'
 
-import theme from 'app/utils/theme'
-
 import MainMenu from './MainMenu'
 import TopNav from './TopNav';
 import BottomNav from './BottomNav';

@@ -4,7 +4,6 @@ import Background from './Pieces/Background'
 import Board from './Pieces/Board'
 import Actions from './Actions'
 import ChatAndInfo from './ChatAndInfo';
-import TableControls from './TableControls';
 
 class Game extends React.Component {
   constructor() {
@@ -76,12 +75,6 @@ class Game extends React.Component {
           />
         </div>
 
-        <TableControls
-          onLeaveClick={() => onLeaveClick(table.id)}
-          onStandClick={() => onStandClick(table.id)}
-          onRotateClockwise={this.rotateClockwiseClick}
-          onRotateCounterClockwise={this.rotateCounterClockwiseClick}
-          />
         {this.isOwnTurn() && (
           <Actions
             user={user}
@@ -98,7 +91,11 @@ class Game extends React.Component {
           table={table}
           seat={seat}
           messages={messages}
-          onTableMessage={e => onTableMessage(e, table.id)}  
+          onTableMessage={e => onTableMessage(e, table.id)}
+          onLeaveClick={() => onLeaveClick(table.id)}
+          onStandClick={() => onStandClick(table.id)}
+          onRotateClockwise={this.rotateClockwiseClick}
+          onRotateCounterClockwise={this.rotateCounterClockwiseClick}
         />
       </div>
     )

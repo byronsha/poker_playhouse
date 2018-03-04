@@ -145,11 +145,13 @@ io.on('connection', socket => {
     const seat = Object.values(table.seats).find(seat =>
       seat && seat.player.socketId === socket.id
     )
+
+    let message = '';
     if (seat) {
       updatePlayerBankroll(player, seat.stack)
+      message = `${player.name} left the table`
     }
 
-    const message = `${player.name} left the table`
     table.standPlayer(socket.id)
 
     broadcastToTable(table, message)

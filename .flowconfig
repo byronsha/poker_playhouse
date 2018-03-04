@@ -4,12 +4,13 @@
 ./node_modules/
 
 [include]
-./client/js/components/*.js
+./client/app/components/*.js
 
 [libs]
 
 [lints]
 
 [options]
+module.name_mapper='^app/\(.*\)' -> '<PROJECT_ROOT>/client/modules/\1'
 
 [strict]

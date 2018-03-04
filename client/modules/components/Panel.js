@@ -6,7 +6,7 @@ const container = css`
   border: 1px solid #eee;
   background: #fff;
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
+  border-radius: 3px;
 `
 const headerStyle = css`
   padding: 16px 24px;

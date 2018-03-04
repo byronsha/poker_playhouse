@@ -4,7 +4,7 @@ import AddIcon from 'material-ui-icons/Add'
 import Input from 'material-ui/Input/Input'
 import { withStyles, createStyleSheet } from 'material-ui/styles'
 
-const styleSheet = createStyleSheet('RaiseSlider', theme => ({
+const styleSheet = createStyleSheet('RaiseSlider', () => ({
   button: {
     width: '36px',
     height: '36px',
@@ -36,6 +36,21 @@ const styleSheet = createStyleSheet('RaiseSlider', theme => ({
   }
 }))
 
+type Props = {
+  raiseAmount: number,
+  decreaseRaiseAmount: () => void,
+  increaseRaiseAmount: () => void,
+  onRaiseChange: () => void,
+  table: {
+    minRaise: number,
+    maxBet: number,
+  },
+  seat: {
+    stack: number,
+    bet: number,
+  },
+  classes: Object,
+}
 const RaiseSlider = ({
   raiseAmount,
   decreaseRaiseAmount,
@@ -44,7 +59,7 @@ const RaiseSlider = ({
   table,
   seat,
   classes
-}) => {
+}: Props) => {
   const maxBet = seat.stack + seat.bet
   const minRaise = table.minRaise > maxBet ? maxBet : table.minRaise
 

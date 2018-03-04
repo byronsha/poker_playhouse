@@ -7,7 +7,9 @@ import Paper from 'material-ui/Paper'
 import { blueGrey, cyan } from 'material-ui/styles/colors'
 
 type Props = {
-  user: {},
+  user: {
+    username: string,
+  },
   seat: {
     id: number,
     hand: Array<{
