@@ -14,7 +14,7 @@ const EmptySeat = ({ seatId, onSeatClick }: Props) => (
     </div>
 
     <div>
-      <div className="seat-number" style={{ color: '#ccc', background: cyan[600] }}>{seatId}</div>
+      <div className="seat-number" style={{ background: cyan[600] }}>{seatId}</div>
       <div className="seat-player" style={{ color: '#ccc', background: cyan[900] }}>$0.00</div>
     </div>
   </Paper>

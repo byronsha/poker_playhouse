@@ -4,7 +4,7 @@
     top: 95px;
     
     .bet {
-      top: 170px;
+      top: 155px;
     }
   }
   .seat2of6 {
@@ -12,7 +12,7 @@
     left: 895px;
   
     .bet {
-      top: 160px;
+      top: 145px;
       left: -150px;
     }
   }
@@ -22,7 +22,7 @@
     
     .bet {
       left: -150px;
-      bottom: 110px;
+      bottom: 85px;
     }
   }
   .seat4of6 {
@@ -30,7 +30,7 @@
     left: 475px;
     
     .bet {
-      bottom: 150px;
+      bottom: 130px;
     }
   }
   .seat5of6 {
@@ -39,7 +39,7 @@
     
     .bet {
       right: -150px;
-      bottom: 110px;
+      bottom: 85px;
     }
   }
   .seat6of6 {
@@ -47,7 +47,7 @@
     left: 55px;
     
     .bet {
-      top: 160px;
+      top: 145px;
       right: -150px;
     }
   }
@@ -144,46 +144,6 @@
   font-size: 24px;
   padding: 8px 0px;
   border-radius: 4px 4px 0 0;
-}
-.hand {
-  position: absolute;
-  text-align: center;
-  width: 100%;
-  bottom: 140px;
-
-  .card {
-    position: absolute;
-    transition: 0.2s all;
-  }
-  .card:first-child {
-    top: 0px;
-    left: 38px;
-  }
-  .card:last-child {
-    top: 0px;
-    right: 38px;
-  }
-}
-.hand:hover {
-  .card:first-child {
-    top: -40px;
-    left: 10px;
-  }
-  .card:last-child {
-    top: -40px;
-    right: 10px;
-  }
-}
-.shot-clock {
-  position: absolute;
-  width: 100%;
-  bottom: -5px;
-
-  div {
-    float: right;
-    height: 5px;
-    transition: 0.2s all;
-  }
 }
 .button-chip {
   color: #fff;

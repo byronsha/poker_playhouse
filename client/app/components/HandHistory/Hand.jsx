@@ -99,7 +99,7 @@ class Hand extends React.Component<Props> {
 
     return (
       <div key={hand.id} style={{ margin: '24px' }}>
-        <p onClick={this.props.onBackClick}>{`<- Back to hand history`}</p>
+        <p onClick={this.props.onBackClick} className={css`&:hover { cursor: pointer; }`}>{`<- Back to hand history`}</p>
         <p className={handNumber}>Hand #{hand.id} - {new Date(hand.createdAt).toDateString()}</p>
         {this.renderHands(hand)}
         {history.slice(1).map((step, index) => {

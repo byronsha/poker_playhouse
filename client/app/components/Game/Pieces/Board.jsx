@@ -30,7 +30,7 @@ class Board extends React.Component<Props> {
         {table.mainPot > 0 &&
           <div className="main-pot">
             <ChipPile amount={table.mainPot} />
-            <div>Main Pot: ${table.mainPot.toFixed(2)}</div>  
+            <div>Main pot: ${table.mainPot.toFixed(2)}</div>  
           </div>
         }
 
@@ -39,7 +39,7 @@ class Board extends React.Component<Props> {
         )}
 
         <div className="pot">
-          Total Pot: ${table.pot.toFixed(2)}
+          Total pot: ${table.pot.toFixed(2)}
         </div>
       </div>
     )

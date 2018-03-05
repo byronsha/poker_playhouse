@@ -9,14 +9,11 @@ import Hand from './Hand'
 const container = css`
   max-height: calc(100vh - 150px);
   overflow-y: auto;
-  padding-top: 60px;
-  padding-bottom: 90px;
+  padding: 60px 20px 90px;
 `;
 const link = css`
-  padding: 0 20px;
   &:hover {
     cursor: pointer;
-    text-decoration: underline;
   }
 `;
 

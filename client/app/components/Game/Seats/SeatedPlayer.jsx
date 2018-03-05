@@ -36,7 +36,7 @@ class SeatedPlayer extends React.Component<Props> {
           <Hand seat={seat} />  
         }
 
-        <Paper className="seat-info">
+        <Paper className="seat-info" style={{ borderRadius: '4px' }}>
           <div className="seat-stack" style={{background: blueGrey[900]}}>
             ${seat.stack.toFixed(2)}
           </div>
@@ -54,7 +54,6 @@ class SeatedPlayer extends React.Component<Props> {
 
           {seat.turn && <ShotClock seconds={30} />}
         </Paper>
-
       </div>
     )
   }

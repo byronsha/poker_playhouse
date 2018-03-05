@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'app/components';
 import { css } from 'emotion';
 
 const outer = css`
@@ -15,17 +15,13 @@ const inner = css`
   padding: 20px;
   align-items: center;
 `
-const link = css`
-  margin-right: 20px;
-  text-decoration: none;
-  color: #333;
-`
+const linkStyle = { marginRight: '20px' };
 
 const TopNav = () => (
   <div className={outer}>
     <div className={inner}>
-      <Link to="/lobby" className={link}>Lobby</Link>
-      <Link to="/lobby/hand-history" className={link}>Hand history</Link>
+      <Link to="/lobby" style={linkStyle}>Lobby</Link>
+      <Link to="/lobby/hand-history" style={linkStyle}>Hand history</Link>
     </div>
   </div>
 )

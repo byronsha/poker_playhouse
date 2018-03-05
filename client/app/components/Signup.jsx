@@ -1,33 +1,34 @@
 // @flow
 import React from 'react'
-import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { css } from 'emotion'
 
 import { signUp } from '../actions/user'
 
 import Input from 'material-ui/Input';
-import { Panel, Button, Text } from 'app/components'
+import { Panel, Button, Text, Link } from 'app/components'
 
 const container = css`
   max-width: 500px;
   padding-top: 200px;
   margin: 0 auto 0;
-`
-const inputStyle = { fontFamily: 'Montserrat, sans-serif', width: '100%', marginBottom: '16px' };
-const linkStyle = css`
-  display: block;
-  margin-top: 12px;
-  text-decoration: none;
-  color: #2196f3;
-`
+`;
+const inputStyle = {
+  fontFamily: 'Montserrat, sans-serif',
+  width: '100%',
+  marginBottom: '16px'
+};
+const linkStyle = {
+  display: 'block',
+  marginTop: '12px',
+  color: '#2196f3',
+};
 
 type Props = {
   signUp: ({ username: string, password: string }) => void,
   isFetching: boolean,
   errorMessage: string,
-}
-
+};
 class Signup extends React.Component<Props> {
   username: { value: ?string }
   password: { value: ?string }
@@ -63,7 +64,7 @@ class Signup extends React.Component<Props> {
           <Button onClick={this.handleSubmit}>Sign up</Button>
           
           <Text small>
-            <Link to="/login" className={linkStyle}>Already have an account?</Link>
+            <Link to="/login" style={linkStyle}>Already have an account?</Link>
           </Text>
 
           {isFetching && <div>Attemping signup...</div>}

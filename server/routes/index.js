@@ -114,7 +114,6 @@ router.post('/hand-history/:page', (req, res, next) => {
 
         const limit = 10;
         let offset = 0;
-      
 
         db.Hand.findAndCountAll({
           include: [{
@@ -130,11 +129,17 @@ router.post('/hand-history/:page', (req, res, next) => {
             db.Hand.findAll({
               include: [{
                 model: db.UserHand,
-                where: { user_id: user.id },
+                include: [{
+                  model: db.User,
+                  where: { id: user.id },
+                  attributes: ['username'],
+                }]
               }],
               limit,
               offset,
-              $sort: { id: 1 }
+              order: [
+                ['createdAt', 'desc'],
+              ],
             })
             .then(hands => {
               res.send({

@@ -30,7 +30,7 @@ const BottomNav = ({ name, bankroll, logout }: Props) => (
         <span style={{ marginRight: '50px' }}>Logged in as {name}</span>
         <span>Balance: ${bankroll.toFixed(2)}</span>
       </div>
-      <Button onClick={logout}>Logout</Button>
+      <Button onClick={logout} style={{ background: '#555' }}>Logout</Button>
     </div>
   </div>
 )

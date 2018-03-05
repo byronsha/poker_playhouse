@@ -1,13 +1,12 @@
 // @flow
 import React from 'react'
-import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { css } from 'emotion'
 
 import { login } from '../actions/user'
 
 import Input from 'material-ui/Input';
-import { Panel, Button, Text } from 'app/components'
+import { Panel, Button, Text, Link } from 'app/components'
 
 const container = css`
   max-width: 500px;
@@ -15,12 +14,7 @@ const container = css`
   margin: 0 auto 0;
 `
 const inputStyle = { fontFamily: 'Montserrat, sans-serif', width: '100%', marginBottom: '16px' };
-const linkStyle = css`
-  display: block;
-  margin-top: 12px;
-  text-decoration: none;
-  color: #2196f3;
-`
+const linkStyle = { display: 'block', marginTop: '12px', color: '#2196f3' };
 
 type Props = {
   login: ({ username: string, password: string }) => void,
@@ -62,7 +56,7 @@ class Login extends React.Component<Props> {
           <Button onClick={this.handleSubmit}>Login</Button>
           
           <Text small>
-            <Link to="/signup" className={linkStyle}>Don't have an account?</Link>
+            <Link to="/signup" style={linkStyle}>Don't have an account?</Link>
           </Text>
           
           {isFetching && <Text small>Attemping login...</Text>}
