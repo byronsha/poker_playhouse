@@ -1,10 +1,15 @@
 // @flow
 import * as React from 'react';
 import { css } from 'emotion';
-import { Link } from 'react-router';
+import { IndexLink } from 'react-router';
 
 const linkStyle = css`
   text-decoration: none;
+  color: #aaa;
+`;
+const activeClass = css`
+  margin-right: 20px;
+  font-weight: bold;
   color: #000;
 `;
 
@@ -15,7 +20,14 @@ type Props = {
 };
 
 const MyLink = ({ children, to, style }: Props) => (
-  <Link to={to} className={linkStyle} style={style}>{children}</Link>
+  <IndexLink
+    to={to}
+    className={linkStyle}
+    activeClassName={activeClass}
+    style={style}
+  >
+    {children}
+  </IndexLink>
 );
 
 MyLink.defaultProps = {

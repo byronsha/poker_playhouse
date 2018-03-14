@@ -41,6 +41,9 @@ class Hand extends React.Component<Props> {
             <div>
               <span><strong>Seat {seat.id} {step.button === seat.id ? '(D)' : ''}</strong></span><br/>
               <span>${seat.stack.toFixed(2)}</span>
+              {seat.player.username &&
+                <div className={css`font-size: 10px;`}>{seat.player.username}</div>
+              }
             </div>
             <Card card={seat.hand[0]} small />
             <Card card={seat.hand[1]} small />
@@ -98,8 +101,8 @@ class Hand extends React.Component<Props> {
     let dealt = -1;
 
     return (
-      <div key={hand.id} style={{ margin: '24px' }}>
-        <p onClick={this.props.onBackClick} className={css`&:hover { cursor: pointer; }`}>{`<- Back to hand history`}</p>
+      <div key={hand.id}>
+        <div onClick={this.props.onBackClick} className={css`&:hover { cursor: pointer; }`}>{`<- Back to hand history`}</div>
         <p className={handNumber}>Hand #{hand.id} - {new Date(hand.createdAt).toDateString()}</p>
         {this.renderHands(hand)}
         {history.slice(1).map((step, index) => {

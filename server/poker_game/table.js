@@ -242,7 +242,7 @@ class Table {
       if (seat) {
         seat.player = {
           id: seat.player.id,
-          username: seat.player.username,
+          username: seat.player.name,
         }
         seat.bet = +(seat.bet).toFixed(2)
         seat.stack = +(seat.stack).toFixed(2)

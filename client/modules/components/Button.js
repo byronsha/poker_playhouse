@@ -17,11 +17,23 @@ type Props = {
   disabled: boolean,
   children: React.Node,
   style?: Object,
+  flat?: boolean,
 }
 
-const MyButton = ({ onClick, disabled, children, style }: Props) => {
+const MyButton = ({ onClick, disabled, children, style, flat }: Props) => {
+  const xStyle = {...style};
+  if (flat) {
+    xStyle.boxShadow = 'none';
+  }
+
   return (
-    <Button raised color="primary" onClick={onClick} style={{ ...buttonStyle, ...style }} disabled={disabled}>
+    <Button
+      raised
+      color="primary"
+      onClick={onClick}
+      style={{ ...buttonStyle, ...xStyle }}
+      disabled={disabled}
+    >
       {children}
     </Button>
   )

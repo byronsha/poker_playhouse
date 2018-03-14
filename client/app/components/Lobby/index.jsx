@@ -28,7 +28,7 @@ const innerContainer = css`
   max-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
 `
 const lobbyContainer = css`
   ${innerContainer}

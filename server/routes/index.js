@@ -129,11 +129,7 @@ router.post('/hand-history/:page', (req, res, next) => {
             db.Hand.findAll({
               include: [{
                 model: db.UserHand,
-                include: [{
-                  model: db.User,
-                  where: { id: user.id },
-                  attributes: ['username'],
-                }]
+                where: { user_id: user.id },
               }],
               limit,
               offset,

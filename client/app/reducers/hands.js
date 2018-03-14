@@ -7,6 +7,8 @@ import {
 const initialState = {
   isFetching: false,
   hands: [],
+  pages: 0,
+  count: 0,
   errorMessage: '',
 }
 
@@ -23,6 +25,8 @@ function hands(state = initialState, action) {
         ...state,
         isFetching: false,
         hands: action.hands,
+        pages: action.pages,
+        count: action.count,
         errorMessage: '',
       }
     case REQUEST_HANDS_FAILURE:
