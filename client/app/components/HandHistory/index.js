@@ -7,19 +7,16 @@ import { fetchHandHistory } from '../../actions/hands'
 import Icon from 'material-ui/Icon'
 import Hand from './Hand'
 import { Button } from 'app/components';
+import theme from 'app/utils/theme';
 
 const container = css`
-  max-height: calc(100vh - 200px);
-  overflow-y: auto;
-  padding: 75px 20px 90px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 80px 20px;
 `;
 const link = css`
   margin-bottom: 10px;
   &:hover {
     cursor: pointer;
+    color: ${theme.colors.blue};
   }
 `;
 const pagination = css`
@@ -28,6 +25,7 @@ const pagination = css`
   width: 350px;
   justify-content: space-between;
   align-items: center;
+  margin-top: 20px;
 `;
 const paginationButton = {
   padding: '2px 4px',
@@ -91,7 +89,7 @@ class HandHistory extends React.Component<Props, State> {
 
     return (
       <div className={container}>
-        <div className={css`min-height: 350px;`}>
+        <div>
           {hands.length > 0 && hands.map(hand => (
             <div key={hand.id} className={link} onClick={() => this.setState({ hand })}>
               Hand #{hand.id} - {new Date(hand.createdAt).toUTCString()}

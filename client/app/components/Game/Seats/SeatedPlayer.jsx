@@ -48,7 +48,7 @@ class SeatedPlayer extends React.Component<Props> {
             <div className="seat-player" style={{background: cyan[900]}}>
               {seat.player.name} 
               {user.username === seat.player.name ? ' (me)' : ''}
-              {isButton && <span className="button-chip">D</span>}
+              {isButton && <span className="button-chip">B</span>}
             </div>
           </div>
 

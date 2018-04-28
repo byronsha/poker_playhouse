@@ -5,11 +5,12 @@ import { css } from 'emotion'
 
 import { signUp } from '../actions/user'
 
+import Icon from 'material-ui/Icon'
 import Input from 'material-ui/Input';
 import { Panel, Button, Text, Link } from 'app/components'
 
 const container = css`
-  max-width: 500px;
+  max-width: 350px;
   padding-top: 200px;
   margin: 0 auto 0;
 `;
@@ -19,7 +20,8 @@ const inputStyle = {
   marginBottom: '16px'
 };
 const linkStyle = {
-  display: 'block',
+  display: 'flex',
+  alignItems: 'center',
   marginTop: '12px',
   color: '#2196f3',
 };
@@ -47,24 +49,25 @@ class Signup extends React.Component<Props> {
     return (
       <div className={container}>
         <Panel header="Sign up">
-          <Text small bold>Username:</Text>
           <Input
             type="text"
-            placeholder="What's your name?"
+            placeholder="Username"
             inputRef={ref => {this.username = ref}}
             style={inputStyle}
           />
-          <Text small bold>Password:</Text>          
           <Input
             type="password"
-            placeholder="Enter your password"
+            placeholder="Password"
             inputRef={ref => {this.password = ref}}
             style={inputStyle}            
           />
           <Button onClick={this.handleSubmit}>Sign up</Button>
           
           <Text small>
-            <Link to="/login" style={linkStyle}>Already have an account?</Link>
+            <Link to="/login" style={linkStyle}>
+              Already have an account? Login
+              <Icon>trending_flat</Icon>              
+            </Link>
           </Text>
 
           {isFetching && <div>Attemping signup...</div>}

@@ -28,10 +28,19 @@ const styles = {
     padding: '0',
   },
   tab: {
-    color: '#666',
+    color: '#999',
     backgroundColor: blueGrey[100],
     padding: '5px 10px',
-    margin: '0 1px',
+    margin: '0 2px',
+    borderRadius: '3px 3px 0 0',
+  },
+  activeTab: {
+    color: '#333',
+    backgroundColor: blueGrey[100],    
+    fontWeight: '600',
+    padding: '5px 10px',
+    margin: '0 2px',
+    borderRadius: '3px 3px 0 0',    
   },
 }
 
@@ -63,17 +72,15 @@ class ChatAndInfo extends React.Component<Props> {
     return (
       <div style={styles.container}>
         <ul style={styles.tabs}>
-          {tabs.map((tab, index) => {
-            return (
-              <li
-                key={index}
-                style={styles.tab}
-                onClick={() => this.setActiveTab(tab)}
-              >
-                {tab}
-              </li>
-            )
-          })}
+          {tabs.map((tab, index) => (
+            <li
+              key={index}
+              style={tab === this.state.activeTab ? styles.activeTab : styles.tab}
+              onClick={() => this.setActiveTab(tab)}
+            >
+              {tab}
+            </li>
+          ))}
         </ul>
 
         <TableControls
@@ -92,7 +99,6 @@ class ChatAndInfo extends React.Component<Props> {
             table={table}
           />
         }
-
         {this.state.activeTab === 'Table Info' &&
           <div style={{ padding: '8px' }}>
             {table.name}, ${table.limit.toFixed(2)} NL Holdem, {table.maxPlayers} players                  

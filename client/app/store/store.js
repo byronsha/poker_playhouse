@@ -8,12 +8,14 @@ import user from '../reducers/user'
 import lobby from '../reducers/lobby'
 import ui from '../reducers/ui'
 import hands from '../reducers/hands'
+import groups from '../reducers/groups'
 
 const rootReducer = combineReducers({
   user,
   lobby,
   ui,
   hands,
+  groups,
   routing: routerReducer
 })
 

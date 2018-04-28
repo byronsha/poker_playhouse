@@ -13,6 +13,7 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: '32px',
+    fontFamily: 'Montserrat, sans-serif',
   },
   buttons: {
     textAlign: 'right',
@@ -97,7 +98,7 @@ class BuyinModal extends React.Component<Props, State> {
               inputRef={ref => { this.buyinAmount = ref }}
               type="number"
               defaultValue={table.limit}
-              style={{ fontFamily: 'Montserrat, sans-serif', width: '100px' }}
+              style={{ width: '100px', fontFamily: 'Montserrat, sans-serif' }}
             />
           </div>
 

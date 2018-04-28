@@ -5,16 +5,26 @@ import { css } from 'emotion'
 
 import { login } from '../actions/user'
 
+import Icon from 'material-ui/Icon'
 import Input from 'material-ui/Input';
 import { Panel, Button, Text, Link } from 'app/components'
 
 const container = css`
-  max-width: 500px;
+  max-width: 350px;
   padding-top: 200px;
   margin: 0 auto 0;
 `
-const inputStyle = { fontFamily: 'Montserrat, sans-serif', width: '100%', marginBottom: '16px' };
-const linkStyle = { display: 'block', marginTop: '12px', color: '#2196f3' };
+const inputStyle = {
+  fontFamily: 'Montserrat, sans-serif',
+  width: '100%',
+  marginBottom: '16px'
+};
+const linkStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  marginTop: '12px', 
+  color: '#2196f3'
+};
 
 type Props = {
   login: ({ username: string, password: string }) => void,
@@ -39,24 +49,25 @@ class Login extends React.Component<Props> {
     return (
       <div className={container}>
         <Panel header="Login">
-          <Text small bold>Username:</Text>
           <Input
             type="text"
-            placeholder="What's your name?"
+            placeholder="Username"
             inputRef={ref => {this.username = ref}}
             style={inputStyle}
           />
-          <Text small bold>Password:</Text>          
           <Input
             type="password"
-            placeholder="Enter your password"
+            placeholder="Password"
             inputRef={ref => {this.password = ref}}
             style={inputStyle}
           />
           <Button onClick={this.handleSubmit}>Login</Button>
           
           <Text small>
-            <Link to="/signup" style={linkStyle}>Don't have an account?</Link>
+            <Link to="/signup" style={linkStyle}>
+              Create a new account
+              <Icon>trending_flat</Icon>                            
+            </Link>
           </Text>
           
           {isFetching && <Text small>Attemping login...</Text>}

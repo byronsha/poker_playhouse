@@ -2,11 +2,22 @@
 import * as React from 'react'
 import { css } from 'emotion'
 import Card from '../Game/Pieces/Card'
+import theme from 'app/utils/theme';
 
 const flex = css`
   display: flex;
   align-items: center;
 `
+const handStyle = css`
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+`;
+const linkStyle = css`
+  &:hover {
+    cursor: pointer;
+    color: ${theme.colors.blue};
+  }
+`;
 const cell = css`min-width: 150px;`
 const stepContainer = css`
   display: inline-flex;
@@ -82,7 +93,7 @@ class Hand extends React.Component<Props> {
           </div>
         </div>
         {step.winMessages.length > 0 && (
-          <div className={css`margin-top: 20px;`}>
+          <div className={css`margin: 20px 0;`}>
             Winner:
             {step.winMessages.map((message, index) => (
               <div key={index}>{message}</div>
@@ -101,9 +112,13 @@ class Hand extends React.Component<Props> {
     let dealt = -1;
 
     return (
-      <div key={hand.id}>
-        <div onClick={this.props.onBackClick} className={css`&:hover { cursor: pointer; }`}>{`<- Back to hand history`}</div>
-        <p className={handNumber}>Hand #{hand.id} - {new Date(hand.createdAt).toDateString()}</p>
+      <div key={hand.id} className={handStyle}>
+        <div onClick={this.props.onBackClick} className={linkStyle}>
+          {`<- Back to hand history`}
+        </div>
+        <p className={handNumber}>
+          Hand #{hand.id} - {new Date(hand.createdAt).toDateString()}
+        </p>
         {this.renderHands(hand)}
         {history.slice(1).map((step, index) => {
           lastDealt = dealt;

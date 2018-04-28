@@ -68,7 +68,7 @@ class Seats extends React.Component<Props> {
                 <EmptySeat
                   seatId={seatId}
                   onSeatClick={e => {
-                    e.stopPropagation()
+                    if (e) e.stopPropagation()
                     onSeatClick(table.id, parseInt(seatId))
                 }}/>
               </div>

@@ -5,13 +5,15 @@ import { css } from 'emotion'
 type Props = {
   children: React.Node,
   small?: boolean,
+  large?: boolean,
   bold?: boolean,
 }
 
-const Text = ({ children, small, bold }: Props) => (
+const Text = ({ children, small, large, bold }: Props) => (
   <span className={css`
-    font-size: ${small ? '14px' : '16px'};
-    font-weight: ${bold ? 'bold': 'normal'};
+    ${small ? 'font-size: 14px' : ''}
+    ${large ? 'font-size: 20px' : ''}
+    font-weight: ${bold ? '600': 'normal'};
   `}>
     {children}
   </span>

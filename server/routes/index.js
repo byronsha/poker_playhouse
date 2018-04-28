@@ -112,7 +112,7 @@ router.post('/hand-history/:page', (req, res, next) => {
           })
         }
 
-        const limit = 10;
+        const limit = 20;
         let offset = 0;
 
         db.Hand.findAndCountAll({
@@ -151,6 +151,32 @@ router.post('/hand-history/:page', (req, res, next) => {
           .catch(err => {
             res.status(500).send('Internal Server Error')
           })
+      })
+  })
+})
+
+router.get('/groups', (req, res, next) => {
+  jwt.verify(req.query.access_token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(404).json({
+        error: true,
+        message: 'Invalid access token'
+      })
+    }
+
+    db.Group.findAll({
+      include: [{
+        model: db.GroupMember,
+        where: { user_id: decoded.id },
+      }],
+    })
+      .then(groups => {
+        res.send({
+          groups: groups,
+        })
+      })
+      .catch(err => {
+        res.status(500).send('Internal Server Error')
       })
   })
 })

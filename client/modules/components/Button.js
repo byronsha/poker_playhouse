@@ -3,7 +3,7 @@ import * as React from 'react'
 import Button from 'material-ui/Button'
 
 const buttonStyle = {
-  fontFamily: `'Montserrat', sans-serif`,
+  fontFamily: 'Montserrat, sans-serif',
   color: '#fff',
   fontSize: '16px',
   padding: '6px 18px',
