@@ -18,9 +18,11 @@ type Props = {
   children: React.Node,
   style?: Object,
   flat?: boolean,
+  secondary?: boolean,
+  className?: string,
 }
 
-const MyButton = ({ onClick, disabled, children, style, flat }: Props) => {
+const MyButton = ({ onClick, disabled, children, style, flat, secondary, className }: Props) => {
   const xStyle = {...style};
   if (flat) {
     xStyle.boxShadow = 'none';
@@ -29,10 +31,11 @@ const MyButton = ({ onClick, disabled, children, style, flat }: Props) => {
   return (
     <Button
       raised
-      color="primary"
+      color={secondary ? 'accent' : 'primary'}
       onClick={onClick}
       style={{ ...buttonStyle, ...xStyle }}
       disabled={disabled}
+      className={className}
     >
       {children}
     </Button>

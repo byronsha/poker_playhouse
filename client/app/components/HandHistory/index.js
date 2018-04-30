@@ -6,26 +6,35 @@ import { css } from 'emotion'
 import { fetchHandHistory } from '../../actions/hands'
 import Icon from 'material-ui/Icon'
 import Hand from './Hand'
-import { Button } from 'app/components';
+import { Panel, Button } from 'app/components';
 import theme from 'app/utils/theme';
 
 const container = css`
+  height: calc(100% - 170px);
   padding: 80px 20px;
 `;
 const link = css`
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 10px;
   &:hover {
     cursor: pointer;
     color: ${theme.colors.blue};
   }
 `;
+const handList = css`
+  position: relative;
+  width: 25%;
+  height: 100%;
+`
 const pagination = css`
+  width: calc(100% - 48px);
+  position: absolute;
+  bottom: 16px;
   font-size: 12px;
   display: flex;
-  width: 350px;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
 `;
 const paginationButton = {
   padding: '2px 4px',
@@ -89,35 +98,38 @@ class HandHistory extends React.Component<Props, State> {
 
     return (
       <div className={container}>
-        <div>
-          {hands.length > 0 && hands.map(hand => (
-            <div key={hand.id} className={link} onClick={() => this.setState({ hand })}>
-              Hand #{hand.id} - {new Date(hand.createdAt).toUTCString()}
-            </div>
-          ))}
-        </div>
-        <div className={pagination}>
-          <Button
-            flat
-            onClick={this.previousPage}
-            style={paginationButton}
-            disabled={this.state.page === 1}
-          >
-            <Icon>fast_rewind</Icon>
-          </Button>
-          <div className={css`margin: 0 5px;`}>
-            Page: {this.state.page} / {this.props.pages}{' '}
-            ({this.props.count} hands)
+        <Panel dark header="Hand history" className={handList}>
+          <div>
+            {hands.length > 0 && hands.map(hand => (
+              <div key={hand.id} className={link} onClick={() => this.setState({ hand })}>
+                <span>Hand #{hand.id}</span>
+                <span>{new Date(hand.createdAt).toUTCString()}</span>
+              </div>
+            ))}
           </div>
-          <Button
-            flat
-            onClick={this.nextPage}
-            style={paginationButton}
-            disabled={this.state.page === pages}
-          >
-            <Icon>fast_forward</Icon>
-          </Button>
-        </div>
+          <div className={pagination}>
+            <Button
+              flat
+              onClick={this.previousPage}
+              style={paginationButton}
+              disabled={this.state.page === 1}
+            >
+              <Icon>fast_rewind</Icon>
+            </Button>
+            <div className={css`margin: 0 5px;`}>
+              Page: {this.state.page} / {this.props.pages}{' '}
+              ({this.props.count} hands)
+            </div>
+            <Button
+              flat
+              onClick={this.nextPage}
+              style={paginationButton}
+              disabled={this.state.page === pages}
+            >
+              <Icon>fast_forward</Icon>
+            </Button>
+          </div>
+        </Panel>
       </div>
     )
   }
