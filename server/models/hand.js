@@ -4,7 +4,11 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.JSON,
       allowNull: false,
     },
-  })
+  });
 
-  return Hand
-}
+  Hand.associate = models => {
+    Hand.hasMany(models.UserHand, { foreignKey: 'hand_id' });
+  };
+
+  return Hand;
+};

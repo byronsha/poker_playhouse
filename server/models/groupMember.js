@@ -17,7 +17,12 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
       defaultValue: 0.00,
     }
-  })
+  });
 
-  return GroupMember
-}
+  GroupMember.associate = models => {
+    GroupMember.belongsTo(models.User, { foreignKey: 'user_id' });
+    GroupMember.belongsTo(models.Group, { foreignKey: 'group_id' });
+  };
+
+  return GroupMember;
+};

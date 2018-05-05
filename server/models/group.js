@@ -11,7 +11,12 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-  })
+  });
 
-  return Group
-}
+  Group.associate = models => {
+    Group.hasMany(models.GroupMember, { foreignKey: 'group_id' });
+    Group.hasMany(models.GroupInvite, { foreignKey: 'group_id', as: 'group_invites' });
+  };;
+
+  return Group;
+};

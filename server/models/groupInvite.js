@@ -15,7 +15,13 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true,
     },
-  })
+  });
 
-  return GroupInvite
-}
+  GroupInvite.associate = models => {
+    GroupInvite.belongsTo(models.User, { foreignKey: 'inviter_id', as: 'inviter' });
+    GroupInvite.belongsTo(models.User, { foreignKey: 'invited_id', as: 'invited' });
+    GroupInvite.belongsTo(models.Group, { foreignKey: 'group_id', as: 'group' });
+  };
+
+  return GroupInvite;
+};

@@ -11,7 +11,12 @@ module.exports = function(sequelize, DataTypes) {
     hand_id: {
       type: DataTypes.INTEGER,
     },
-  })
+  });
 
-  return UserHand
-}
+  UserHand.associate = models => {
+    UserHand.belongsTo(models.User, { foreignKey: 'user_id' })
+    UserHand.belongsTo(models.Hand, { foreignKey: 'hand_id' })
+  };
+
+  return UserHand;
+};
