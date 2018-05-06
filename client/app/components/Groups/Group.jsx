@@ -5,7 +5,7 @@ import { css } from 'emotion'
 import { Modal, Panel, Button, Text } from 'app/components';
 
 const container = css`
-  width: calc(75% - 20px);
+  width: calc(100% - 470px);
 `;
 
 type Props = {

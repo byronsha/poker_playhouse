@@ -1,3 +1,5 @@
+// @flow
+const db = require('../db/models')
 const Player = require('../poker/player.js')
 const Table = require('../poker/table.js')
 

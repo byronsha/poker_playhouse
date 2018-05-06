@@ -31,15 +31,15 @@ const styles = {
 }
 
 type Props = {
-  open: boolean,
   user: {
     id: number,
+    username: string,
+    bankroll: number,
   },
   logout: () => void,
   openTables: {},
   tables: {},
   handleTableClick: (tableId: number) => void,
-  toggleModal: () => void,
   players: {
     [socketId: string]: ?{
       id: number,
@@ -47,7 +47,6 @@ type Props = {
       bankroll: number,
     },
   },
-  onClose: () => void,
 }
 type State = {
   activeTab: 'games' | 'players',

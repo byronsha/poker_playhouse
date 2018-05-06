@@ -5,15 +5,23 @@ import EmptySeat from './EmptySeat'
 
 type Props = {
   user: {
+    id: number,
     username: string,
   },
   table: {
     id: number,
     seats: {
-      [seatId: any]: {
+      [seatId: any]: ?{
+        id: number,
         player: {
           name: string,
         },
+        hand: Array<{
+          rank: string,
+          suit: string,
+        }>,
+        bet: number,
+        stack: number,
       },
     },
     maxPlayers: number,
@@ -25,14 +33,8 @@ class Seats extends React.Component<Props> {
   render() {
     const { user, table, onSeatClick, displayOffset } = this.props
     let seats = Object.keys(table.seats)
-
-    let seated = false
-    for (let i = 0; i < Object.values(table.seats).length; i++) {
-      let seat = Object.values(table.seats)[i]
-      if (seat && seat.player.name === user.username) {
-        seated = true
-      }
-    }
+    const seatedPlayerIds = seats.map(seatId => table.seats[seatId] && table.seats[seatId].id);
+    const seated = seatedPlayerIds.includes(user.id);
 
     return (
       <div>

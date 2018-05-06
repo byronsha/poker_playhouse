@@ -39,14 +39,30 @@ type Props = {
   children?: React.Node,
   socket: any,
   user: {
+    id: number,
     username: string,
     bankroll: number,
   },
   tables: {
-    [key: number]: {},
+    [key: number]: {
+      table: {
+        limit: number,
+        seats: {
+          [key: number]: ?{
+            stack: number,
+            player: {},
+          },
+        },
+      },
+      messages: Array<string>,
+    },
   },
   players: {
-    [key: string]: {},
+    [socketId: string]: ?{
+      id: number,
+      name: string,
+      bankroll: number,
+    },
   },
   openTables: {
     [key: string]: {

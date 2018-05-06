@@ -6,7 +6,7 @@ const webpack = require('webpack')
 const path = require('path')
 const webpackConfig = require('../webpack.config.js')
 const routes = require('./routes/index')
-const db = require('./models')
+const db = require('./db/models')
 const gameSocket = require('./socket');
 
 const app = express()

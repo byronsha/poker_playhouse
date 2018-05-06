@@ -1,4 +1,4 @@
-const db = require('../models');
+const db = require('../db/models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
 const utils = require('../utils');

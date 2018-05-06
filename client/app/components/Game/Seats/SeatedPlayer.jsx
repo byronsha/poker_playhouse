@@ -12,15 +12,15 @@ type Props = {
   },
   seat: {
     id: number,
+    player: {
+      name: string,
+    },
     hand: Array<{
       rank: string,
       suit: string,
     }>,
     bet: number,
     stack: number,
-    player: {
-      name: string,
-    },
   },
   isButton: boolean,
 }

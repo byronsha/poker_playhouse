@@ -24,7 +24,7 @@ const link = css`
 `;
 const handList = css`
   position: relative;
-  width: 25%;
+  width: 450px;
   height: 100%;
 `
 const pagination = css`

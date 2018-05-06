@@ -15,7 +15,7 @@ const container = css`
   padding: 80px 20px;
 `;
 const leftColumn = css`
-  width: 25%;
+  width: 450px;
   margin-right: 20px;
 `;
 const groupList = css`
