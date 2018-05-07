@@ -35,6 +35,7 @@ class CreateGroupModal extends React.Component<Props> {
         />
         <div className={buttons}>
           <Button
+            secondary
             onClick={() => this.props.closeModal()}
             style={{ marginRight: '8px' }}
           >

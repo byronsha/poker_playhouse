@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { css } from 'emotion'
 
-import { Modal, Panel, Button, Text } from 'app/components';
+import { Modal, Panel, Button, Text, UserSearchModal } from 'app/components';
 
 const container = css`
   width: calc(100% - 470px);
@@ -13,20 +13,30 @@ type Props = {
   deleteGroup: (groupId: number) => void,
 }
 type State = {
-  confirmOpen: boolean,
+  confirmModalOpen: boolean,
+  inviteModalOpen: boolean,
 }
 class Group extends React.Component<Props, State> {
   state = {
-    confirmOpen: false,
+    confirmModalOpen: false,
+    inviteModalOpen: false,
   }
 
   toggleConfirm = () => {
-    this.setState({ confirmOpen: !this.state.confirmOpen });
+    this.setState({ confirmModalOpen: !this.state.confirmModalOpen })
+  }
+
+  toggleInvite = () => {
+    this.setState({ inviteModalOpen: !this.state.inviteModalOpen })
   }
 
   handleDeleteClick = () => {
     this.props.deleteGroup(this.props.group.id);
     this.toggleConfirm();
+  }
+
+  createInvites = data => {
+    console.log(data);
   }
 
   render() {
@@ -42,10 +52,15 @@ class Group extends React.Component<Props, State> {
             </div>
           </div>
           <div className={css`text-align: right;`}>
-            <Button secondary onClick={this.toggleConfirm}>Delete this group</Button>
+            <Button onClick={this.toggleInvite} style={{ marginRight: '8px' }}>
+              Invite a user
+            </Button>
+            <Button secondary onClick={this.toggleConfirm}>
+              Delete this group
+            </Button>
           </div>
         </Panel>
-        <Modal open={this.state.confirmOpen}>
+        <Modal open={this.state.confirmModalOpen}>
           <h2 className={css`margin: 0 0 32px;`}>
             Are you sure you want to delete group: {group.name}?
           </h2>
@@ -61,6 +76,12 @@ class Group extends React.Component<Props, State> {
             </Button>
           </div>
         </Modal>
+        <UserSearchModal
+          open={this.state.inviteModalOpen}
+          header={`Invite a user to group... "${group.name}"`}
+          closeModal={this.toggleInvite}
+          onSubmit={this.createInvites}
+        />
       </div>
     )
   }
