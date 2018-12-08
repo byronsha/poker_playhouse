@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./server/index",
     "test-poker": "mocha ./server/poker/__test__/*.js",
-    "test-models": "mocha ./server/models/__test__/*.js"
+    "test-models": "mocha ./server/db/models/__test__/*.js"
   },
   "keywords": [],
   "author": "",

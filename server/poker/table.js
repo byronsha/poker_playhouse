@@ -5,6 +5,50 @@ const Hand = require('pokersolver').Hand
 const SidePot = require('./sidePot.js')
 const lodash = require('lodash')
 
+/* --Hand--
+id
+seat_one_id...seat_nine_id
+
+seat_one_hand...seat_nine_hand
+
+big_blind_amount
+button_id
+small_blind_id
+big_blind_id
+is_complete
+went_to_showdown
+final_pot_size
+winners
+
+--Action--
+id
+hand_id
+player_id
+street (preflop|flop|turn|river)
+action (raise|call|check|fold)
+amount
+current_bet_amount
+pot_size
+
+--Player--
+id
+group_id
+user_id
+bankroll
+
+--Group--
+id
+name
+creator_id
+
+--Group Admin--
+id
+group_id
+user_id
+*/
+
+
+
 class Table {
   constructor(id, name, maxPlayers, limit) {
     this.id = parseInt(id)
