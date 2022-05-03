@@ -1,5 +1,7 @@
 import * as React from 'react'
 import { css } from 'emotion'
+import { connect } from 'react-redux'
+import { selectAccount } from '../../actions/user'
 
 import { Panel, Text, Button } from 'app/components';
 
@@ -34,33 +36,7 @@ const groupName = css`
   margin-bottom: 8px;
 `;
 
-const Accounts = () => {
-
-	const selectAccount = () => {
-
-	}
-
-
-	const accounts = [
-		{
-			id: 1,
-			name: 'account 1',
-			level: 1,
-			experience: 10000,
-		},
-		{
-			id: 2,
-			name: 'account 2',
-			level: 7,
-			experience: 190000,
-		},
-		{
-			id: 3,
-			name: 'account 3',
-			level: 1,
-			experience: 10000,
-		}
-	];
+const Accounts = ({ accounts, ...props }) => {
 
 
 	return (
@@ -73,7 +49,7 @@ const Accounts = () => {
 							<Text large>tokens: {account.experience}</Text>
 						</div>
 
-						<Button onClick={selectAccount} style={button}>
+						<Button onClick={() => props.selectAccount(account.id)} style={button}>
 	            Select account
 	          </Button>
 					</Panel>
@@ -83,4 +59,9 @@ const Accounts = () => {
 	);
 }
 
-export default Accounts;
+export default connect(
+	state => {
+		return  ({ accounts : state.user.user.accounts })
+	},
+	{ selectAccount }
+)(Accounts);

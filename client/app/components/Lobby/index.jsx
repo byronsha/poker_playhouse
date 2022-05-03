@@ -43,6 +43,7 @@ type Props = {
     username: string,
     bankroll: number,
   },
+  account: string,
   tables: {
     [key: number]: {
       table: {
@@ -213,7 +214,8 @@ class Lobby extends React.Component<Props, State> {
       players,
       openTables,
       messages,
-      logout
+      logout,
+      account,
     } = this.props
 
     let table
@@ -248,9 +250,10 @@ class Lobby extends React.Component<Props, State> {
               handleTableClick={this.handleTableClick}
               players={players}
               messages={messages}
+              account={account}
             />
           )}
-          <BottomNav name={user.username} bankroll={user.bankroll} logout={logout} />
+          <BottomNav name={user.username} bankroll={user.bankroll} logout={logout} account={account} />
           {isInGame && (
             <div style={{ position: 'absolute', top: 14, right: 14, zIndex: 100 }}>
               <Button onClick={() => this.toggleMenu()}>
@@ -302,8 +305,12 @@ class Lobby extends React.Component<Props, State> {
 }
 
 function mapStateToProps(state) {
+
+  const account = state.user.user.accounts.find(a => a.id === state.user.accountId);
+
   return {
     user: state.user.user,
+    account: account,
     tables: state.lobby.tables,
     players: state.lobby.players,
     openTables: state.lobby.openTables,

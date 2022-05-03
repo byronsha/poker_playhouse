@@ -17,9 +17,26 @@ module.exports = {
         if (!user) {
           db.User.create({
             username: body.username,
-            password: hash
-          })
-            .then(user => {
+            password: hash,
+            Accounts: [
+              {
+                name: body.username + ' account1',
+                level: 1,
+                tokens: 100,
+                experience: 0,
+              },
+              {
+                name: body.username + ' account2',
+                level: 10,
+                tokens: 100000,
+                experience: 0,
+              }
+            ]
+          }, {
+            include: [ db.Account ]
+          }).then(user => {
+              console.log('user ', user);
+
               res.send({
                 user: utils.getCleanUser(user),
                 token: utils.generateToken(user)
@@ -71,7 +88,12 @@ module.exports = {
       }
 
       db.User
-        .findOne({ where: { id: decoded.id } })
+        .findOne({
+          where: { id: decoded.id },
+          include: [{
+            model: db.Account,
+          }]
+        })
         .then(user => {
           if (!user) {
             return res.status(404).json({

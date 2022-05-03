@@ -8,7 +8,8 @@ import {
   LOGOUT,
   TOKEN_LOGIN_REQUEST,
   TOKEN_LOGIN_SUCCESS,
-  TOKEN_LOGIN_FAILURE
+  TOKEN_LOGIN_FAILURE,
+  SELECT_ACCOUNT,
 } from '../actions/user'
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   isAuthenticated: false,
   user: null,
   token: localStorage.getItem('client') || null,
+  accountId: null,
   errorMessage: ''
 }
 
@@ -27,6 +29,11 @@ function user(state = initialState, action) {
         isFetching: true,
         isAuthenticated: false,
         errorMessage: ''
+      }
+    case SELECT_ACCOUNT: 
+      return {
+        ...state,
+        accountId: action.id
       }
     case LOGIN_SUCCESS:
       localStorage.setItem('client', action.token)

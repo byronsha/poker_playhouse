@@ -57,6 +57,26 @@ class MainMenu extends React.Component<Props, State> {
     activeTab: 'free'
   }
 
+  selectPlayToEarn() {
+    if (!this.props.account) {
+      alert('Please select account for play')      
+    } else {
+      this.setState({ activeTab: 'playToEarn' })
+    }
+  }
+
+  selectPvP() {
+    if (!this.props.account) {
+      alert('Please select account for play')      
+    } else {
+      if (this.props.account.level < 10) {
+        alert('account level should be more than 10')        
+      } else {
+        this.setState({ activeTab: 'PvP' })        
+      }
+    }
+  }
+
   renderTabs() {
     const { activeTab } = this.state
     return (
@@ -74,12 +94,12 @@ class MainMenu extends React.Component<Props, State> {
           </span>
           <span
             className={activeTab === 'playToEarn' ? styles.activeTab : styles.tab}        
-            onClick={() => this.setState({ activeTab: 'playToEarn' })}>
+            onClick={() => this.selectPlayToEarn()} >
             play to earn
           </span>
           <span
             className={activeTab === 'PvP' ? styles.activeTab : styles.tab}        
-            onClick={() => this.setState({ activeTab: 'PvP' })}>
+            onClick={() => this.selectPvP()}>
             PvP
           </span>
         </div>

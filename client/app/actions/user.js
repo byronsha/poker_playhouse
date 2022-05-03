@@ -17,6 +17,8 @@ export const TOKEN_LOGIN_REQUEST = 'TOKEN_LOGIN_REQUEST'
 export const TOKEN_LOGIN_SUCCESS = 'TOKEN_LOGIN_SUCCESS'
 export const TOKEN_LOGIN_FAILURE = 'TOKEN_LOGIN_FAILURE'
 
+export const SELECT_ACCOUNT = 'SELECT_ACCOUNT'
+
 const ROOT_URL = '/api';
 //location.href.indexOf('localhost') > 0 ? 'http://localhost:9000/api' : '/api'
 
@@ -139,6 +141,13 @@ export function tokenLoginFailure(message) {
   return {
     type: TOKEN_LOGIN_FAILURE,
     message
+  }
+}
+
+export function selectAccount(id) {
+  return {
+    type: SELECT_ACCOUNT,
+    id,
   }
 }
 
