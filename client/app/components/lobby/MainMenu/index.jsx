@@ -49,11 +49,12 @@ type Props = {
   },
 }
 type State = {
-  activeTab: 'games' | 'players',
+  activeTab: 'free' | 'playToEarn' | 'PvP',
 }
+
 class MainMenu extends React.Component<Props, State> {
   state = {
-    activeTab: 'games'
+    activeTab: 'free'
   }
 
   renderTabs() {
@@ -67,14 +68,19 @@ class MainMenu extends React.Component<Props, State> {
       }}>
         <div>
           <span
-            className={activeTab === 'games' ? styles.activeTab : styles.tab}
-            onClick={() => this.setState({ activeTab: 'games' })}>
-            Games
+            className={activeTab === 'free' ? styles.activeTab : styles.tab}
+            onClick={() => this.setState({ activeTab: 'free' })}>
+            Free
           </span>
           <span
-            className={activeTab === 'players' ? styles.activeTab : styles.tab}        
-            onClick={() => this.setState({ activeTab: 'players' })}>
-            Players
+            className={activeTab === 'playToEarn' ? styles.activeTab : styles.tab}        
+            onClick={() => this.setState({ activeTab: 'playToEarn' })}>
+            play to earn
+          </span>
+          <span
+            className={activeTab === 'PvP' ? styles.activeTab : styles.tab}        
+            onClick={() => this.setState({ activeTab: 'PvP' })}>
+            PvP
           </span>
         </div>
       </div>
@@ -97,22 +103,39 @@ class MainMenu extends React.Component<Props, State> {
     )
     if (!userPlayer) return null;
 
+    const tablesByType = Object.entries(tables).map(item => item[1]).reduce((acc, item) => {
+      if (!acc[item.type]) acc[item.type] = { [item.id]: item };
+      else acc[item.type] = { ...acc[item.type], [item.id]: item };
+
+      return acc;
+    }, {})
+
     return (
       <div>
         <div className={styles.container}>
-          {false && this.renderTabs()}
-          {this.state.activeTab === 'games' &&
+          {this.renderTabs()}
+          {this.state.activeTab === 'free' &&
             <TableList
-            tables={tables}
+            tables={tablesByType.free}
             onTableClick={handleTableClick}
             openTables={Object.keys(openTables)}
             hasTableOpen={hasTableOpen}
             />
           }
-          {this.state.activeTab === 'players' &&
-            <PlayerList
-            user={user} 
-            players={players}
+          {this.state.activeTab === 'playToEarn' &&
+            <TableList
+            tables={tablesByType.playToEarn}
+            onTableClick={handleTableClick}
+            openTables={Object.keys(openTables)}
+            hasTableOpen={hasTableOpen}
+            />
+          }
+          {this.state.activeTab === 'PvP' &&
+            <TableList
+            tables={tablesByType.PvP}
+            onTableClick={handleTableClick}
+            openTables={Object.keys(openTables)}
+            hasTableOpen={hasTableOpen}
             />
           }
         </div>

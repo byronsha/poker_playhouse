@@ -20,6 +20,7 @@ import Signup from './components/Signup'
 import Playground from './components/Playground'
 import HandHistory from './components/HandHistory'
 import Groups from './components/Groups'
+import Accounts from './components/Accounts';
 
 const history = syncHistoryWithStore(hashHistory, store)
 
@@ -40,6 +41,7 @@ const Root = () => (
         <Route path="lobby" component={Lobby} onEnter={requireLogin}>
           <Route path="hand-history" component={HandHistory} />
           <Route path="groups" component={Groups} />
+          <Route path="accounts" component={Accounts} />
         </Route>
         <Route path="playground" component={Playground} />
         <Route path="*" component={NoMatch} />

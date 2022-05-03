@@ -6,10 +6,13 @@ const utils = require('../utils');
 module.exports = {
   signup(req, res) {
     const { body } = req;
+    // console.log('>> ', body);
     const hash = bcrypt.hashSync(body.password.trim())
 
+    console.log('db.User >> ', db.User);
+
     db.User
-      .find({ where: { username: body.username } })
+      .findOne({ where: { username: body.username } })
       .then(user => {
         if (!user) {
           db.User.create({
@@ -34,7 +37,7 @@ module.exports = {
     const { body } = req;
 
     db.User
-      .find({ where: { username: body.username } })
+      .findOne({ where: { username: body.username } })
       .then(user => {
         if (!user) {
           return res.status(404).json({
@@ -68,7 +71,7 @@ module.exports = {
       }
 
       db.User
-        .find({ where: { id: decoded.id } })
+        .findOne({ where: { id: decoded.id } })
         .then(user => {
           if (!user) {
             return res.status(404).json({

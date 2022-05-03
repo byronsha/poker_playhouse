@@ -111,6 +111,8 @@ class Lobby extends React.Component<Props, State> {
     }
 
     socket.on('receive_lobby_info', ({ tables, players, socketId }) => {
+      console.log('tables ', tables);
+      
       receiveLobbyInfo(tables, players, socketId)
     })
     socket.on('tables_updated', tables => {

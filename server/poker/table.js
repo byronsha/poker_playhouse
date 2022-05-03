@@ -50,7 +50,7 @@ user_id
 
 
 class Table {
-  constructor(id, name, maxPlayers, limit) {
+  constructor(id, name, maxPlayers, limit, type) {
     this.id = parseInt(id)
     this.name = name
     this.maxPlayers = maxPlayers
@@ -73,6 +73,7 @@ class Table {
     this.wentToShowdown = false
     this.sidePots = []
     this.history = []
+    this.type = type || 'free'
   }
   initSeats(maxPlayers) {
     const seats = {}

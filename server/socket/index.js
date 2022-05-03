@@ -6,16 +6,16 @@ const Table = require('../poker/table.js')
 const tables = {}
 const players = {}
 
-tables[1] = new Table(1, 'Table 1', 6, 10)
-tables[2] = new Table(2, 'Table 2', 6, 10)
-tables[3] = new Table(3, 'Table 3', 6, 20)
-tables[4] = new Table(4, 'Table 4', 6, 20)
-tables[5] = new Table(5, 'Table 5', 6, 50)
-tables[6] = new Table(6, 'Table 6', 9, 10)
-tables[7] = new Table(7, 'Table 7', 9, 10)
-tables[8] = new Table(8, 'Table 8', 9, 20)
-tables[9] = new Table(9, 'Table 9', 9, 20)
-tables[10] = new Table(10, 'Table 10', 9, 50)
+tables[1] = new Table(1, 'Table 1', 6, 10, 'free')
+tables[2] = new Table(2, 'Table 2', 6, 10, 'free')
+tables[3] = new Table(3, 'Table 3', 6, 20, 'free')
+tables[4] = new Table(4, 'Table 4', 6, 20, 'playToEarn')
+tables[5] = new Table(5, 'Table 5', 6, 50, 'playToEarn')
+tables[6] = new Table(6, 'Table 6', 9, 10, 'playToEarn')
+tables[7] = new Table(7, 'Table 7', 9, 10, 'PvP')
+tables[8] = new Table(8, 'Table 8', 9, 20, 'PvP')
+tables[9] = new Table(9, 'Table 9', 9, 20, 'PvP')
+tables[10] = new Table(10, 'Table 10', 9, 50, 'PvP')
 
 module.exports = {
   init(socket, io) {

@@ -17,7 +17,8 @@ export const TOKEN_LOGIN_REQUEST = 'TOKEN_LOGIN_REQUEST'
 export const TOKEN_LOGIN_SUCCESS = 'TOKEN_LOGIN_SUCCESS'
 export const TOKEN_LOGIN_FAILURE = 'TOKEN_LOGIN_FAILURE'
 
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:9000/api' : '/api'
+const ROOT_URL = '/api';
+//location.href.indexOf('localhost') > 0 ? 'http://localhost:9000/api' : '/api'
 
 // login
 export function requestLogin(params) {
