@@ -14,7 +14,7 @@ import store from './store/store'
 
 import App from './components/App'
 import NoMatch from './components/NoMatch'
-import Lobby from './components/Lobby'
+import Lobby from './components/LobbyLayout'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Playground from './components/Playground'

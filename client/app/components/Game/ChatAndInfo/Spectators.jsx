@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import Player from '../../Lobby/MainMenu/Player'
+import Player from '../../LobbyLayout/MainMenu/Player'
 
 const styles = {
   playerList: {
