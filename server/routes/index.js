@@ -22,4 +22,6 @@ router.delete('/groups/:groupId', groupsRoute.deleteGroup);
 
 router.get('/users/search', searchUsersRoute.search);
 
+router.get('/users', searchUsersRoute.getAllUsers);
+
 module.exports = router;

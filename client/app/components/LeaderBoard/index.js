@@ -1,6 +1,7 @@
 import React from 'react';
 
 // import * as api from '../api'
+import axios from 'axios'
 
 const nickNames = ['dima', 'urban', 'guest', 'datuk'];
 
@@ -36,9 +37,10 @@ for(var i = 4; i <= 150; i++) {
 
 const api = {
 	getLeaderboard: () => {
-		return new Promise((resolve) => {
-			resolve(users);
-		})
+		// return new Promise((resolve) => {
+		// 	resolve(users);
+		// })
+		return axios.get('/api/users').then(response => response.data)
 	}
 }
 
@@ -74,12 +76,22 @@ class Leaderboard extends React.Component {
   	}
 
   	componentDidMount() {
+  		this.setState({
+  			isLoading: true
+  		})
   		api.getLeaderboard().then(users => {
   			this.setState({
   				data: users,
+  				isLoading: false
   			})
   		})
   	}
+
+  	handlySelectPeriod = (period) => {
+  		this.setState({
+  			period,
+  		})
+  	} 
 
   	handlySearch = () => {
 
@@ -104,7 +116,7 @@ class Leaderboard extends React.Component {
 	            <div
 	              key={item.key}
 	              className={`period__item ${period === item.key ? 'period__item--active' : ''}`}
-	              onClick={() => handlySelectPeriod(item.key)}
+	              onClick={() => this.handlySelectPeriod(item.key)}
 	            >{item.text}</div>
 	          ))}
 	        </div>
