@@ -38,7 +38,7 @@ const Root = () => (
       <Route path="/" component={App}>
         <IndexRedirect to="/login" />
         <Route path="leaderboard" component={LeaderBoard} />
-        <Route path="login" component={LeaderBoard} />
+        <Route path="login" component={Login} />
         <Route path="signup" component={Signup} />
         <Route path="lobby" component={Lobby} onEnter={requireLogin}>
           <Route path="hand-history" component={HandHistory} />
