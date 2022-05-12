@@ -21,6 +21,7 @@ import Playground from './components/Playground'
 import HandHistory from './components/HandHistory'
 import Groups from './components/Groups'
 import Accounts from './components/Accounts';
+import LeaderBoard from './components/LeaderBoard';
 
 const history = syncHistoryWithStore(hashHistory, store)
 
@@ -36,7 +37,8 @@ const Root = () => (
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRedirect to="/login" />
-        <Route path="login" component={Login} />
+        <Route path="leaderboard" component={LeaderBoard} />
+        <Route path="login" component={LeaderBoard} />
         <Route path="signup" component={Signup} />
         <Route path="lobby" component={Lobby} onEnter={requireLogin}>
           <Route path="hand-history" component={HandHistory} />

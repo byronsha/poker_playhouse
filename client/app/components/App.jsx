@@ -10,7 +10,7 @@ import io from 'socket.io-client'
 const socket = io('/')
 
 const container = css`
-  height: 100vh;
+  min-height: 100vh;
   background: #fafafa;
 `
 
