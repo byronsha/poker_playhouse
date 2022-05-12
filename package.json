@@ -4,6 +4,7 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
+    "build:frontend": "webpack",
     "start": "node ./server/index",
     "test-poker": "mocha ./server/poker/__test__/*.js",
     "test-models": "mocha ./server/db/models/__test__/*.js"
