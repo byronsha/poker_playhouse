@@ -40,8 +40,8 @@ module.exports = {
         test: /\.(sass|scss)$/,
         loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
       },
-      {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+      {//jpe?g|
+        test: /\.(png|gif|svg)$/i,
         loaders: [
           'file-loader?hash=sha512&digest=hex&name=[hash].[ext]&esModule=false',
           'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
