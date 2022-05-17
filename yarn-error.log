@@ -1,0 +1,85 @@
+Arguments: 
+  /Users/andrey/.nvm/versions/node/v12.18.2/bin/node /usr/local/Cellar/yarn/1.22.18/libexec/bin/yarn.js
+
+PATH: 
+  /Users/andrey/.cargo/bin:/Users/andrey/.local/share/solana/install/active_release/bin:/Users/andrey/.local/share/solana/install/active_release/bin:/Users/andrey/.pravda/bin/:/Users/andrey/.nvm/versions/node/v12.18.2/bin:/Users/andrey/go/bin:/Users/andrey/google-cloud-sdk/bin:/Users/andrey/.rvm/gems/ruby-2.1.0/bin:/Users/andrey/.rvm/gems/ruby-2.1.0@global/bin:/Users/andrey/.rvm/rubies/ruby-2.1.0/bin:/opt/local/bin:/opt/local/sbin:/usr/local/mysql/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/andrey/.rvm/bin:/Users/andrey/.rvm/bin:/usr/local/opt/fzf/bin::/Library/Frameworks/Mono.framework/Versions/Current/bin/:/Users/andrey/Library/Android/sdk/emulator:/Users/andrey/Library/Android/sdk/tools:/Users/andrey/Library/Android/sdk/tools/bin:/Users/andrey/Library/Android/sdk/platform-tools
+
+Yarn version: 
+  1.22.18
+
+Node version: 
+  12.18.2
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/andrey/projects/bitshares/poker_playhouse/package.json: Unexpected token } in JSON at position 1194
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.22.18/libexec/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.22.18/libexec/lib/cli.js:310:30)
+      at /usr/local/Cellar/yarn/1.22.18/libexec/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "poker_friends",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server/index.js",
+    "scripts": {
+      "build:frontend": "webpack",
+      "start": "node ./server/index",
+      "test-poker": "mocha ./server/poker/__test__/*.js",
+      "test-models": "mocha ./server/db/models/__test__/*.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "axios": "^0.16.1",
+      "bcrypt-nodejs": "0.0.3",
+      "body-parser": "^1.16.0",
+      "classnames": "^2.2.5",
+      "cookie-parser": "^1.4.3",
+      "create-react-app": "4.0.3",
+      "css-loader": "^0.28.0",
+      "cucumber": "6.0.7",
+      "emotion": "^8.0.12",
+      "express": "^4.14.0",
+      "extract-text-webpack-plugin": "^2.1.0",
+      "file-loader": "6.1.1",
+      "foreman": "^2.0.0",
+      "image-webpack-loader": "8.1.0",
+      "jsonwebtoken": "^7.4.0",
+      "lodash": "^4.17.5",
+      "material-ui": "1.0.0-alpha.20",
+      "material-ui-icons": "1.0.0-alpha.19",
+      "moment": "^2.18.1",
+      "path": "^0.12.7",
+      "pg": "8.7.3",
+      "pg-hstore": "2.3.2",
+      "pokersolver": "^2.1.2",
+      "random-id": "0.0.2",
+      "sequelize": "6.17.0",
+      "sequelize-cli": "6.4.1",
+      "socket.io": "^1.7.2",
+      "underscore": "^1.8.3",
+    },
+    "devDependencies": {
+      "chai": "^3.5.0",
+      "eslint": "4.13.1",
+      "eslint-config-airbnb": "^16.1.0",
+      "eslint-plugin-import": "^2.8.0",
+      "eslint-plugin-jsx-a11y": "^6.0.3",
+      "eslint-plugin-react": "^7.5.1",
+      "flow-bin": "^0.64.0",
+      "mocha": "^3.3.0",
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

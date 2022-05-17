@@ -1,0 +1,154 @@
+@media screen and (min-height: 1050px) {
+  .seat1of6 {
+    left: 475px;
+    top: 95px;
+    
+    .bet {
+      top: 155px;
+    }
+  }
+  .seat2of6 {
+    top: 195px;
+    left: 895px;
+  
+    .bet {
+      top: 145px;
+      left: -150px;
+    }
+  }
+  .seat3of6 {
+    top: 460px;
+    left: 895px;
+    
+    .bet {
+      left: -150px;
+      bottom: 85px;
+    }
+  }
+  .seat4of6 {
+    top: 560px;
+    left: 475px;
+    
+    .bet {
+      bottom: 130px;
+    }
+  }
+  .seat5of6 {
+    top: 460px;
+    left: 55px;
+    
+    .bet {
+      right: -150px;
+      bottom: 85px;
+    }
+  }
+  .seat6of6 {
+    top: 195px;
+    left: 55px;
+    
+    .bet {
+      top: 145px;
+      right: -150px;
+    }
+  }
+}
+@media screen and (max-height: 1049px) {
+  .seat1of6 {
+    left: 475px;
+    top: 25px;
+    
+    .bet {
+      top: 170px;
+    }
+  }
+  .seat2of6 {
+    top: 125px;
+    left: 895px;
+   
+    .bet {
+      top: 160px;
+      left: -150px;
+    }
+  }
+  .seat3of6 {
+    top: 390px;
+    left: 895px;
+    
+    .bet {
+      left: -150px;
+      bottom: 110px;
+    }
+  }
+  .seat4of6 {
+    top: 490px;
+    left: 475px;
+    
+    .bet {
+      bottom: 150px;
+    }
+  }
+  .seat5of6 {
+    top: 390px;
+    left: 55px;
+    
+    .bet {
+      right: -150px;
+      bottom: 110px;
+    }
+  }
+  .seat6of6 {
+    top: 125px;
+    left: 55px;
+    
+    .bet {
+      top: 160px;
+      right: -150px;
+    }
+  }
+}
+.seat-container {
+  color: #fff;
+  width: 180px;
+  height: 150px;
+  position: absolute;
+  text-align: center;
+  z-index: 5;
+  transition: 0.2s all;
+}
+.bet {
+  position: absolute;
+  width: 100%;
+}
+.seat-info {
+  position: absolute;
+  width: 100%;
+  bottom: 5px;
+}
+.seat-number {
+  padding: 4px 0px;
+  display: inline-block;
+  width: 20%;
+  border-radius: 0 0 0 4px;
+}
+.seat-player {
+  position: relative;
+  display: inline-block;
+  padding: 4px 0px;
+  width: 80%;
+  border-radius: 0 0 4px 0;
+}
+.seat-container.active .seat-info .seat-player {
+  color: #ffeb3b;
+}
+.seat-stack {
+  font-size: 24px;
+  padding: 8px 0px;
+  border-radius: 4px 4px 0 0;
+}
+.button-chip {
+  color: #fff;
+  position: absolute;
+  right: 5px;
+  top: -42px;
+  font-size: 10px;
+}
