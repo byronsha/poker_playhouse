@@ -3,7 +3,7 @@ var path = require('path')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
-  entry: ['./client/app/index.js', './client/scss/main.scss', 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
+  entry: ['./client2/app/index.js', './client2/scss/main.scss', 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
   output: {
     path: path.resolve(__dirname, 'server'),
     publicPath: '/',
@@ -12,11 +12,11 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     modules: [
-      path.resolve('./client/modules'),
+      path.resolve('./client2/modules'),
       path.resolve('./node_modules'),
     ],
     alias: {
-      'app': path.resolve('./client/modules'),
+      'app': path.resolve('./client2/modules'),
     },
   },
   devtool: 'source-maps',
