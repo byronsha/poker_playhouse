@@ -16,7 +16,7 @@ import TopNav from './TopNav';
 import BottomNav from './BottomNav';
 import Game from '../Game/Game'
 import BuyinModal from '../Game/BuyinModal'
-// import { Button } from '../../modules/components';
+import { Button } from '../../../components';
 
 const outerContainer = css`
   display: flex;
@@ -398,11 +398,13 @@ const Lobby = (props) => {
     if (Object.keys(props.openTables).length < 4) {
       socket.emit('join_table', tableId)
     }
+    setOnMenu(false);
     // this.setState({ onMenu: false })
   }
 
   const handleLeaveClick = tableId => {
     socket.emit('leave_table', tableId)
+    setOnMenu(true);
     // this.setState({ onMenu: true })    
   }
 
@@ -505,18 +507,18 @@ const Lobby = (props) => {
         <BottomNav name={user.username} bankroll={user.bankroll} logout={props.logout} account={account} />
         {isInGame && (
           <div style={{ position: 'absolute', top: 14, right: 14, zIndex: 100 }}>
-            <button onClick={() => toggleMenu()}>
+            <Button onClick={() => toggleMenu()}>
               Back to game
-            </button>
+            </Button>
           </div>
         )}
       </div>
 
       <div className={innerContainer}>
         <div style={{ position: 'absolute', top: 14, left: 14, zIndex: 100 }}>
-        <button onClick={toggleMenu}>
+        <Button onClick={toggleMenu}>
           Main menu
-        </button>                        
+        </Button>                        
       </div>
         {Object.keys(openTables).length > 0 &&
           Object.values(openTables).map(table =>
@@ -555,11 +557,11 @@ const Lobby = (props) => {
 
 function mapStateToProps(state) {
 
-  // const account = state.user.user.accounts.find(a => a.id === state.user.accountId);
+  const account = state.user && state.user.user && state.user.user.accounts ? state.user.user.accounts.find(a => a.id === state.user.accountId) : null;
 
   return {
     user: state.user.user,
-    account: null,
+    account: account,
     tables: state.lobby.tables,
     players: state.lobby.players,
     openTables: state.lobby.openTables,

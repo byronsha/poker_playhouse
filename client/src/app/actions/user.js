@@ -1,7 +1,10 @@
-import { createBrowserHistory } from "history";
+// import { createBrowserHistory } from "history";
 
 import axios from 'axios'
-const history = createBrowserHistory();
+// const history = createBrowserHistory();
+
+import history from '../../utils/history';
+
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // import { hashHistory } from 'react-router'
@@ -61,7 +64,7 @@ export function login(params) {
         if (user) {
           dispatch(loginSuccess(user, token))
           // dispatch(push('/lobby'))
-          history.push('/lobby')
+          history.replace('/lobby')
         } else {
           console.log(res)
         }
@@ -107,6 +110,7 @@ export function signUp(params) {
 
         if (user) {
           dispatch(signUpSuccess(user, token))
+          history.push('/lobby')
           // dispatch(push('/lobby'))          
         } else {
           console.log(res)
@@ -123,6 +127,7 @@ export function signUp(params) {
 export function logout() {
   return function(dispatch) {
     dispatch({ type: LOGOUT })
+    history.push('/login')
     // dispatch(push('/login'))
   }
 }
@@ -167,6 +172,9 @@ export function tokenLogin(token) {
 
         if (user) {
           dispatch(tokenLoginSuccess(user, token))
+          if (window.location.pathname !== '/lobby') {
+            history.replace('/lobby')
+          }
           // if (hashHistory.getCurrentLocation().pathname !== '/lobby') {
           //   dispatch(push('/lobby'))
           // }

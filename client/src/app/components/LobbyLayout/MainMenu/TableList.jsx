@@ -2,7 +2,7 @@ import React from 'react'
 import { css } from 'emotion';
 
 import Table from './Table'
-// import { Panel } from '../../../../modules/app/components';
+import { Panel } from '../../../../components';
 
 const tableList = css`
   text-align: center;
@@ -30,7 +30,7 @@ class TableList extends React.Component<Props> {
     const { tables, openTables, onTableClick, hasTableOpen } = this.props
     if (Object.keys(tables).length > 0) {
       return (
-        <div>
+        <Panel header={`Games`}>
           <table className={tableList}>
             <thead>
               <tr>
@@ -55,7 +55,7 @@ class TableList extends React.Component<Props> {
               })}
             </tbody>
           </table>
-        </div>
+        </Panel>
       )
     } else {
       return <div>Loading...</div>

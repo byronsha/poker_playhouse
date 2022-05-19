@@ -28,7 +28,7 @@ import { Provider } from 'react-redux'
 // import { Router, Route, IndexRedirect, hashHistory } from 'react-router'
 // import { syncHistoryWithStore, push } from 'react-router-redux'
 import {
-  BrowserRouter as Router,
+   HistoryRouter as Router,
   Routes,
   Route,
   Outlet,
@@ -80,6 +80,30 @@ import LeaderBoard from './app/components/LeaderBoard';
 //   </Provider>
 // )
 
+import CustomRouter from './utils/CustomRouter';
+import history from './utils/history';
+
+// const CustomRouter = (props) => <Router {...props} />
+
+const Root = () => {
+  return (
+    <CustomRouter history={history}>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index path="login" element={<Login/>} />
+          <Route path="leaderboard" element={<LeaderBoard />} />
+          <Route path="signup" element={<Signup/>} />
+          <Route path="lobby" element={<Lobby><Outlet /></Lobby>}>
+            <Route path="hand-history" element={<HandHistory/>} />
+            <Route path="groups" element={<Groups/>} />
+            <Route path="accounts" element={<Accounts/>} />
+          </Route>
+        </Route>
+      </Routes>
+    </CustomRouter>
+  )
+}
+
 const theme = createMuiTheme({
   palette: createPalette({
     type: 'light',
@@ -101,20 +125,7 @@ ReactDOM.render(
   // </React.StrictMode>
   <MuiThemeProvider theme={theme}>
     <Provider store={store}>
-      <Router>
-        <Routes>
-        <Route path="/" element={<App />}>
-          <Route index path="login" element={<Login/>} />
-          <Route path="leaderboard" element={<LeaderBoard />} />
-          <Route path="signup" element={<Signup/>} />
-          <Route path="lobby" element={<Lobby><Outlet /></Lobby>}>
-            <Route path="hand-history" element={<HandHistory/>} />
-            <Route path="groups" element={<Groups/>} />
-            <Route path="accounts" element={<Accounts/>} />
-          </Route>
-        </Route>
-        </Routes>
-      </Router>
+      <Root />
     </Provider>
   </MuiThemeProvider>,
   document.getElementById('root')
