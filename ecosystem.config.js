@@ -5,7 +5,7 @@ module.exports = {
     script: './server/index.js',
     env:{
       JWT_SECRET:"test",
-      PORT:5432,
+      PORT:3000,
       NODE_ENV:"production"
     },
   }],
