@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { css } from 'emotion'
-import { Button } from '../../../../modules/components';
+import { Button } from '../../../../components';
 
 const activeStyle = css`font-weight: bold;`;
 const disabledStyle = css`color: #aaa;`;
