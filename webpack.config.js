@@ -3,7 +3,7 @@ var path = require('path')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
-  entry: ['./client/app/index.js', './client/scss/main.scss', 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
+  entry: ['./client2/app/index.js', './client2/scss/main.scss', 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
   output: {
     path: path.resolve(__dirname, 'server'),
     publicPath: '/',
@@ -12,11 +12,11 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     modules: [
-      path.resolve('./client/modules'),
+      path.resolve('./client2/modules'),
       path.resolve('./node_modules'),
     ],
     alias: {
-      'app': path.resolve('./client/modules'),
+      'app': path.resolve('./client2/modules'),
     },
   },
   devtool: 'source-maps',
@@ -40,10 +40,10 @@ module.exports = {
         test: /\.(sass|scss)$/,
         loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
       },
-      {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+      {//jpe?g|
+        test: /\.(png|gif|svg)$/i,
         loaders: [
-          'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
+          'file-loader?hash=sha512&digest=hex&name=[hash].[ext]&esModule=false',
           'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
         ]
       } 

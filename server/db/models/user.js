@@ -22,6 +22,7 @@ module.exports = function(sequelize, DataTypes) {
 
   User.associate = models => {
     User.hasMany(models.UserHand, { foreignKey: 'user_id' });
+    User.hasMany(models.Account, { foreignKey: 'user_id' });    
     User.hasMany(models.GroupMember, { foreignKey: 'user_id' });
     User.hasMany(models.GroupInvite, { foreignKey: 'inviter_id', as: 'sent_invites' })
     User.hasMany(models.GroupInvite, { foreignKey: 'invited_id', as: 'received_invites' })

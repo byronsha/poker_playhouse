@@ -25,4 +25,27 @@ module.exports = {
       res.send({ searchResults });
     });
   },
+
+  getAllUsers(res, req) {
+    db.User.findAll({
+      include: [{
+        model: db.Account,
+      }],
+    }).then(users => {
+
+      let results = users.reduce((acc, item) => {
+        return [ ...acc, ...item.Accounts]
+      }, [])
+
+      results = results.map((item) => ({
+        position: item.experience,
+        nickname: item.name,
+        winCount: '???',
+        score: item.tokens,
+      }));
+
+      req.json(results)      
+    })
+
+  }
 }

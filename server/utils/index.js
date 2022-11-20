@@ -18,13 +18,17 @@ function generateToken(user) {
 function getCleanUser(user) {
   if (!user) return {}
 
+  console.log('user ', JSON.stringify(user));
+
+
   return {
     id: user.id,
     username: user.username,
     location: user.location,
     bankroll: user.bankroll,
     createdAt: user.createdAt,
-    updatedAt: user.updatedAt
+    updatedAt: user.updatedAt,
+    accounts: user.Accounts
   }
 }
 
